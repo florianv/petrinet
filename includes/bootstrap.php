@@ -26,4 +26,4 @@ if (!class_exists('JLoader'))
 }
 
 // Register the Application prefix.
-JLoader::registerPrefix('Petrinet', JPATH_SITE);
+JLoader::registerPrefix('PN', JPATH_SITE);
