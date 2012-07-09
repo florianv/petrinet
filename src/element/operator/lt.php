@@ -23,6 +23,8 @@ class PNElementOperatorLt implements PNElementOperator
 	 * @param   mixed  $rightValue  The right value.
 	 *
 	 * @return  boolean  True on success, false otherwise.
+	 *
+	 * @since   1.0
 	 */
 	public function execute($leftValue, $rightValue)
 	{
