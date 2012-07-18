@@ -17,13 +17,13 @@
 abstract class PNElementArc
 {
 	/**
-	 * @var    array  The input Place or Transition of this Arc.
+	 * @var    object  The input Place or Transition of this Arc.
 	 * @since  1.0
 	 */
 	protected $input;
 
 	/**
-	 * @var    array  The output Place or Transition of this Arc.
+	 * @var    object  The output Place or Transition of this Arc.
 	 * @since  1.0
 	 */
 	protected $output;
@@ -79,7 +79,7 @@ abstract class PNElementArc
 	/**
 	 * Get the weight of this Arc.
 	 *
-	 * @return   integer  The Arc's weight.
+	 * @return  integer  The Arc's weight.
 	 *
 	 * @since   1.0
 	 */
