@@ -118,7 +118,7 @@ class PNElementGuard
 	 *
 	 * @since   1.0
 	 */
-	protected function assertIsLoaded()
+	public function assertIsLoaded()
 	{
 		if (is_null($this->operator) || is_null($this->variable) || is_null($this->value))
 		{
