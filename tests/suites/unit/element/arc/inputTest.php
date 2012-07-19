@@ -106,11 +106,16 @@ class PNElementArcInputTest extends TestCase
 	 * @return  void
 	 *
 	 * @covers  PNElementArcInput::accept
-	 * @todo
 	 * @since   1.0
 	 */
 	public function testAccept()
 	{
+		$visitor = $this->getMock('PNBaseVisitor');
 
+		$visitor->expects($this->once())
+			->method('visitInputArc')
+			->with($this->object);
+
+		$this->object->accept($visitor);
 	}
 }

@@ -69,7 +69,7 @@ class PNElementVariable
 	{
 		if (is_string($value) || is_numeric($value) || is_bool($value))
 		{
-			$this->value = serialize($value);
+			$this->value = $value;
 		}
 
 		else
@@ -87,6 +87,6 @@ class PNElementVariable
 	 */
 	public function getValue()
 	{
-		return unserialize($this->value);
+		return $this->value;
 	}
 }

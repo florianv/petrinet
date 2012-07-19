@@ -106,11 +106,16 @@ class PNElementArcOutputTest extends TestCase
 	 * @return  void
 	 *
 	 * @cover   PNElementArcOutput::accept
-	 * @todo
 	 * @since   1.0
 	 */
 	public function testAccept()
 	{
+		$visitor = $this->getMock('PNBaseVisitor');
 
+		$visitor->expects($this->once())
+			->method('visitOutputArc')
+			->with($this->object);
+
+		$this->object->accept($visitor);
 	}
 }

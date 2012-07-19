@@ -341,11 +341,16 @@ class PNElementPlaceTest extends TestCase
 	 * @return  void
 	 *
 	 * @covers  PNElementPlace::accept
-	 * @todo
 	 * @since   1.0
 	 */
 	public function testAccept()
 	{
+		$visitor = $this->getMock('PNBaseVisitor');
 
+		$visitor->expects($this->once())
+			->method('visitPlace')
+			->with($this->object);
+
+		$this->object->accept($visitor);
 	}
 }
