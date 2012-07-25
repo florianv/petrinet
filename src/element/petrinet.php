@@ -56,6 +56,8 @@ class PNElementPetrinet implements PNBaseVisitable
 	 * Constructor.
 	 *
 	 * @param   string  $name  The Petri Net name.
+	 *
+	 * @since   1.0
 	 */
 	public function __construct($name)
 	{

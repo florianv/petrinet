@@ -17,7 +17,7 @@
 class PNElementGuardTest extends TestCase
 {
 	/**
-	 * @var    PNElementArc  A PNElementArc mock.
+	 * @var    PNElementGuard  A PNElementGuard instance.
 	 * @since  1.0
 	 */
 	protected $object;
@@ -116,9 +116,7 @@ class PNElementGuardTest extends TestCase
 	 * @return  void
 	 *
 	 * @covers  PNElementGuard::setVariable
-	 *
 	 * @since   1.0
-	 *
 	 * @expectedException PHPUnit_Framework_Error
 	 */
 	public function testSetVariableException()
@@ -155,9 +153,7 @@ class PNElementGuardTest extends TestCase
 	 * @return  void
 	 *
 	 * @covers  PNElementGuard::setValue
-	 *
 	 * @since   1.0
-	 *
 	 * @expectedException InvalidArgumentException
 	 */
 	public function testSetValueException()

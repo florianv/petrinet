@@ -104,9 +104,7 @@ class PNElementVariableTest extends TestCase
 	 * @return  void
 	 *
 	 * @covers  PNElementVariable::setValue
-	 *
 	 * @since   1.0
-	 *
 	 * @expectedException InvalidArgumentException
 	 */
 	public function testSetValueException()

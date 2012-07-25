@@ -60,9 +60,7 @@ class PNElementArcOutputTest extends TestCase
 	 * @return  void
 	 *
 	 * @covers  PNElementArcOutput::setInput
-	 *
 	 * @since   1.0
-	 *
 	 * @expectedException PHPUnit_Framework_Error
 	 */
 	public function testSetInputException()
@@ -94,9 +92,7 @@ class PNElementArcOutputTest extends TestCase
 	 * @return  void
 	 *
 	 * @covers  PNElementArcOutput::setOutput
-	 *
 	 * @since   1.0
-	 *
 	 * @expectedException PHPUnit_Framework_Error
 	 */
 	public function testSetOutputException()

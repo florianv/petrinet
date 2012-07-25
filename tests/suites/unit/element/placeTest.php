@@ -86,9 +86,7 @@ class PNElementPlaceTest extends TestCase
 	 * @return  void
 	 *
 	 * @covers  PNElementPlace::addInput
-	 *
 	 * @since   1.0
-	 *
 	 * @expectedException PHPUnit_Framework_Error
 	 */
 	public function testAddInputException()
@@ -152,9 +150,7 @@ class PNElementPlaceTest extends TestCase
 	 * @return  void
 	 *
 	 * @covers  PNElementPlace::addOutput
-	 *
 	 * @since   1.0
-	 *
 	 * @expectedException PHPUnit_Framework_Error
 	 */
 	public function testAddOutputException()
