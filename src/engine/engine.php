@@ -23,12 +23,6 @@ class PNEngine
 	protected $net;
 
 	/**
-	 * @var    array  The Petri Net Transitions.
-	 * @since  1.0
-	 */
-	protected $transitions = array();
-
-	/**
 	 * @var    array  The Petri Net Enabled Transitions.
 	 * @since  1.0
 	 */
@@ -202,11 +196,13 @@ class PNEngine
 	 */
 	public function refresh()
 	{
+		$transitions = $this->net->getTransitions();
+
 		// Clear the enabled transition.
 		$this->enabledTransitions = array();
 
 		// Get the enabled Transitions.
-		foreach ($this->transitions as $transition)
+		foreach ($transitions as $transition)
 		{
 			if ($transition->isEnabled())
 			{
@@ -217,7 +213,7 @@ class PNEngine
 	}
 
 	/**
-	 * Get the enabled Transitions
+	 * Get the enabled Transitions of the current Petri net.
 	 *
 	 * @return  array
 	 *
@@ -241,9 +237,6 @@ class PNEngine
 	{
 		// Set the property.
 		$this->net = $net;
-
-		// Store the Petri Net transitions.
-		$this->transitions = $this->net->getTransitions();
 
 		return $this;
 	}
@@ -318,7 +311,7 @@ class PNEngine
 	 *
 	 * @since   1.0
 	 */
-	public function isEnded()
+	public function hasEnded()
 	{
 		return $this->state == $this->endedState;
 	}
