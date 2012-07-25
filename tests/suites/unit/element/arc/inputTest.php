@@ -50,22 +50,24 @@ class PNElementArcInputTest extends TestCase
 		$input = new PNElementPlace;
 		$this->object->setInput($input);
 		$in = TestReflection::getValue($this->object, 'input');
+
 		$this->assertEquals($in, $input);
+	}
 
-		// Set a random object.
-		$obj = new stdClass;
-		$caught = false;
-
-		try
-		{
-			$this->object->setInput($obj);
-		}
-		catch (Exception $e)
-		{
-			$caught = true;
-		}
-
-		$this->assertTrue($caught);
+	/**
+	 * Tests the error thrown by the PNElementArcInput::setInput method.
+	 *
+	 * @return  void
+	 *
+	 * @covers  PNElementArcInput::setInput
+	 *
+	 * @since   1.0
+	 *
+	 * @expectedException PHPUnit_Framework_Error
+	 */
+	public function testSetInputException()
+	{
+		$this->object->setInput(new stdClass);
 	}
 
 	/**
@@ -82,22 +84,24 @@ class PNElementArcInputTest extends TestCase
 		$output = new PNElementTransition;
 		$this->object->setOutput($output);
 		$out = TestReflection::getValue($this->object, 'output');
+
 		$this->assertEquals($out, $output);
+	}
 
-		// Set a random object.
-		$obj = new stdClass;
-		$caught = false;
-
-		try
-		{
-			$this->object->setOutput($obj);
-		}
-		catch (Exception $e)
-		{
-			$caught = true;
-		}
-
-		$this->assertTrue($caught);
+	/**
+	 * Tests the error thrown by the PNElementArcInput::setOutput method.
+	 *
+	 * @return  void
+	 *
+	 * @covers  PNElementArcInput::setOutput
+	 *
+	 * @since   1.0
+	 *
+	 * @expectedException PHPUnit_Framework_Error
+	 */
+	public function testSetOutputException()
+	{
+		$this->object->setOutput(new stdClass);
 	}
 
 	/**

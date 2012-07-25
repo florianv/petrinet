@@ -175,12 +175,18 @@ class PNElementTransition implements PNBaseVisitable
 	 *
 	 * @since   1.0
 	 */
-	public function execute(PNEngine $engine)
+	public function execute()
 	{
 		foreach ($this->inputs as $inputArc)
 		{
-			// Remove tokens from the input places.
-			$inputArc->getInput()->clearTokens();
+			$inputPlace = $inputArc->getInput();
+			$tokens = $inputPlace->getTokens();
+			$inputWeight = $inputArc->getWeight();
+
+			for ($i = 0; $i < $inputWeight; $i++)
+			{
+				$inputPlace->removeToken($tokens[$i]);
+			}
 		}
 
 		foreach ($this->outputs as $arc)

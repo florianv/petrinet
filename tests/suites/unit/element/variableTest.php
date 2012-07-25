@@ -82,47 +82,37 @@ class PNElementVariableTest extends TestCase
 		// Try and integer
 		$this->object->setValue(8);
 		$value = TestReflection::getValue($this->object, 'value');
+
 		$this->assertEquals($value, 8);
 
 		// Try a string.
 		$this->object->setValue('test');
 		$value = TestReflection::getValue($this->object, 'value');
+
 		$this->assertEquals($value, 'test');
 
 		// Try a bool.
 		$this->object->setValue(true);
 		$value = TestReflection::getValue($this->object, 'value');
+
 		$this->assertTrue($value);
+	}
 
-		// Try an array.
-		$caught = false;
-
-		try
-		{
-			$this->object->setValue(array());
-		}
-
-		catch (Exception $e)
-		{
-			$caught = true;
-		}
-
-		$this->assertTrue($caught);
-
-		// Try an object.
-		$caught = false;
-
-		try
-		{
-			$this->object->setValue(new stdClass);
-		}
-
-		catch (Exception $e)
-		{
-			$caught = true;
-		}
-
-		$this->assertTrue($caught);
+	/**
+	 * Tests the exception thrown by the PNElementVariable::setValue method.
+	 *
+	 * @return  void
+	 *
+	 * @covers  PNElementVariable::setValue
+	 *
+	 * @since   1.0
+	 *
+	 * @expectedException InvalidArgumentException
+	 */
+	public function testSetValueException()
+	{
+		$this->object->setValue(array());
+		$this->object->setValue(new stdClass);
 	}
 
 	/**

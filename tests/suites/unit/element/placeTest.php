@@ -78,21 +78,22 @@ class PNElementPlaceTest extends TestCase
 
 		$this->assertCount(2, $input);
 		$this->assertEquals($input[1], $arc);
+	}
 
-		// Try to add an invalid arc type.
-		$arc = new PNElementArcInput;
-		$caught = false;
-
-		try
-		{
-			$this->object->addInput($arc);
-		}
-		catch (Exception $e)
-		{
-			$caught = true;
-		}
-
-		$this->assertTrue($caught);
+	/**
+	 * Tests the error thrown by the PNElementPlace::addInput method.
+	 *
+	 * @return  void
+	 *
+	 * @covers  PNElementPlace::addInput
+	 *
+	 * @since   1.0
+	 *
+	 * @expectedException PHPUnit_Framework_Error
+	 */
+	public function testAddInputException()
+	{
+		$this->object->addInput(new stdClass);
 	}
 
 	/**
@@ -143,21 +144,22 @@ class PNElementPlaceTest extends TestCase
 
 		$this->assertCount(2, $output);
 		$this->assertEquals($output[1], $arc);
+	}
 
-		// Try to add an invalid arc type.
-		$arc = new PNElementArcOutput;
-		$caught = false;
-
-		try
-		{
-			$this->object->addOutput($arc);
-		}
-		catch (Exception $e)
-		{
-			$caught = true;
-		}
-
-		$this->assertTrue($caught);
+	/**
+	 * Tests the exception thrown by the PNElementPlace::addOutput method.
+	 *
+	 * @return  void
+	 *
+	 * @covers  PNElementPlace::addOutput
+	 *
+	 * @since   1.0
+	 *
+	 * @expectedException PHPUnit_Framework_Error
+	 */
+	public function testAddOutputException()
+	{
+		$this->object->addOutput(new stdClass);
 	}
 
 	/**

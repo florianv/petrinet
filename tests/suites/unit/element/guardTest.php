@@ -73,21 +73,24 @@ class PNElementGuardTest extends TestCase
 		// Try a valid operator.
 		$operator = new PNElementOperatorGt;
 		$this->object->setOperator($operator);
+
 		$this->assertEquals(TestReflection::getValue($this->object, 'operator'), $operator);
+	}
 
-		// Try an invalid operator.
-		$caught = false;
-
-		try
-		{
-			$this->object->setOperator(new stdClass);
-		}
-		catch (Exception $e)
-		{
-			$caught = true;
-		}
-
-		$this->assertTrue($caught);
+	/**
+	 * Tests the error thrown by the PNElementGuard::setOperator method.
+	 *
+	 * @return  void
+	 *
+	 * @covers  PNElementGuard::setOperator
+	 *
+	 * @since   1.0
+	 *
+	 * @expectedException PHPUnit_Framework_Error
+	 */
+	public function testSetOperatorException()
+	{
+		$this->object->setOperator(new stdClass);
 	}
 
 	/**
@@ -103,21 +106,24 @@ class PNElementGuardTest extends TestCase
 		// Try a valid variable.
 		$variable = new PNElementVariable('test', 'test');
 		$this->object->setVariable($variable);
+
 		$this->assertEquals(TestReflection::getValue($this->object, 'variable'), $variable);
+	}
 
-		// Try an invalid operator.
-		$caught = false;
-
-		try
-		{
-			$this->object->setVariable(new stdClass);
-		}
-		catch (Exception $e)
-		{
-			$caught = true;
-		}
-
-		$this->assertTrue($caught);
+	/**
+	 * Tests the error thrown by the PNElementGuard::setVariable method.
+	 *
+	 * @return  void
+	 *
+	 * @covers  PNElementGuard::setVariable
+	 *
+	 * @since   1.0
+	 *
+	 * @expectedException PHPUnit_Framework_Error
+	 */
+	public function testSetVariableException()
+	{
+		$this->object->setVariable(new stdClass);
 	}
 
 	/**
@@ -141,20 +147,23 @@ class PNElementGuardTest extends TestCase
 		// Try a boolean.
 		$this->object->setValue(true);
 		$this->assertEquals(TestReflection::getValue($this->object, 'value'), true);
+	}
 
-		// Try an array.
-		$caught = false;
-		try
-		{
-			$this->object->setValue(array());
-		}
-
-		catch (Exception $e)
-		{
-			$caught = true;
-		}
-
-		$this->assertTrue($caught);
+	/**
+	 * Tests the exception thrown by the PNElementGuard::setValue method.
+	 *
+	 * @return  void
+	 *
+	 * @covers  PNElementGuard::setValue
+	 *
+	 * @since   1.0
+	 *
+	 * @expectedException InvalidArgumentException
+	 */
+	public function testSetValueException()
+	{
+		$this->object->setValue(array());
+		$this->object->setValue(new stdClass);
 	}
 
 	/**
@@ -183,7 +192,7 @@ class PNElementGuardTest extends TestCase
 		$this->assertTrue($caught);
 
 		// Add an operator.
-		$this->object->setOperator(new PNElementOperatorEq);
+		TestReflection::setValue($this->object, 'operator', new PNElementOperatorEq);
 
 		$caught = false;
 
@@ -199,7 +208,7 @@ class PNElementGuardTest extends TestCase
 		$this->assertTrue($caught);
 
 		// Add a variable.
-		$this->object->setVariable(new PNElementVariable('test', 'test'));
+		TestReflection::setValue($this->object, 'variable', new PNElementVariable('test', 'test'));
 
 		$caught = false;
 
@@ -216,7 +225,7 @@ class PNElementGuardTest extends TestCase
 		$this->assertTrue($caught);
 
 		// Add a value to compare against.
-		$this->object->setValue(8);
+		TestReflection::setValue($this->object, 'value', 8);
 
 		$this->object->assertIsLoaded();
 	}
