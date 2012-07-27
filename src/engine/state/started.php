@@ -97,7 +97,7 @@ class PNEngineStateStarted extends PNEngineState
 			foreach ($transitions as $transition)
 			{
 				// Execute the Transition.
-				if (!$transition->execute($this->engine))
+				if (!$transition->execute())
 				{
 					$this->engine->end();
 				}
