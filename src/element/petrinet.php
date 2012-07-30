@@ -118,8 +118,8 @@ class PNElementPetrinet implements PNBaseVisitable
 	/**
 	 * Connect a place to a Transition or vice-versa.
 	 *
-	 * @param   object   $from    The source Place or Transition.
-	 * @param   object   $to      The target Place or Transition.
+	 * @param   mixed    $from    The source Place or Transition.
+	 * @param   mixed    $to      The target Place or Transition.
 	 * @param   integer  $weight  The Arc weight.
 	 *
 	 * @return  object  The Arc object.
@@ -133,11 +133,9 @@ class PNElementPetrinet implements PNBaseVisitable
 		// Input Arc.
 		if ($from instanceof PNElementPlace && $to instanceof PNElementTransition)
 		{
-			$arc = new PNElementArcInput;
+			$arc = new PNElementArcInput($from, $to);
 
-			$arc->setInput($from)
-				->setOutput($to)
-				->setWeight($weight);
+			$arc->setWeight($weight);
 
 			$this->inputArcs[] = $arc;
 		}
@@ -145,11 +143,9 @@ class PNElementPetrinet implements PNBaseVisitable
 		// Output Arc.
 		elseif ($from instanceof PNElementTransition && $to instanceof PNElementPlace)
 		{
-			$arc = new PNElementArcOutput;
+			$arc = new PNElementArcOutput($from, $to);
 
-			$arc->setInput($from)
-				->setOutput($to)
-				->setWeight($weight);
+			$arc->setWeight($weight);
 
 			$this->outputArcs[] = $arc;
 		}
