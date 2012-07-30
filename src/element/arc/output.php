@@ -18,6 +18,20 @@
 class PNElementArcOutput extends PNElementArc implements PNBaseVisitable
 {
 	/**
+	 * Constructor.
+	 *
+	 * @param   PNElementTransition  $input   The input Place.
+	 * @param   PNElementPlace       $output  The output Transition.
+	 *
+	 * @since   1.0
+	 */
+	public function __construct(PNElementTransition $input = null, PNElementPlace $output = null)
+	{
+		$this->input = $input;
+		$this->output = $output;
+	}
+
+	/**
 	 * Set the input Transition of this Arc.
 	 *
 	 * @param   PNElementTransition  $transition  The input Transition.

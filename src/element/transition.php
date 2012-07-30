@@ -20,19 +20,59 @@ class PNElementTransition implements PNBaseVisitable
 	 * @var    array  The input Arcs of this Transition.
 	 * @since  1.0
 	 */
-	protected $inputs = array();
+	protected $inputs;
 
 	/**
 	 * @var    array  The ouput Arcs of this Transition.
 	 * @since  1.0
 	 */
-	protected $outputs = array();
+	protected $outputs;
 
 	/**
 	 * @var    PNElementGuard  A Guard for this Transition.
 	 * @since  1.0
 	 */
-	protected $guard = false;
+	protected $guard;
+
+	/**
+	 * Constructor.
+	 *
+	 * @param   PNElementGuard  $guard    A Guard for this Transition.
+	 * @param   array           $inputs   The input arcs of this Transition (PNElementArcInput).
+	 * @param   array           $outputs  The output arcs of this Transition (PNElementArcOutput).
+	 *
+	 * @since   1.0
+	 */
+	public function __construct(PNElementGuard $guard = null, array $inputs = array(), array $outputs = array())
+	{
+		$this->guard = $guard;
+
+		if (empty($inputs))
+		{
+			$this->inputs = $inputs;
+		}
+
+		else
+		{
+			foreach ($inputs as $input)
+			{
+				$this->addInput($input);
+			}
+		}
+
+		if (empty($outputs))
+		{
+			$this->outputs = $outputs;
+		}
+
+		else
+		{
+			foreach ($outputs as $output)
+			{
+				$this->addOutput($output);
+			}
+		}
+	}
 
 	/**
 	 * Add an input Arc to this Transition.

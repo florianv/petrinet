@@ -37,6 +37,28 @@ class PNElementArcInputTest extends TestCase
 	}
 
 	/**
+	 * Constructor.
+	 *
+	 * @return  void
+	 *
+	 * @covers  PNElementArcInput::__construct
+	 * @since   1.0
+	 */
+	public function test__construct()
+	{
+		$arc = new PNElementArcInput;
+		$this->assertNull(TestReflection::getValue($arc, 'input'));
+		$this->assertNull(TestReflection::getValue($arc, 'output'));
+
+		$place = new PNElementPlace;
+		$transition = new PNElementTransition;
+		$arc = new PNElementArcInput($place, $transition);
+
+		$this->assertEquals(TestReflection::getValue($arc, 'input'), $place);
+		$this->assertEquals(TestReflection::getValue($arc, 'output'), $transition);
+	}
+
+	/**
 	 * Set the input Place of this Arc.
 	 *
 	 * @return  void

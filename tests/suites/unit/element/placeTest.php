@@ -50,9 +50,23 @@ class PNElementPlaceTest extends TestCase
 	 */
 	public function test__construct()
 	{
+		// Test without param.
 		$place = new PNElementPlace;
-		$set = TestReflection::getValue($place, 'tokenSet');
-		$this->assertInstanceOf('PNElementSet', $set);
+
+		$this->assertInstanceOf('PNElementSet', TestReflection::getValue($place, 'tokenSet'));
+		$this->assertEmpty(TestReflection::getValue($place, 'inputs'));
+		$this->assertEmpty(TestReflection::getValue($place, 'outputs'));
+
+		// Test with params.
+		$set = new PNElementSet;
+		$inputs = array(new PNElementArcOutput, new PNElementArcOutput);
+		$outputs = array(new PNElementArcInput, new PNElementArcInput);
+
+		$place = new PNElementPlace($set, $inputs, $outputs);
+
+		$this->assertEquals($set, TestReflection::getValue($place, 'tokenSet'));
+		$this->assertEquals($inputs, TestReflection::getValue($place, 'inputs'));
+		$this->assertEquals($outputs, TestReflection::getValue($place, 'outputs'));
 	}
 
 	/**

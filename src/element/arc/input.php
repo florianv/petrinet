@@ -18,6 +18,20 @@
 class PNElementArcInput extends PNElementArc implements PNBaseVisitable
 {
 	/**
+	 * Constructor.
+	 *
+	 * @param   PNElementPlace       $input   The input Place.
+	 * @param   PNElementTransition  $output  The output Transition.
+	 *
+	 * @since   1.0
+	 */
+	public function __construct(PNElementPlace $input = null, PNElementTransition $output = null)
+	{
+		$this->input = $input;
+		$this->output = $output;
+	}
+
+	/**
 	 * Set the input Place of this Arc.
 	 *
 	 * @param   PNElementPlace  $place  The input Place.

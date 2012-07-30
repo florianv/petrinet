@@ -37,6 +37,35 @@ class PNElementTransitionTest extends TestCase
 	}
 
 	/**
+	 * Constructor.
+	 *
+	 * @return  void
+	 *
+	 * @covers  PNElementTransition::__construct
+	 * @since   1.0
+	 */
+	public function test__construct()
+	{
+		// Test without param.
+		$transition = new PNElementTransition;
+
+		$this->assertNull(TestReflection::getValue($transition, 'guard'));
+		$this->assertEmpty(TestReflection::getValue($transition, 'inputs'));
+		$this->assertEmpty(TestReflection::getValue($transition, 'outputs'));
+
+		// Test with params.
+		$guard = new PNElementGuard;
+		$inputs = array(new PNElementArcInput, new PNElementArcInput);
+		$outputs = array(new PNElementArcOutput, new PNElementArcOutput);
+
+		$transition = new PNElementTransition($guard, $inputs, $outputs);
+
+		$this->assertEquals($guard, TestReflection::getValue($transition, 'guard'));
+		$this->assertEquals($inputs, TestReflection::getValue($transition, 'inputs'));
+		$this->assertEquals($outputs, TestReflection::getValue($transition, 'outputs'));
+	}
+
+	/**
 	 * Add an input Arc to this Transition.
 	 *
 	 * @return  void
@@ -193,7 +222,7 @@ class PNElementTransitionTest extends TestCase
 	 */
 	public function testGetGuard()
 	{
-		$this->assertFalse($this->object->getGuard());
+		$this->assertNull($this->object->getGuard());
 
 		$guard = new PNElementGuard;
 		TestReflection::setValue($this->object, 'guard', $guard);

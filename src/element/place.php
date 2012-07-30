@@ -20,13 +20,13 @@ class PNElementPlace implements PNBaseVisitable
 	 * @var    array  The input Arcs of this Place.
 	 * @since  1.0
 	 */
-	protected $inputs = array();
+	protected $inputs;
 
 	/**
 	 * @var    array  The ouput Arcs of this Place.
 	 * @since  1.0
 	 */
-	protected $outputs = array();
+	protected $outputs;
 
 	/**
 	 * @var    PNElementSet  The tokens Set.
@@ -37,11 +37,41 @@ class PNElementPlace implements PNBaseVisitable
 	/**
 	 * Constructor.
 	 *
-	 * @since  1.0
+	 * @param   PNElementSet  $tokenSet  A bag of tokens to add to this place.
+	 * @param   array         $inputs    An array of input arcs of this place (PNElementArcOutput).
+	 * @param   array         $outputs   An array of output arcs of this place (PNElementArcInput).
+	 *
+	 * @since   1.0
 	 */
-	public function __construct()
+	public function __construct(PNElementSet $tokenSet = null, array $inputs = array(), array $outputs = array())
 	{
-		$this->tokenSet = new PNElementSet;
+		$this->tokenSet = $tokenSet ? $tokenSet : new PNElementSet;
+
+		if (empty($inputs))
+		{
+			$this->inputs = $inputs;
+		}
+
+		else
+		{
+			foreach ($inputs as $input)
+			{
+				$this->addInput($input);
+			}
+		}
+
+		if (empty($outputs))
+		{
+			$this->outputs = $outputs;
+		}
+
+		else
+		{
+			foreach ($outputs as $output)
+			{
+				$this->addOutput($output);
+			}
+		}
 	}
 
 	/**
