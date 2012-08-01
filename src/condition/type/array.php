@@ -19,7 +19,7 @@ class PNConditionTypeArray implements PNConditionType
 	/**
 	 * Evaluate the condition.
 	 *
-	 * @param   mixed  $var  The variable value.
+	 * @param   mixed  $var  A variable value.
 	 *
 	 * @return  boolean  True if the condition holds, false otherwise.
 	 *

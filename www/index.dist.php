@@ -12,7 +12,7 @@ require_once JPATH_ROOT . '/includes/bootstrap.php';
 
 // Example
 // Create a petri net named "test".
-$net = PNElementPetrinet::getInstance('test');
+/*$net = PNElementPetrinet::getInstance('test');
 
 // Create the places
 
@@ -52,4 +52,4 @@ $engine->start();
 var_dump($engine->getState());
 
 // One token has been produced in the stop place and the other places are empty.
-var_dump($stop->getTokenCount());
+var_dump($stop->getTokenCount());*/

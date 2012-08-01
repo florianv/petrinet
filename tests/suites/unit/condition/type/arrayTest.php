@@ -47,7 +47,6 @@ class PNConditionTypeArrayTest extends TestCase
 	{
 		return array(
 			array(array(), true),
-			array(array(1), true),
 			array('3', false)
 		);
 	}

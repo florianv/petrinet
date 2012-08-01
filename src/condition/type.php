@@ -8,7 +8,7 @@
  */
 
 /**
- * Interface for type conditions on variable values.
+ * Interface for type conditions.
  *
  * @package     Petrinet
  * @subpackage  Condition
@@ -19,7 +19,7 @@ interface PNConditionType
 	/**
 	 * Evaluate the condition.
 	 *
-	 * @param   mixed  $var  The variable value.
+	 * @param   mixed  $var  A variable value.
 	 *
 	 * @return  boolean  True if the condition holds, false otherwise.
 	 *

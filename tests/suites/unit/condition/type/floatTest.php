@@ -47,7 +47,6 @@ class PNConditionTypeFloatTest extends TestCase
 	{
 		return array(
 			array(3.0, true),
-			array(2.2, true),
 			array('2.2', false)
 		);
 	}

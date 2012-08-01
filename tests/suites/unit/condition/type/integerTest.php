@@ -47,7 +47,6 @@ class PNConditionTypeIntegerTest extends TestCase
 	{
 		return array(
 			array(3, true),
-			array(2.2, false),
 			array('2.2', false)
 		);
 	}

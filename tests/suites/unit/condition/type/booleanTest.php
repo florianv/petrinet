@@ -47,7 +47,6 @@ class PNConditionTypeBooleanTest extends TestCase
 	{
 		return array(
 			array(true, true),
-			array(false, true),
 			array(0, false)
 		);
 	}

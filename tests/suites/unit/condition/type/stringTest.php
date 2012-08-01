@@ -46,7 +46,6 @@ class PNConditionTypeStringTest extends TestCase
 	public function provider()
 	{
 		return array(
-			array('3', true),
 			array('test', true),
 			array(22, false)
 		);
