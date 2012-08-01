@@ -1,23 +1,23 @@
 <?php
 /**
  * @package     Tests.Unit
- * @subpackage  Operator
+ * @subpackage  Type
  *
  * @copyright   Copyright (C) 2012 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
 /**
- * Test class for PNElementOperatorLt.
+ * Test class for PNConditionTypeString.
  *
  * @package     Tests.Unit
- * @subpackage  Operator
+ * @subpackage  Type
  * @since       1.0
  */
-class PNElementOperatorLtTest extends TestCase
+class PNConditionTypeStringTest extends TestCase
 {
 	/**
-	 * @var    PNElementOperatorLt  A PNElementOperatorLt instance.
+	 * @var    PNConditionTypeString  A PNConditionTypeString instance.
 	 * @since  1.0
 	 */
 	protected $object;
@@ -33,39 +33,40 @@ class PNElementOperatorLtTest extends TestCase
 	{
 		parent::setUp();
 
-		$this->object = new PNElementOperatorLt;
+		$this->object = new PNConditionTypeString;
 	}
 
 	/**
 	 * Data provider for the execute method.
 	 *
 	 * @return  array  The data.
+	 *
+	 * @since   1.0
 	 */
 	public function provider()
 	{
 		return array(
-			array(3.2, 3 ,false),
-			array('2.8', 3, true),
-			array('3', '3', false),
+			array('3', true),
+			array('test', true),
+			array(22, false)
 		);
 	}
 
 	/**
-	 * Execute the Comparison.
+	 * Evaluate the condition.
 	 *
-	 * @param   mixed    $leftValue   The left value.
-	 * @param   mixed    $rightValue  The right value.
-	 * @param   boolean  $expected    The expected return value.
+	 * @param   mixed    $var       The variable value.
+	 * @param   boolean  $expected  The expected return value.
 	 *
 	 * @return  void
 	 *
 	 * @dataProvider  provider
-	 * @covers        PNElementOperatorLt::execute
+	 * @covers        PNConditionTypeString::execute
 	 * @since         1.0
 	 */
-	public function testExecute($leftValue, $rightValue, $expected)
+	public function testExecute($var, $expected)
 	{
-		$return = $this->object->execute($leftValue, $rightValue);
+		$return = $this->object->execute($var);
 
 		$this->assertEquals($expected, $return);
 	}

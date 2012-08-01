@@ -1,23 +1,23 @@
 <?php
 /**
  * @package     Petrinet
- * @subpackage  Operator
+ * @subpackage  Comparison
  *
  * @copyright   Copyright (C) 2012 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
 /**
- * Comparison Operator checking if leftValue is less than rightValue.
+ * Comparison condition checking if leftValue is greater than rightValue.
  *
  * @package     Petrinet
- * @subpackage  Operator
+ * @subpackage  Comparison
  * @since       1.0
  */
-class PNElementOperatorLt implements PNElementOperator
+class PNConditionComparisonGt implements PNConditionComparison
 {
 	/**
-	 * Execute the Comparison.
+	 * Evaluate the condition.
 	 *
 	 * @param   mixed  $leftValue   The left value.
 	 * @param   mixed  $rightValue  The right value.
@@ -28,6 +28,6 @@ class PNElementOperatorLt implements PNElementOperator
 	 */
 	public function execute($leftValue, $rightValue)
 	{
-		return $leftValue < $rightValue;
+		return $leftValue > $rightValue;
 	}
 }

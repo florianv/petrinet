@@ -1,23 +1,23 @@
 <?php
 /**
  * @package     Tests.Unit
- * @subpackage  Operator
+ * @subpackage  Type
  *
  * @copyright   Copyright (C) 2012 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
 /**
- * Test class for PNElementOperatorEq.
+ * Test class for PNConditionTypeInteger.
  *
  * @package     Tests.Unit
- * @subpackage  Operator
+ * @subpackage  Type
  * @since       1.0
  */
-class PNElementOperatorEqTest extends TestCase
+class PNConditionTypeIntegerTest extends TestCase
 {
 	/**
-	 * @var    PNElementOperatorEq  A PNElementOperatorEq instance.
+	 * @var    PNConditionTypeInteger  A PNConditionTypeInteger instance.
 	 * @since  1.0
 	 */
 	protected $object;
@@ -33,39 +33,40 @@ class PNElementOperatorEqTest extends TestCase
 	{
 		parent::setUp();
 
-		$this->object = new PNElementOperatorEq;
+		$this->object = new PNConditionTypeInteger;
 	}
 
 	/**
 	 * Data provider for the execute method.
 	 *
 	 * @return  array  The data.
+	 *
+	 * @since   1.0
 	 */
 	public function provider()
 	{
 		return array(
-			array(3, 3 ,true),
-			array(3, 3.2, false),
-			array('3', 3, true)
+			array(3, true),
+			array(2.2, false),
+			array('2.2', false)
 		);
 	}
 
 	/**
-	 * Execute the Comparison.
+	 * Evaluate the condition.
 	 *
-	 * @param   mixed    $leftValue   The left value.
-	 * @param   mixed    $rightValue  The right value.
-	 * @param   boolean  $expected    The expected return value.
+	 * @param   mixed    $var       The variable value.
+	 * @param   boolean  $expected  The expected return value.
 	 *
 	 * @return  void
 	 *
 	 * @dataProvider  provider
-	 * @covers        PNElementOperatorEq::execute
+	 * @covers        PNConditionTypeInteger::execute
 	 * @since         1.0
 	 */
-	public function testExecute($leftValue, $rightValue, $expected)
+	public function testExecute($var, $expected)
 	{
-		$return = $this->object->execute($leftValue, $rightValue);
+		$return = $this->object->execute($var);
 
 		$this->assertEquals($expected, $return);
 	}

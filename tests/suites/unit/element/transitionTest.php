@@ -260,7 +260,7 @@ class PNElementTransitionTest extends TestCase
 	{
 		// Generate a guarded transition where the guard returns false.
 		$var = new PNElementVariable('test', 'test');
-		$op = new PNElementOperatorEq;
+		$op = new PNConditionComparisonEq;
 		$guard = new PNElementGuard($op, $var, 8);
 
 		$this->object->setGuard($guard);

@@ -22,10 +22,10 @@
 class PNElementGuard
 {
 	/**
-	 * @var    PNElementOperator  The Comparison Operator.
+	 * @var    PNConditionComparison  A comparison condition.
 	 * @since  1.0
 	 */
-	protected $operator;
+	protected $condition;
 
 	/**
 	 * @var    PNElementVariable  The Variable.
@@ -42,31 +42,31 @@ class PNElementGuard
 	/**
 	 * Constructor.
 	 *
-	 * @param   PNElementOperator  $operator  The Comparison Operator.
-	 * @param   PNElementVariable  $variable  The Variable.
-	 * @param   mixed              $value     The Value to compare against.
+	 * @param   PNConditionComparison  $condition  The Comparison condition.
+	 * @param   PNElementVariable      $variable   The Variable.
+	 * @param   mixed                  $value      The Value to compare against.
 	 *
 	 * @since   1.0
 	 */
-	public function __construct(PNElementOperator $operator = null, PNElementVariable $variable = null, $value = null)
+	public function __construct(PNConditionComparison $condition = null, PNElementVariable $variable = null, $value = null)
 	{
-		$this->operator = $operator;
+		$this->condition = $condition;
 		$this->variable = $variable;
 		$this->value = $value;
 	}
 
 	/**
-	 * Set an operator for this Guard.
+	 * Set a Condition for this Guard.
 	 *
-	 * @param   PNElementOperator  $operator  The Comparison Operator.
+	 * @param   PNConditionComparison  $condition  The Comparison condition.
 	 *
 	 * @return  PNElementGuard  This method is chainable.
 	 *
 	 * @since   1.0
 	 */
-	public function setOperator(PNElementOperator $operator)
+	public function setCondition(PNConditionComparison $condition)
 	{
-		$this->operator = $operator;
+		$this->condition = $condition;
 
 		return $this;
 	}
@@ -120,9 +120,9 @@ class PNElementGuard
 	 */
 	public function assertIsLoaded()
 	{
-		if (is_null($this->operator) || is_null($this->variable) || is_null($this->value))
+		if (is_null($this->condition) || is_null($this->variable) || is_null($this->value))
 		{
-			throw new RuntimeException('The Guard is not loaded : Null variable, operator or Value.');
+			throw new RuntimeException('The Guard is not loaded : Null variable, condition or Value.');
 		}
 	}
 
@@ -139,6 +139,6 @@ class PNElementGuard
 		$this->assertIsLoaded();
 
 		// Execute the Condition.
-		return $this->operator->execute($this->variable->getValue(), $this->value);
+		return $this->condition->execute($this->variable->getValue(), $this->value);
 	}
 }

@@ -1,23 +1,23 @@
 <?php
 /**
  * @package     Tests.Unit
- * @subpackage  Operator
+ * @subpackage  Type
  *
  * @copyright   Copyright (C) 2012 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
 /**
- * Test class for PNElementOperatorGt.
+ * Test class for PNConditionTypeBoolean.
  *
  * @package     Tests.Unit
- * @subpackage  Operator
+ * @subpackage  Type
  * @since       1.0
  */
-class PNElementOperatorGtTest extends TestCase
+class PNConditionTypeBooleanTest extends TestCase
 {
 	/**
-	 * @var    PNElementOperatorGt  A PNElementOperatorGt instance.
+	 * @var    PNConditionTypeBoolean  A PNConditionTypeBoolean instance.
 	 * @since  1.0
 	 */
 	protected $object;
@@ -33,39 +33,40 @@ class PNElementOperatorGtTest extends TestCase
 	{
 		parent::setUp();
 
-		$this->object = new PNElementOperatorGt;
+		$this->object = new PNConditionTypeBoolean;
 	}
 
 	/**
 	 * Data provider for the execute method.
 	 *
 	 * @return  array  The data.
+	 *
+	 * @since   1.0
 	 */
 	public function provider()
 	{
 		return array(
-			array(3.2, 3 ,true),
-			array('2.8', 3, false),
-			array('3', '3', false),
+			array(true, true),
+			array(false, true),
+			array(0, false)
 		);
 	}
 
 	/**
-	 * Execute the Comparison.
+	 * Evaluate the condition.
 	 *
-	 * @param   mixed    $leftValue   The left value.
-	 * @param   mixed    $rightValue  The right value.
-	 * @param   boolean  $expected    The expected return value.
+	 * @param   mixed    $var       The variable value.
+	 * @param   boolean  $expected  The expected return value.
 	 *
 	 * @return  void
 	 *
 	 * @dataProvider  provider
-	 * @covers        PNElementOperatorGt::execute
+	 * @covers        PNConditionTypeBoolean::execute
 	 * @since         1.0
 	 */
-	public function testExecute($leftValue, $rightValue, $expected)
+	public function testExecute($var, $expected)
 	{
-		$return = $this->object->execute($leftValue, $rightValue);
+		$return = $this->object->execute($var);
 
 		$this->assertEquals($expected, $return);
 	}

@@ -1,23 +1,23 @@
 <?php
 /**
  * @package     Tests.Unit
- * @subpackage  Operator
+ * @subpackage  Comparison
  *
  * @copyright   Copyright (C) 2012 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
 /**
- * Test class for PNElementOperatorGte.
+ * Test class for PNConditionComparisonNeq.
  *
  * @package     Tests.Unit
- * @subpackage  Operator
+ * @subpackage  Comparison
  * @since       1.0
  */
-class PNElementOperatorGteTest extends TestCase
+class PNConditionComparisonNeqTest extends TestCase
 {
 	/**
-	 * @var    PNElementOperatorGte  A PNElementOperatorGte instance.
+	 * @var    PNConditionComparisonNeq  A PNConditionComparisonNeq instance.
 	 * @since  1.0
 	 */
 	protected $object;
@@ -33,25 +33,27 @@ class PNElementOperatorGteTest extends TestCase
 	{
 		parent::setUp();
 
-		$this->object = new PNElementOperatorGte;
+		$this->object = new PNConditionComparisonNeq;
 	}
 
 	/**
 	 * Data provider for the execute method.
 	 *
 	 * @return  array  The data.
+	 *
+	 * @since   1.0
 	 */
 	public function provider()
 	{
 		return array(
-			array(3.2, 3 ,true),
-			array('2.8', 3, false),
-			array('3', '3', true),
+			array(3, 3 ,false),
+			array(3, 3.2, true),
+			array('3', 3, false)
 		);
 	}
 
 	/**
-	 * Execute the Comparison.
+	 * Evaluate the condition.
 	 *
 	 * @param   mixed    $leftValue   The left value.
 	 * @param   mixed    $rightValue  The right value.
@@ -60,7 +62,7 @@ class PNElementOperatorGteTest extends TestCase
 	 * @return  void
 	 *
 	 * @dataProvider  provider
-	 * @covers        PNElementOperatorGte::execute
+	 * @covers        PNConditionComparisonNeq::execute
 	 * @since         1.0
 	 */
 	public function testExecute($leftValue, $rightValue, $expected)

@@ -46,43 +46,43 @@ class PNElementGuardTest extends TestCase
 	 */
 	public function test__construct()
 	{
-		$operator = new PNElementOperatorEq;
+		$condition = new PNConditionComparisonEq;
 		$variable = new PNElementVariable('test', 8);
 
-		$guard = new PNElementGuard($operator, $variable, 8);
+		$guard = new PNElementGuard($condition, $variable, 8);
 
-		$op = TestReflection::getValue($guard, 'operator');
+		$op = TestReflection::getValue($guard, 'condition');
 		$var = TestReflection::getValue($guard, 'variable');
 		$val = TestReflection::getValue($guard, 'value');
 
-		$this->assertEquals($op, $operator);
+		$this->assertEquals($op, $condition);
 		$this->assertEquals($var, $variable);
 		$this->assertEquals($val, 8);
 	}
 
 	/**
-	 * Set an operator for this Guard.
+	 * Set a Condition for this Guard.
 	 *
 	 * @return  void
 	 *
-	 * @covers  PNElementGuard::setOperator
+	 * @covers  PNElementGuard::setCondition
 	 * @since   1.0
 	 */
-	public function testSetOperator()
+	public function testSetCondition()
 	{
-		// Try a valid operator.
-		$operator = new PNElementOperatorGt;
-		$this->object->setOperator($operator);
+		// Try a valid comparison condition.
+		$condition = new PNConditionComparisonGt;
+		$this->object->setCondition($condition);
 
-		$this->assertEquals(TestReflection::getValue($this->object, 'operator'), $operator);
+		$this->assertEquals(TestReflection::getValue($this->object, 'condition'), $condition);
 	}
 
 	/**
-	 * Tests the error thrown by the PNElementGuard::setOperator method.
+	 * Tests the error thrown by the PNElementGuard::setCondition method.
 	 *
 	 * @return  void
 	 *
-	 * @covers  PNElementGuard::setOperator
+	 * @covers  PNElementGuard::setCondition
 	 *
 	 * @since   1.0
 	 *
@@ -90,7 +90,7 @@ class PNElementGuardTest extends TestCase
 	 */
 	public function testSetOperatorException()
 	{
-		$this->object->setOperator(new stdClass);
+		$this->object->setCondition(new stdClass);
 	}
 
 	/**
@@ -188,7 +188,7 @@ class PNElementGuardTest extends TestCase
 		$this->assertTrue($caught);
 
 		// Add an operator.
-		TestReflection::setValue($this->object, 'operator', new PNElementOperatorEq);
+		TestReflection::setValue($this->object, 'condition', new PNConditionComparisonEq);
 
 		$caught = false;
 
@@ -239,15 +239,15 @@ class PNElementGuardTest extends TestCase
 		// Create a random variable.
 		$variable = new PNElementVariable('test', 'test');
 
-		// Create a mocked operator.
-		$operator  = $this->getMock('PNElementOperator');
+		// Create a mocked condition.
+		$condition  = $this->getMock('PNConditionComparison');
 
-		$operator->expects($this->once())
+		$condition->expects($this->once())
 			->method('execute')
 			->with('test', 'test');
 
 		// Set the guard operator, variable and value.
-		TestReflection::setValue($this->object, 'operator', $operator);
+		TestReflection::setValue($this->object, 'condition', $condition);
 		TestReflection::setValue($this->object, 'variable', $variable);
 		TestReflection::setValue($this->object, 'value', 'test');
 
