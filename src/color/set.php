@@ -21,7 +21,7 @@
  * @subpackage  Color
  * @since       1.0
  */
-class PNColorSet
+class PNColorSet implements Countable
 {
 	/**
 	 * @var    array  A tuple of types.
@@ -158,5 +158,17 @@ class PNColorSet
 		}
 
 		return true;
+	}
+
+	/**
+	 * Get the set size.
+	 *
+	 * @return  integer  The number of types.
+	 *
+	 * @since   1.0
+	 */
+	public function count()
+	{
+		return count($this->type);
 	}
 }

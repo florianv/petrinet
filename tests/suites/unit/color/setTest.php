@@ -175,4 +175,18 @@ class PNColorSetTest extends TestCase
 		$set = new PNColorSet(array('integer', 'array', 'string', 'string', 'boolean'));
 		$this->assertTrue($set->matches($color));
 	}
+
+	/**
+	 * Get the set size.
+	 *
+	 * @return  integer  void
+	 *
+	 * @covers  PNColorSet::count
+	 * @since   1.0
+	 */
+	public function testCount()
+	{
+		TestReflection::setValue($this->object, 'type', array(1, 2, 3));
+		$this->assertEquals(3, count($this->object));
+	}
 }

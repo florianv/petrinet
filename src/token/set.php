@@ -176,6 +176,13 @@ class PNTokenSet implements Countable, IteratorAggregate
 	 */
 	public function count()
 	{
-		return count($this->tokens);
+		$count = 0;
+
+		foreach ($this->tokens as $token)
+		{
+			$count += count($token);
+		}
+
+		return $count;
 	}
 }

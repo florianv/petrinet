@@ -218,7 +218,15 @@ class PNTokenSetTest extends TestCase
 	 */
 	public function testCount()
 	{
-		TestReflection::setValue($this->object, 'tokens', array(1, 2, 3));
-		$this->assertEquals(3, count($this->object));
+		$color = new PNColor(array(8, 3));
+		$token = new PNToken($color);
+		$token1 = new PNToken;
+
+		$this->object->addToken($token)
+			->addToken($token)
+			->addToken($token1)
+			->addToken($token1);
+
+		$this->assertEquals(4, count($this->object));
 	}
 }
