@@ -106,12 +106,14 @@ abstract class PNArc
 	public function setExpression(PNArcExpression $expression)
 	{
 		$this->expression = $expression;
+
+		return $this;
 	}
 
 	/**
 	 * Get the arc expression.
 	 *
-	 * @return  integer  The Arc's weight.
+	 * @return  PNArcExpression  The Arc's expression.
 	 *
 	 * @since   1.0
 	 */
