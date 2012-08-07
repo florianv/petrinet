@@ -106,4 +106,35 @@ class PNArcTest extends TestCase
 		TestReflection::setValue($this->object, 'weight', 8);
 		$this->assertEquals(8, $this->object->getWeight());
 	}
+
+	/**
+	 * Set the arc expression.
+	 *
+	 * @return  void
+	 *
+	 * @covers  PNArc::setExpression
+	 * @since   1.0
+	 */
+	public function testSetExpression()
+	{
+		$ex = $this->getMockForAbstractClass('PNArcExpression');
+
+		$this->object->setExpression($ex);
+
+		$this->assertEquals($ex, TestReflection::getValue($this->object, 'expression'));
+	}
+
+	/**
+	 * Get the arc expression.
+	 *
+	 * @return  void
+	 *
+	 * @covers  PNArc::getExpression
+	 * @since   1.0
+	 */
+	public function testGetExpression()
+	{
+		TestReflection::setValue($this->object, 'expression', true);
+		$this->assertTrue(TestReflection::getValue($this->object, 'expression'));
+	}
 }

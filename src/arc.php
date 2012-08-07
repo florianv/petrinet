@@ -29,6 +29,12 @@ abstract class PNArc
 	protected $output;
 
 	/**
+	 * @var    PNArcExpression  The arc expression.
+	 * @since  1.0
+	 */
+	protected $expression;
+
+	/**
 	 * This value specifies how many tokens can transit through this Arc.
 	 *
 	 * @var    integer  The weight of this Arc.
@@ -86,5 +92,31 @@ abstract class PNArc
 	public function getWeight()
 	{
 		return $this->weight;
+	}
+
+	/**
+	 * Set the arc expression.
+	 *
+	 * @param   PNArcExpression  $expression  The Arc's expression.
+	 *
+	 * @return  PNArc  This method is chainable.
+	 *
+	 * @since   1.0
+	 */
+	public function setExpression(PNArcExpression $expression)
+	{
+		$this->expression = $expression;
+	}
+
+	/**
+	 * Get the arc expression.
+	 *
+	 * @return  integer  The Arc's weight.
+	 *
+	 * @since   1.0
+	 */
+	public function getExpression()
+	{
+		return $this->expression;
 	}
 }
