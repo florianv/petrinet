@@ -1,7 +1,7 @@
 <?php
 /**
  * @package     Petrinet
- * @subpackage  Element
+ * @subpackage  Petrinet
  *
  * @copyright   Copyright (C) 2012 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
@@ -11,7 +11,7 @@
  * Class for Petri Net Places.
  *
  * @package     Petrinet
- * @subpackage  Element
+ * @subpackage  Petrinet
  * @since       1.0
  */
 class PNPlace implements PNBaseVisitable
@@ -38,8 +38,8 @@ class PNPlace implements PNBaseVisitable
 	 * Constructor.
 	 *
 	 * @param   PNSet  $tokenSet  A bag of tokens to add to this place.
-	 * @param   array         $inputs    An array of input arcs of this place (PNArcOutput).
-	 * @param   array         $outputs   An array of output arcs of this place (PNArcInput).
+	 * @param   array  $inputs    An array of input arcs of this place (PNArcOutput).
+	 * @param   array  $outputs   An array of output arcs of this place (PNArcInput).
 	 *
 	 * @since   1.0
 	 */

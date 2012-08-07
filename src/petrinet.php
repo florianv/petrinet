@@ -1,7 +1,7 @@
 <?php
 /**
  * @package     Petrinet
- * @subpackage  Element
+ * @subpackage  Petrinet
  *
  * @copyright   Copyright (C) 2012 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
@@ -11,7 +11,7 @@
  * Class for Petri Nets.
  *
  * @package     Petrinet
- * @subpackage  Element
+ * @subpackage  Petrinet
  * @since       1.0
  */
 class PNPetrinet implements PNBaseVisitable

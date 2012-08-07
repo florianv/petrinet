@@ -17,7 +17,7 @@
 interface PNConditionComparison
 {
 	/**
-	 * Execute the condition.
+	 * Evaluate the condition.
 	 *
 	 * @param   mixed  $leftValue   The left value.
 	 * @param   mixed  $rightValue  The right value.

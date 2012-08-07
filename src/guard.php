@@ -1,7 +1,7 @@
 <?php
 /**
  * @package     Petrinet
- * @subpackage  Element
+ * @subpackage  Petrinet
  *
  * @copyright   Copyright (C) 2012 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
@@ -16,7 +16,7 @@
  * Example : var_1 >= 3
  *
  * @package     Petrinet
- * @subpackage  Element
+ * @subpackage  Petrinet
  * @since       1.0
  */
 class PNGuard
@@ -43,7 +43,7 @@ class PNGuard
 	 * Constructor.
 	 *
 	 * @param   PNConditionComparison  $condition  The Comparison condition.
-	 * @param   PNVariable      $variable   The Variable.
+	 * @param   PNVariable             $variable   The Variable.
 	 * @param   mixed                  $value      The Value to compare against.
 	 *
 	 * @since   1.0
