@@ -14,10 +14,10 @@
  * @subpackage  Element
  * @since       1.0
  */
-class PNElementPetrinet implements PNBaseVisitable
+class PNPetrinet implements PNBaseVisitable
 {
 	/**
-	 * @var    PNElementPetrinet  The Petri Net instances.
+	 * @var    PNPetrinet  The Petri Net instances.
 	 * @since  1.0
 	 */
 	protected static $instances = array();
@@ -69,7 +69,7 @@ class PNElementPetrinet implements PNBaseVisitable
 	 *
 	 * @param   string  $name  The Petri Net name.
 	 *
-	 * @return  PNElementPetrinet
+	 * @return  PNPetrinet
 	 *
 	 * @since   1.0
 	 */
@@ -77,7 +77,7 @@ class PNElementPetrinet implements PNBaseVisitable
 	{
 		if (empty(self::$instances[$name]))
 		{
-			self::$instances[$name] = new PNElementPetrinet($name);
+			self::$instances[$name] = new PNPetrinet($name);
 		}
 
 		return self::$instances[$name];
@@ -86,13 +86,13 @@ class PNElementPetrinet implements PNBaseVisitable
 	/**
 	 * Create a new Place.
 	 *
-	 * @return  PNElementPlace  The Place.
+	 * @return  PNPlace  The Place.
 	 *
 	 * @since   1.0
 	 */
 	public function createPlace()
 	{
-		$place = new PNElementPlace;
+		$place = new PNPlace;
 
 		$this->places[] = $place;
 
@@ -102,13 +102,13 @@ class PNElementPetrinet implements PNBaseVisitable
 	/**
 	 * Create a new Transition.
 	 *
-	 * @return  PNElementTransition  The Transition.
+	 * @return  PNTransition  The Transition.
 	 *
 	 * @since   1.0
 	 */
 	public function createTransition()
 	{
-		$transition = new PNElementTransition;
+		$transition = new PNTransition;
 
 		$this->transitions[] = $transition;
 
@@ -131,9 +131,9 @@ class PNElementPetrinet implements PNBaseVisitable
 	public function connect($from, $to, $weight = 1)
 	{
 		// Input Arc.
-		if ($from instanceof PNElementPlace && $to instanceof PNElementTransition)
+		if ($from instanceof PNPlace && $to instanceof PNTransition)
 		{
-			$arc = new PNElementArcInput($from, $to);
+			$arc = new PNArcInput($from, $to);
 
 			$arc->setWeight($weight);
 
@@ -141,9 +141,9 @@ class PNElementPetrinet implements PNBaseVisitable
 		}
 
 		// Output Arc.
-		elseif ($from instanceof PNElementTransition && $to instanceof PNElementPlace)
+		elseif ($from instanceof PNTransition && $to instanceof PNPlace)
 		{
-			$arc = new PNElementArcOutput($from, $to);
+			$arc = new PNArcOutput($from, $to);
 
 			$arc->setWeight($weight);
 

@@ -14,7 +14,7 @@
  * @subpackage  Element
  * @since       1.0
  */
-class PNElementSet implements Countable
+class PNSet implements Countable
 {
 	/**
 	 * @var    array  The elements in this set.
@@ -27,7 +27,7 @@ class PNElementSet implements Countable
 	 *
 	 * @param   object  $element  The element.
 	 *
-	 * @return  PNElementSet  This method is chainable.
+	 * @return  PNSet  This method is chainable.
 	 *
 	 * @since   1.0
 	 */
@@ -43,7 +43,7 @@ class PNElementSet implements Countable
 	 *
 	 * @param   array  $elements  An array of elements.
 	 *
-	 * @return  PNElementSet  This method is chainable.
+	 * @return  PNSet  This method is chainable.
 	 *
 	 * @since   1.0
 	 */
@@ -59,7 +59,7 @@ class PNElementSet implements Countable
 	 *
 	 * @param   object  $element  The element.
 	 *
-	 * @return  PNElementSet  This method is chainable.
+	 * @return  PNSet  This method is chainable.
 	 *
 	 * @since   1.0
 	 */

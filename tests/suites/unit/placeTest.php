@@ -8,16 +8,16 @@
  */
 
 /**
- * Test class for PNElementPlace.
+ * Test class for PNPlace.
  *
  * @package     Tests.Unit
  * @subpackage  Element
  * @since       1.0
  */
-class PNElementPlaceTest extends TestCase
+class PNPlaceTest extends TestCase
 {
 	/**
-	 * @var    PNElementPlace  A PNElementPlace instance.
+	 * @var    PNPlace  A PNPlace instance.
 	 * @since  1.0
 	 */
 	protected $object;
@@ -33,10 +33,10 @@ class PNElementPlaceTest extends TestCase
 	{
 		parent::setUp();
 
-		$this->object = new PNElementPlace;
+		$this->object = new PNPlace;
 
 		// Mock the token set.
-		$setMock = $this->getMock('PNElementSet');
+		$setMock = $this->getMock('PNSet');
 		TestReflection::setValue($this->object, 'tokenSet', $setMock);
 	}
 
@@ -45,24 +45,24 @@ class PNElementPlaceTest extends TestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers  PNElementPlace::__construct
+	 * @covers  PNPlace::__construct
 	 * @since   1.0
 	 */
 	public function test__construct()
 	{
 		// Test without param.
-		$place = new PNElementPlace;
+		$place = new PNPlace;
 
-		$this->assertInstanceOf('PNElementSet', TestReflection::getValue($place, 'tokenSet'));
+		$this->assertInstanceOf('PNSet', TestReflection::getValue($place, 'tokenSet'));
 		$this->assertEmpty(TestReflection::getValue($place, 'inputs'));
 		$this->assertEmpty(TestReflection::getValue($place, 'outputs'));
 
 		// Test with params.
-		$set = new PNElementSet;
-		$inputs = array(new PNElementArcOutput, new PNElementArcOutput);
-		$outputs = array(new PNElementArcInput, new PNElementArcInput);
+		$set = new PNSet;
+		$inputs = array(new PNArcOutput, new PNArcOutput);
+		$outputs = array(new PNArcInput, new PNArcInput);
 
-		$place = new PNElementPlace($set, $inputs, $outputs);
+		$place = new PNPlace($set, $inputs, $outputs);
 
 		$this->assertEquals($set, TestReflection::getValue($place, 'tokenSet'));
 		$this->assertEquals($inputs, TestReflection::getValue($place, 'inputs'));
@@ -74,13 +74,13 @@ class PNElementPlaceTest extends TestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers  PNElementPlace::addInput
+	 * @covers  PNPlace::addInput
 	 * @since   1.0
 	 */
 	public function testAddInput()
 	{
 		// Add an input (output) arc to this place.
-		$arc = new PNElementArcOutput;
+		$arc = new PNArcOutput;
 		$this->object->addInput($arc);
 		$input = TestReflection::getValue($this->object, 'inputs');
 
@@ -95,11 +95,11 @@ class PNElementPlaceTest extends TestCase
 	}
 
 	/**
-	 * Tests the error thrown by the PNElementPlace::addInput method.
+	 * Tests the error thrown by the PNPlace::addInput method.
 	 *
 	 * @return  void
 	 *
-	 * @covers  PNElementPlace::addInput
+	 * @covers  PNPlace::addInput
 	 * @since   1.0
 	 * @expectedException PHPUnit_Framework_Error
 	 */
@@ -113,7 +113,7 @@ class PNElementPlaceTest extends TestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers  PNElementPlace::getInputs
+	 * @covers  PNPlace::getInputs
 	 * @since   1.0
 	 */
 	public function testGetInputs()
@@ -138,13 +138,13 @@ class PNElementPlaceTest extends TestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers  PNElementPlace::addOutput
+	 * @covers  PNPlace::addOutput
 	 * @since   1.0
 	 */
 	public function testAddOutput()
 	{
 		// Add an output (input) arc to this place.
-		$arc = new PNElementArcInput;
+		$arc = new PNArcInput;
 		$this->object->addOutput($arc);
 		$output = TestReflection::getValue($this->object, 'outputs');
 
@@ -159,11 +159,11 @@ class PNElementPlaceTest extends TestCase
 	}
 
 	/**
-	 * Tests the exception thrown by the PNElementPlace::addOutput method.
+	 * Tests the exception thrown by the PNPlace::addOutput method.
 	 *
 	 * @return  void
 	 *
-	 * @covers  PNElementPlace::addOutput
+	 * @covers  PNPlace::addOutput
 	 * @since   1.0
 	 * @expectedException PHPUnit_Framework_Error
 	 */
@@ -177,7 +177,7 @@ class PNElementPlaceTest extends TestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers  PNElementPlace::getOutputs
+	 * @covers  PNPlace::getOutputs
 	 * @since   1.0
 	 */
 	public function testGetOutputs()
@@ -202,7 +202,7 @@ class PNElementPlaceTest extends TestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers  PNElementPlace::addToken
+	 * @covers  PNPlace::addToken
 	 * @since   1.0
 	 */
 	public function testAddToken()
@@ -221,7 +221,7 @@ class PNElementPlaceTest extends TestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers  PNElementPlace::addTokens
+	 * @covers  PNPlace::addTokens
 	 * @since   1.0
 	 */
 	public function testAddTokens()
@@ -240,7 +240,7 @@ class PNElementPlaceTest extends TestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers  PNElementPlace::removeToken
+	 * @covers  PNPlace::removeToken
 	 * @since   1.0
 	 */
 	public function testRemoveToken()
@@ -259,7 +259,7 @@ class PNElementPlaceTest extends TestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers  PNElementPlace::clearTokens
+	 * @covers  PNPlace::clearTokens
 	 * @since   1.0
 	 */
 	public function testClearTokens()
@@ -278,7 +278,7 @@ class PNElementPlaceTest extends TestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers  PNElementPlace::getTokens
+	 * @covers  PNPlace::getTokens
 	 * @since   1.0
 	 */
 	public function testGetTokens()
@@ -297,7 +297,7 @@ class PNElementPlaceTest extends TestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers  PNElementPlace::getTokenCount
+	 * @covers  PNPlace::getTokenCount
 	 * @since   1.0
 	 */
 	public function testGetTokenCount()
@@ -317,7 +317,7 @@ class PNElementPlaceTest extends TestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers  PNElementPlace::isStart
+	 * @covers  PNPlace::isStart
 	 * @since   1.0
 	 */
 	public function testIsStart()
@@ -335,7 +335,7 @@ class PNElementPlaceTest extends TestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers  PNElementPlace::isEnd
+	 * @covers  PNPlace::isEnd
 	 * @since   1.0
 	 */
 	public function testIsEnd()
@@ -352,7 +352,7 @@ class PNElementPlaceTest extends TestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers  PNElementPlace::accept
+	 * @covers  PNPlace::accept
 	 * @since   1.0
 	 */
 	public function testAccept()

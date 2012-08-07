@@ -1,7 +1,7 @@
 <?php
 /**
  * @package     Petrinet
- * @subpackage  Element
+ * @subpackage  ...
  *
  * @copyright   Copyright (C) 2012 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
@@ -11,10 +11,10 @@
  * Base Class for Petri Net Arcs.
  *
  * @package     Petrinet
- * @subpackage  Element
+ * @subpackage  ...
  * @since       1.0
  */
-abstract class PNElementArc
+abstract class PNArc
 {
 	/**
 	 * @var    object  The input Place or Transition of this Arc.
@@ -65,7 +65,7 @@ abstract class PNElementArc
 	 *
 	 * @param   integer  $weight  The Arc's weight.
 	 *
-	 * @return  PNElementArc  This method is chainable.
+	 * @return  PNArc  This method is chainable.
 	 *
 	 * @since   1.0
 	 */

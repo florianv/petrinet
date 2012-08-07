@@ -8,16 +8,16 @@
  */
 
 /**
- * Test class for PNElementSet.
+ * Test class for PNSet.
  *
  * @package     Tests.Unit
  * @subpackage  Element
  * @since       1.0
  */
-class PNElementSetTest extends TestCase
+class PNSetTest extends TestCase
 {
 	/**
-	 * @var    PNElementSet  A PNElementSet instance.
+	 * @var    PNSet  A PNSet instance.
 	 * @since  1.0
 	 */
 	protected $object;
@@ -33,7 +33,7 @@ class PNElementSetTest extends TestCase
 	{
 		parent::setUp();
 
-		$this->object = new PNElementSet;
+		$this->object = new PNSet;
 	}
 
 	/**
@@ -41,7 +41,7 @@ class PNElementSetTest extends TestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers  PNElementSet::add
+	 * @covers  PNSet::add
 	 * @since   1.0
 	 */
 	public function testAdd()
@@ -64,7 +64,7 @@ class PNElementSetTest extends TestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers  PNElementSet::addMultiple
+	 * @covers  PNSet::addMultiple
 	 * @since   1.0
 	 */
 	public function testAddMultiple()
@@ -101,7 +101,7 @@ class PNElementSetTest extends TestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers  PNElementSet::remove
+	 * @covers  PNSet::remove
 	 * @since   1.0
 	 */
 	public function testRemove()
@@ -129,7 +129,7 @@ class PNElementSetTest extends TestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers  PNElementSet::clear
+	 * @covers  PNSet::clear
 	 * @since   1.0
 	 */
 	public function testClear()
@@ -157,7 +157,7 @@ class PNElementSetTest extends TestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers  PNElementSet::count
+	 * @covers  PNSet::count
 	 * @since   1.0
 	 */
 	public function testCount()
@@ -176,7 +176,7 @@ class PNElementSetTest extends TestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers  PNElementSet::getElements
+	 * @covers  PNSet::getElements
 	 * @since   1.0
 	 */
 	public function testGetElements()

@@ -14,7 +14,7 @@
  * @subpackage  Element
  * @since       1.0
  */
-class PNElementVariable
+class PNVariable
 {
 	/**
 	 * @var    string  The Variable name.

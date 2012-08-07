@@ -8,16 +8,16 @@
  */
 
 /**
- * Test Class for PNElementArc.
+ * Test Class for PNArc.
  *
  * @package     Tests.Unit
  * @subpackage  Element
  * @since       1.0
  */
-class PNElementArcTest extends TestCase
+class PNArcTest extends TestCase
 {
 	/**
-	 * @var    PNElementArc  A PNElementArc mock.
+	 * @var    PNArc  A PNArc mock.
 	 * @since  1.0
 	 */
 	protected $object;
@@ -33,7 +33,7 @@ class PNElementArcTest extends TestCase
 	{
 		parent::setUp();
 
-		$this->object = $this->getMockForAbstractClass('PNElementArc');
+		$this->object = $this->getMockForAbstractClass('PNArc');
 	}
 
 	/**
@@ -41,7 +41,7 @@ class PNElementArcTest extends TestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers  PNElementArc::getInput
+	 * @covers  PNArc::getInput
 	 * @since   1.0
 	 */
 	public function testGetInput()
@@ -60,7 +60,7 @@ class PNElementArcTest extends TestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers  PNElementArc::getOutput
+	 * @covers  PNArc::getOutput
 	 * @since   1.0
 	 */
 	public function testGetOutput()
@@ -79,7 +79,7 @@ class PNElementArcTest extends TestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers  PNElementArc::setWeight
+	 * @covers  PNArc::setWeight
 	 * @since   1.0
 	 */
 	public function testSetWeight()
@@ -94,7 +94,7 @@ class PNElementArcTest extends TestCase
 	 *
 	 * @return   void
 	 *
-	 * @covers  PNElementArc::getWeight
+	 * @covers  PNArc::getWeight
 	 * @since   1.0
 	 */
 	public function testGetWeight()

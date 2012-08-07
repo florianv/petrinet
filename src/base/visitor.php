@@ -20,55 +20,55 @@ interface PNBaseVisitor
 	/**
 	 * Visit a Petri Net.
 	 *
-	 * @param   PNElementPetrinet  $net  The Petri Net.
+	 * @param   PNPetrinet  $net  The Petri Net.
 	 *
 	 * @return  void
 	 *
 	 * @since   1.0
 	 */
-	public function visitNet(PNElementPetrinet $net);
+	public function visitNet(PNPetrinet $net);
 
 	/**
 	 * Visit a Place.
 	 *
-	 * @param   PNElementPlace  $place  The Place.
+	 * @param   PNPlace  $place  The Place.
 	 *
 	 * @return  void
 	 *
 	 * @since   1.0
 	 */
-	public function visitPlace(PNElementPlace $place);
+	public function visitPlace(PNPlace $place);
 
 	/**
 	 * Visit a Transition.
 	 *
-	 * @param   PNElementTransition  $transition  The Transition.
+	 * @param   PNTransition  $transition  The Transition.
 	 *
 	 * @return  void
 	 *
 	 * @since   1.0
 	 */
-	public function visitTransition(PNElementTransition $transition);
+	public function visitTransition(PNTransition $transition);
 
 	/**
 	 * Visit an Input Arc.
 	 *
-	 * @param   PNElementArcInput  $inputArc  The Input Arc.
+	 * @param   PNArcInput  $inputArc  The Input Arc.
 	 *
 	 * @return  void
 	 *
 	 * @since   1.0
 	 */
-	public function visitInputArc(PNElementArcInput $inputArc);
+	public function visitInputArc(PNArcInput $inputArc);
 
 	/**
 	 * Visit an Output Arc.
 	 *
-	 * @param   PNElementArcOutput  $outputArc  The Output Arc.
+	 * @param   PNArcOutput  $outputArc  The Output Arc.
 	 *
 	 * @return  void
 	 *
 	 * @since   1.0
 	 */
-	public function visitOutputArc(PNElementArcOutput $outputArc);
+	public function visitOutputArc(PNArcOutput $outputArc);
 }

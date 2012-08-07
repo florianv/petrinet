@@ -10,7 +10,7 @@
 /**
  * Base Class for Petri Net Guards.
  * A Guard is an enabling condition associated with a Transition.
- * It Evaluates a Comparison condition between a PNElementVariable, and a PHP string/float/integer/boolean.
+ * It Evaluates a Comparison condition between a PNVariable, and a PHP string/float/integer/boolean.
  * The PetriNet variable is always placed at the left and the PHP variable at the right.
  *
  * Example : var_1 >= 3
@@ -19,7 +19,7 @@
  * @subpackage  Element
  * @since       1.0
  */
-class PNElementGuard
+class PNGuard
 {
 	/**
 	 * @var    PNConditionComparison  A comparison condition.
@@ -28,7 +28,7 @@ class PNElementGuard
 	protected $condition;
 
 	/**
-	 * @var    PNElementVariable  The Variable.
+	 * @var    PNVariable  The Variable.
 	 * @since  1.0
 	 */
 	protected $variable;
@@ -43,12 +43,12 @@ class PNElementGuard
 	 * Constructor.
 	 *
 	 * @param   PNConditionComparison  $condition  The Comparison condition.
-	 * @param   PNElementVariable      $variable   The Variable.
+	 * @param   PNVariable      $variable   The Variable.
 	 * @param   mixed                  $value      The Value to compare against.
 	 *
 	 * @since   1.0
 	 */
-	public function __construct(PNConditionComparison $condition = null, PNElementVariable $variable = null, $value = null)
+	public function __construct(PNConditionComparison $condition = null, PNVariable $variable = null, $value = null)
 	{
 		$this->condition = $condition;
 		$this->variable = $variable;
@@ -60,7 +60,7 @@ class PNElementGuard
 	 *
 	 * @param   PNConditionComparison  $condition  The Comparison condition.
 	 *
-	 * @return  PNElementGuard  This method is chainable.
+	 * @return  PNGuard  This method is chainable.
 	 *
 	 * @since   1.0
 	 */
@@ -74,13 +74,13 @@ class PNElementGuard
 	/**
 	 * Set a Variable for this Guard.
 	 *
-	 * @param   PNElementVariable  $variable  The Variable.
+	 * @param   PNVariable  $variable  The Variable.
 	 *
-	 * @return  PNElementGuard  This method is chainable.
+	 * @return  PNGuard  This method is chainable.
 	 *
 	 * @since   1.0
 	 */
-	public function setVariable(PNElementVariable $variable)
+	public function setVariable(PNVariable $variable)
 	{
 		$this->variable = $variable;
 
@@ -92,7 +92,7 @@ class PNElementGuard
 	 *
 	 * @param   mixed  $value  The Value to compare against.
 	 *
-	 * @return  PNElementGuard  This method is chainable.
+	 * @return  PNGuard  This method is chainable.
 	 *
 	 * @throws  InvalidArgumentException
 	 *

@@ -8,16 +8,16 @@
  */
 
 /**
- * Test class for PNElementGuard.
+ * Test class for PNGuard.
  *
  * @package     Tests.Unit
  * @subpackage  Element
  * @since       1.0
  */
-class PNElementGuardTest extends TestCase
+class PNGuardTest extends TestCase
 {
 	/**
-	 * @var    PNElementGuard  A PNElementGuard instance.
+	 * @var    PNGuard  A PNGuard instance.
 	 * @since  1.0
 	 */
 	protected $object;
@@ -33,7 +33,7 @@ class PNElementGuardTest extends TestCase
 	{
 		parent::setUp();
 
-		$this->object = new PNElementGuard;
+		$this->object = new PNGuard;
 	}
 
 	/**
@@ -41,15 +41,15 @@ class PNElementGuardTest extends TestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers  PNElementGuard::__construct
+	 * @covers  PNGuard::__construct
 	 * @since   1.0
 	 */
 	public function test__construct()
 	{
 		$condition = new PNConditionComparisonEq;
-		$variable = new PNElementVariable('test', 8);
+		$variable = new PNVariable('test', 8);
 
-		$guard = new PNElementGuard($condition, $variable, 8);
+		$guard = new PNGuard($condition, $variable, 8);
 
 		$op = TestReflection::getValue($guard, 'condition');
 		$var = TestReflection::getValue($guard, 'variable');
@@ -65,7 +65,7 @@ class PNElementGuardTest extends TestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers  PNElementGuard::setCondition
+	 * @covers  PNGuard::setCondition
 	 * @since   1.0
 	 */
 	public function testSetCondition()
@@ -78,11 +78,11 @@ class PNElementGuardTest extends TestCase
 	}
 
 	/**
-	 * Tests the error thrown by the PNElementGuard::setCondition method.
+	 * Tests the error thrown by the PNGuard::setCondition method.
 	 *
 	 * @return  void
 	 *
-	 * @covers  PNElementGuard::setCondition
+	 * @covers  PNGuard::setCondition
 	 *
 	 * @since   1.0
 	 *
@@ -98,24 +98,24 @@ class PNElementGuardTest extends TestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers  PNElementGuard::setVariable
+	 * @covers  PNGuard::setVariable
 	 * @since   1.0
 	 */
 	public function testSetVariable()
 	{
 		// Try a valid variable.
-		$variable = new PNElementVariable('test', 'test');
+		$variable = new PNVariable('test', 'test');
 		$this->object->setVariable($variable);
 
 		$this->assertEquals(TestReflection::getValue($this->object, 'variable'), $variable);
 	}
 
 	/**
-	 * Tests the error thrown by the PNElementGuard::setVariable method.
+	 * Tests the error thrown by the PNGuard::setVariable method.
 	 *
 	 * @return  void
 	 *
-	 * @covers  PNElementGuard::setVariable
+	 * @covers  PNGuard::setVariable
 	 * @since   1.0
 	 * @expectedException PHPUnit_Framework_Error
 	 */
@@ -129,7 +129,7 @@ class PNElementGuardTest extends TestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers  PNElementGuard::setValue
+	 * @covers  PNGuard::setValue
 	 * @since   1.0
 	 */
 	public function testSetValue()
@@ -148,11 +148,11 @@ class PNElementGuardTest extends TestCase
 	}
 
 	/**
-	 * Tests the exception thrown by the PNElementGuard::setValue method.
+	 * Tests the exception thrown by the PNGuard::setValue method.
 	 *
 	 * @return  void
 	 *
-	 * @covers  PNElementGuard::setValue
+	 * @covers  PNGuard::setValue
 	 * @since   1.0
 	 * @expectedException InvalidArgumentException
 	 */
@@ -167,7 +167,7 @@ class PNElementGuardTest extends TestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers  PNElementGuard::assertIsLoaded
+	 * @covers  PNGuard::assertIsLoaded
 	 * @since   1.0
 	 */
 	public function testAssertIsLoaded()
@@ -204,7 +204,7 @@ class PNElementGuardTest extends TestCase
 		$this->assertTrue($caught);
 
 		// Add a variable.
-		TestReflection::setValue($this->object, 'variable', new PNElementVariable('test', 'test'));
+		TestReflection::setValue($this->object, 'variable', new PNVariable('test', 'test'));
 
 		$caught = false;
 
@@ -231,13 +231,13 @@ class PNElementGuardTest extends TestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers  PNElementGuard::execute
+	 * @covers  PNGuard::execute
 	 * @since   1.0
 	 */
 	public function testExecute()
 	{
 		// Create a random variable.
-		$variable = new PNElementVariable('test', 'test');
+		$variable = new PNVariable('test', 'test');
 
 		// Create a mocked condition.
 		$condition  = $this->getMock('PNConditionComparison');

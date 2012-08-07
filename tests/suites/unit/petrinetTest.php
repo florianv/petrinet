@@ -8,16 +8,16 @@
  */
 
 /**
- * Test Class for PNElementPetrinet.
+ * Test Class for PNPetrinet.
  *
  * @package     Tests.Unit
  * @subpackage  Element
  * @since       1.0
  */
-class PNElementPetrinetTest extends TestCase
+class PNPetrinetTest extends TestCase
 {
 	/**
-	 * @var    PNElementPetrinet  A PNElementPetrinet instance.
+	 * @var    PNPetrinet  A PNPetrinet instance.
 	 * @since  1.0
 	 */
 	protected $object;
@@ -33,7 +33,7 @@ class PNElementPetrinetTest extends TestCase
 	{
 		parent::setUp();
 
-		$this->object = new PNElementPetrinet('test');
+		$this->object = new PNPetrinet('test');
 	}
 
 	/**
@@ -41,12 +41,12 @@ class PNElementPetrinetTest extends TestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers  PNElementPetrinet::__construct
+	 * @covers  PNPetrinet::__construct
 	 * @since   1.0
 	 */
 	public function test__construct()
 	{
-		$petri = new PNElementPetrinet('test');
+		$petri = new PNPetrinet('test');
 		$this->assertEquals('test', TestReflection::getValue($petri, 'name'));
 	}
 
@@ -55,16 +55,16 @@ class PNElementPetrinetTest extends TestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers  PNElementPetrinet::getInstance
+	 * @covers  PNPetrinet::getInstance
 	 * @since   1.0
 	 */
 	public function testGetInstance()
 	{
-		$this->assertInstanceOf('PNElementPetrinet', PNElementPetrinet::getInstance('test'));
+		$this->assertInstanceOf('PNPetrinet', PNPetrinet::getInstance('test'));
 
-		TestReflection::setValue('PNElementPetrinet', 'instances', array('foo' => true));
+		TestReflection::setValue('PNPetrinet', 'instances', array('foo' => true));
 
-		$this->assertTrue(PNElementPetrinet::getInstance('foo'));
+		$this->assertTrue(PNPetrinet::getInstance('foo'));
 	}
 
 	/**
@@ -72,13 +72,13 @@ class PNElementPetrinetTest extends TestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers  PNElementPetrinet::createPlace
+	 * @covers  PNPetrinet::createPlace
 	 * @since   1.0
 	 */
 	public function testCreatePlace()
 	{
 		$place = $this->object->createPlace();
-		$this->assertInstanceOf('PNElementPlace', $place);
+		$this->assertInstanceOf('PNPlace', $place);
 
 		$places = TestReflection::getValue($this->object, 'places');
 
@@ -97,13 +97,13 @@ class PNElementPetrinetTest extends TestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers  PNElementPetrinet::createTransition
+	 * @covers  PNPetrinet::createTransition
 	 * @since   1.0
 	 */
 	public function testCreateTransition()
 	{
 		$transition = $this->object->createTransition();
-		$this->assertInstanceOf('PNElementTransition', $transition);
+		$this->assertInstanceOf('PNTransition', $transition);
 
 		$transitions = TestReflection::getValue($this->object, 'transitions');
 
@@ -122,18 +122,18 @@ class PNElementPetrinetTest extends TestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers  PNElementPetrinet::connect
+	 * @covers  PNPetrinet::connect
 	 * @since   1.0
 	 */
 	public function testConnect()
 	{
 		// Try connect a place to a transition.
-		$place = new PNElementPlace;
-		$transition = new PNElementTransition;
+		$place = new PNPlace;
+		$transition = new PNTransition;
 
 		$arc = $this->object->connect($place, $transition);
 
-		$this->assertInstanceOf('PNElementArcInput', $arc);
+		$this->assertInstanceOf('PNArcInput', $arc);
 		$this->assertEquals(TestReflection::getValue($arc, 'input'), $place);
 		$this->assertEquals(TestReflection::getValue($arc, 'output'), $transition);
 		$this->assertEquals(TestReflection::getValue($arc, 'weight'), 1);
@@ -148,12 +148,12 @@ class PNElementPetrinetTest extends TestCase
 		$this->assertEquals($inputArcs[0], $arc);
 
 		// Try connect a transition to a place with weight 3.
-		$place = new PNElementPlace;
-		$transition = new PNElementTransition;
+		$place = new PNPlace;
+		$transition = new PNTransition;
 
 		$arc = $this->object->connect($transition, $place, 3);
 
-		$this->assertInstanceOf('PNElementArcOutput', $arc);
+		$this->assertInstanceOf('PNArcOutput', $arc);
 		$this->assertEquals(TestReflection::getValue($arc, 'input'), $transition);
 		$this->assertEquals(TestReflection::getValue($arc, 'output'), $place);
 		$this->assertEquals(TestReflection::getValue($arc, 'weight'), 3);
@@ -169,11 +169,11 @@ class PNElementPetrinetTest extends TestCase
 	}
 
 	/**
-	 * Tests the exception thrown by the PNElementPetrinet::connect method.
+	 * Tests the exception thrown by the PNPetrinet::connect method.
 	 *
 	 * @return  void
 	 *
-	 * @covers  PNElementPetrinet::connect
+	 * @covers  PNPetrinet::connect
 	 * @since   1.0
 	 *
 	 * @expectedException InvalidArgumentException
@@ -181,15 +181,15 @@ class PNElementPetrinetTest extends TestCase
 	public function testConnectException1()
 	{
 		// Try connect a place to a place.
-		$this->object->connect(new PNElementPlace, new PNElementPlace);
+		$this->object->connect(new PNPlace, new PNPlace);
 	}
 
 	/**
-	 * Tests the exception thrown by the PNElementPetrinet::connect method.
+	 * Tests the exception thrown by the PNPetrinet::connect method.
 	 *
 	 * @return  void
 	 *
-	 * @covers  PNElementPetrinet::connect
+	 * @covers  PNPetrinet::connect
 	 * @since   1.0
 	 *
 	 * @expectedException InvalidArgumentException
@@ -197,7 +197,7 @@ class PNElementPetrinetTest extends TestCase
 	public function testConnectException2()
 	{
 		// Try connect a transition to a transition.
-		$this->object->connect(new PNElementTransition, new PNElementTransition);
+		$this->object->connect(new PNTransition, new PNTransition);
 	}
 
 	/**
@@ -205,7 +205,7 @@ class PNElementPetrinetTest extends TestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers  PNElementPetrinet::getName
+	 * @covers  PNPetrinet::getName
 	 * @since   1.0
 	 */
 	public function testGetName()
@@ -218,7 +218,7 @@ class PNElementPetrinetTest extends TestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers  PNElementPetrinet::getPlaces
+	 * @covers  PNPetrinet::getPlaces
 	 * @since   1.0
 	 */
 	public function testGetPlaces()
@@ -238,7 +238,7 @@ class PNElementPetrinetTest extends TestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers  PNElementPetrinet::getTransitions
+	 * @covers  PNPetrinet::getTransitions
 	 * @since   1.0
 	 */
 	public function testGetTransitions()
@@ -258,7 +258,7 @@ class PNElementPetrinetTest extends TestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers  PNElementPetrinet::getOuputArcs
+	 * @covers  PNPetrinet::getOuputArcs
 	 * @since   1.0
 	 */
 	public function testGetOuputArcs()
@@ -278,7 +278,7 @@ class PNElementPetrinetTest extends TestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers  PNElementPetrinet::getInputArcs
+	 * @covers  PNPetrinet::getInputArcs
 	 * @since   1.0
 	 */
 	public function testGetInputArcs()
@@ -298,7 +298,7 @@ class PNElementPetrinetTest extends TestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers  PNElementPetrinet::accept
+	 * @covers  PNPetrinet::accept
 	 * @since   1.0
 	 */
 	public function testAccept()

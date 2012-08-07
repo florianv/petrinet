@@ -83,7 +83,7 @@ class PNTokenSet implements Countable, IteratorAggregate
 	 *
 	 * @param   PNToken  $token  The token.
 	 *
-	 * @return  PNElementSet  This method is chainable.
+	 * @return  PNSet  This method is chainable.
 	 *
 	 * @since   1.0
 	 */

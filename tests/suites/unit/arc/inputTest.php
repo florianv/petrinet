@@ -8,16 +8,16 @@
  */
 
 /**
- * Test class for PNElementArcInput.
+ * Test class for PNArcInput.
  *
  * @package     Tests.Unit
  * @subpackage  Arc
  * @since       1.0
  */
-class PNElementArcInputTest extends TestCase
+class PNArcInputTest extends TestCase
 {
 	/**
-	 * @var    PNElementArcInput  A PNElementArcInput instance.
+	 * @var    PNArcInput  A PNArcInput instance.
 	 * @since  1.0
 	 */
 	protected $object;
@@ -33,7 +33,7 @@ class PNElementArcInputTest extends TestCase
 	{
 		parent::setUp();
 
-		$this->object = new PNElementArcInput;
+		$this->object = new PNArcInput;
 	}
 
 	/**
@@ -41,18 +41,18 @@ class PNElementArcInputTest extends TestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers  PNElementArcInput::__construct
+	 * @covers  PNArcInput::__construct
 	 * @since   1.0
 	 */
 	public function test__construct()
 	{
-		$arc = new PNElementArcInput;
+		$arc = new PNArcInput;
 		$this->assertNull(TestReflection::getValue($arc, 'input'));
 		$this->assertNull(TestReflection::getValue($arc, 'output'));
 
-		$place = new PNElementPlace;
-		$transition = new PNElementTransition;
-		$arc = new PNElementArcInput($place, $transition);
+		$place = new PNPlace;
+		$transition = new PNTransition;
+		$arc = new PNArcInput($place, $transition);
 
 		$this->assertEquals(TestReflection::getValue($arc, 'input'), $place);
 		$this->assertEquals(TestReflection::getValue($arc, 'output'), $transition);
@@ -63,13 +63,13 @@ class PNElementArcInputTest extends TestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers  PNElementArcInput::setInput
+	 * @covers  PNArcInput::setInput
 	 * @since   1.0
 	 */
 	public function testSetInput()
 	{
 		// Set an input place.
-		$input = new PNElementPlace;
+		$input = new PNPlace;
 		$this->object->setInput($input);
 		$in = TestReflection::getValue($this->object, 'input');
 
@@ -77,11 +77,11 @@ class PNElementArcInputTest extends TestCase
 	}
 
 	/**
-	 * Tests the error thrown by the PNElementArcInput::setInput method.
+	 * Tests the error thrown by the PNArcInput::setInput method.
 	 *
 	 * @return  void
 	 *
-	 * @covers  PNElementArcInput::setInput
+	 * @covers  PNArcInput::setInput
 	 * @since   1.0
 	 * @expectedException PHPUnit_Framework_Error
 	 */
@@ -95,13 +95,13 @@ class PNElementArcInputTest extends TestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers  PNElementArcInput::setOutput
+	 * @covers  PNArcInput::setOutput
 	 * @since   1.0
 	 */
 	public function testSetOutput()
 	{
 		// Set an output transition.
-		$output = new PNElementTransition;
+		$output = new PNTransition;
 		$this->object->setOutput($output);
 		$out = TestReflection::getValue($this->object, 'output');
 
@@ -109,11 +109,11 @@ class PNElementArcInputTest extends TestCase
 	}
 
 	/**
-	 * Tests the error thrown by the PNElementArcInput::setOutput method.
+	 * Tests the error thrown by the PNArcInput::setOutput method.
 	 *
 	 * @return  void
 	 *
-	 * @covers  PNElementArcInput::setOutput
+	 * @covers  PNArcInput::setOutput
 	 * @since   1.0
 	 * @expectedException PHPUnit_Framework_Error
 	 */
@@ -127,7 +127,7 @@ class PNElementArcInputTest extends TestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers  PNElementArcInput::accept
+	 * @covers  PNArcInput::accept
 	 * @since   1.0
 	 */
 	public function testAccept()

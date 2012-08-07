@@ -15,17 +15,17 @@
  * @subpackage  Arc
  * @since       1.0
  */
-class PNElementArcOutput extends PNElementArc implements PNBaseVisitable
+class PNArcOutput extends PNArc implements PNBaseVisitable
 {
 	/**
 	 * Constructor.
 	 *
-	 * @param   PNElementTransition  $input   The input Place.
-	 * @param   PNElementPlace       $output  The output Transition.
+	 * @param   PNTransition  $input   The input Place.
+	 * @param   PNPlace       $output  The output Transition.
 	 *
 	 * @since   1.0
 	 */
-	public function __construct(PNElementTransition $input = null, PNElementPlace $output = null)
+	public function __construct(PNTransition $input = null, PNPlace $output = null)
 	{
 		$this->input = $input;
 		$this->output = $output;
@@ -34,13 +34,13 @@ class PNElementArcOutput extends PNElementArc implements PNBaseVisitable
 	/**
 	 * Set the input Transition of this Arc.
 	 *
-	 * @param   PNElementTransition  $transition  The input Transition.
+	 * @param   PNTransition  $transition  The input Transition.
 	 *
-	 * @return  PNElementArcOutput  This method is chainable.
+	 * @return  PNArcOutput  This method is chainable.
 	 *
 	 * @since   1.0
 	 */
-	public function setInput(PNElementTransition $transition)
+	public function setInput(PNTransition $transition)
 	{
 		$this->input = $transition;
 
@@ -50,13 +50,13 @@ class PNElementArcOutput extends PNElementArc implements PNBaseVisitable
 	/**
 	 * Set the output Place of this Arc.
 	 *
-	 * @param   PNElementPlace  $place  The output Place.
+	 * @param   PNPlace  $place  The output Place.
 	 *
-	 * @return  PNElementArcOutput  This method is chainable.
+	 * @return  PNArcOutput  This method is chainable.
 	 *
 	 * @since   1.0
 	 */
-	public function setOutput(PNElementPlace $place)
+	public function setOutput(PNPlace $place)
 	{
 		$this->output = $place;
 

@@ -120,7 +120,7 @@ class PNEngineStateStartedTest extends TestCase
 	public function testRun()
 	{
 		// Get a mocked engine, make him return 0 enabled transitions.
-		$engine = $this->getMock('PNElementEngine', array('refresh', 'getEnabledTransitions', 'pause', 'run'));
+		$engine = $this->getMock('PNEngine', array('refresh', 'getEnabledTransitions', 'pause', 'run'));
 
 		$engine->expects($this->once())
 			->method('refresh');
@@ -144,18 +144,18 @@ class PNEngineStateStartedTest extends TestCase
 
 		// Now create a mocked engine executing a net with 2 enabled transitions (returning true).
 		// Create the transitions.
-		$transition1 = $this->getMock('PNElementTransition');
+		$transition1 = $this->getMock('PNTransition');
 		$transition1->expects($this->once())
 			->method('execute')
 			->will($this->returnValue(true));
 
-		$transition2 = $this->getMock('PNElementTransition');
+		$transition2 = $this->getMock('PNTransition');
 		$transition2->expects($this->once())
 			->method('execute')
 			->will($this->returnValue(true));
 
 		// Create the mocked engine.
-		$engine = $this->getMock('PNElementEngine', array('refresh', 'getEnabledTransitions', 'run'));
+		$engine = $this->getMock('PNEngine', array('refresh', 'getEnabledTransitions', 'run'));
 
 		$engine->expects($this->once())
 			->method('refresh');
@@ -176,18 +176,18 @@ class PNEngineStateStartedTest extends TestCase
 
 		// Now create a mocked engine executing a net with 2 enabled transitions with the second returning false.
 		// Create the transitions.
-		$transition1 = $this->getMock('PNElementTransition');
+		$transition1 = $this->getMock('PNTransition');
 		$transition1->expects($this->once())
 			->method('execute')
 			->will($this->returnValue(true));
 
-		$transition2 = $this->getMock('PNElementTransition');
+		$transition2 = $this->getMock('PNTransition');
 		$transition2->expects($this->once())
 			->method('execute')
 			->will($this->returnValue(false));
 
 		// Create the mocked engine.
-		$engine = $this->getMock('PNElementEngine', array('refresh', 'getEnabledTransitions', 'end', 'run'));
+		$engine = $this->getMock('PNEngine', array('refresh', 'getEnabledTransitions', 'end', 'run'));
 
 		$engine->expects($this->once())
 			->method('refresh');

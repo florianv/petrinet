@@ -8,16 +8,16 @@
  */
 
 /**
- * Test class for PNElementTransition.
+ * Test class for PNTransition.
  *
  * @package     Tests.Unit
  * @subpackage  Element
  * @since       1.0
  */
-class PNElementTransitionTest extends TestCase
+class PNTransitionTest extends TestCase
 {
 	/**
-	 * @var    PNElementTransition  A PNElementTransition instance.
+	 * @var    PNTransition  A PNTransition instance.
 	 * @since  1.0
 	 */
 	protected $object;
@@ -33,7 +33,7 @@ class PNElementTransitionTest extends TestCase
 	{
 		parent::setUp();
 
-		$this->object = new PNElementTransition;
+		$this->object = new PNTransition;
 	}
 
 	/**
@@ -41,24 +41,24 @@ class PNElementTransitionTest extends TestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers  PNElementTransition::__construct
+	 * @covers  PNTransition::__construct
 	 * @since   1.0
 	 */
 	public function test__construct()
 	{
 		// Test without param.
-		$transition = new PNElementTransition;
+		$transition = new PNTransition;
 
 		$this->assertNull(TestReflection::getValue($transition, 'guard'));
 		$this->assertEmpty(TestReflection::getValue($transition, 'inputs'));
 		$this->assertEmpty(TestReflection::getValue($transition, 'outputs'));
 
 		// Test with params.
-		$guard = new PNElementGuard;
-		$inputs = array(new PNElementArcInput, new PNElementArcInput);
-		$outputs = array(new PNElementArcOutput, new PNElementArcOutput);
+		$guard = new PNGuard;
+		$inputs = array(new PNArcInput, new PNArcInput);
+		$outputs = array(new PNArcOutput, new PNArcOutput);
 
-		$transition = new PNElementTransition($guard, $inputs, $outputs);
+		$transition = new PNTransition($guard, $inputs, $outputs);
 
 		$this->assertEquals($guard, TestReflection::getValue($transition, 'guard'));
 		$this->assertEquals($inputs, TestReflection::getValue($transition, 'inputs'));
@@ -70,29 +70,29 @@ class PNElementTransitionTest extends TestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers  PNElementTransition::addInput
+	 * @covers  PNTransition::addInput
 	 * @since   1.0
 	 */
 	public function testAddInput()
 	{
-		$input = new PNElementArcInput;
+		$input = new PNArcInput;
 		$this->object->addInput($input);
 		$inputs = TestReflection::getValue($this->object, 'inputs');
 
 		$this->assertEquals($inputs[0], $input);
 
-		$input = new PNElementArcInput;
+		$input = new PNArcInput;
 		$this->object->addInput($input);
 		$inputs = TestReflection::getValue($this->object, 'inputs');
 		$this->assertEquals($inputs[1], $input);
 	}
 
 	/**
-	 * Tests the error thrown by the PNElementTransition::addInput method.
+	 * Tests the error thrown by the PNTransition::addInput method.
 	 *
 	 * @return  void
 	 *
-	 * @covers  PNElementTransition::addInput
+	 * @covers  PNTransition::addInput
 	 *
 	 * @since   1.0
 	 *
@@ -108,7 +108,7 @@ class PNElementTransitionTest extends TestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers  PNElementTransition::getInputs
+	 * @covers  PNTransition::getInputs
 	 * @since   1.0
 	 */
 	public function testGetInputs()
@@ -116,7 +116,7 @@ class PNElementTransitionTest extends TestCase
 		$this->assertEmpty($this->object->getInputs());
 
 		// Add two input arcs.
-		$inputs = array(new PNElementArcInput, new PNElementArcInput);
+		$inputs = array(new PNArcInput, new PNArcInput);
 		TestReflection::setValue($this->object, 'inputs', $inputs);
 
 		$this->assertEquals($inputs, $this->object->getInputs());
@@ -127,18 +127,18 @@ class PNElementTransitionTest extends TestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers  PNElementTransition::addOutput
+	 * @covers  PNTransition::addOutput
 	 * @since   1.0
 	 */
 	public function testAddOutput()
 	{
-		$output = new PNElementArcOutput;
+		$output = new PNArcOutput;
 		$this->object->addOutput($output);
 		$outputs = TestReflection::getValue($this->object, 'outputs');
 
 		$this->assertEquals($outputs[0], $output);
 
-		$output = new PNElementArcOutput;
+		$output = new PNArcOutput;
 		$this->object->addOutput($output);
 		$outputs = TestReflection::getValue($this->object, 'outputs');
 
@@ -146,11 +146,11 @@ class PNElementTransitionTest extends TestCase
 	}
 
 	/**
-	 * Tests the error thrown by the PNElementTransition::addOutput method.
+	 * Tests the error thrown by the PNTransition::addOutput method.
 	 *
 	 * @return  void
 	 *
-	 * @covers  PNElementTransition::addOutput
+	 * @covers  PNTransition::addOutput
 	 *
 	 * @since   1.0
 	 *
@@ -166,7 +166,7 @@ class PNElementTransitionTest extends TestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers  PNElementTransition::getOutputs
+	 * @covers  PNTransition::getOutputs
 	 * @since   1.0
 	 */
 	public function testGetOutputs()
@@ -174,7 +174,7 @@ class PNElementTransitionTest extends TestCase
 		$this->assertEmpty($this->object->getOutputs());
 
 		// Add two output arcs.
-		$outputs = array(new PNElementArcOutput, new PNElementArcOutput);
+		$outputs = array(new PNArcOutput, new PNArcOutput);
 		TestReflection::setValue($this->object, 'outputs', $outputs);
 
 		$this->assertEquals($outputs, $this->object->getOutputs());
@@ -185,23 +185,23 @@ class PNElementTransitionTest extends TestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers  PNElementTransition::setGuard
+	 * @covers  PNTransition::setGuard
 	 * @since   1.0
 	 */
 	public function testSetGuard()
 	{
-		$guard = new PNElementGuard;
+		$guard = new PNGuard;
 		$this->object->setGuard($guard);
 
 		$this->assertEquals($guard, TestReflection::getValue($this->object, 'guard'));
 	}
 
 	/**
-	 * Tests the error thrown by the PNElementTransition::setGuard method.
+	 * Tests the error thrown by the PNTransition::setGuard method.
 	 *
 	 * @return  void
 	 *
-	 * @covers  PNElementTransition::setGuard
+	 * @covers  PNTransition::setGuard
 	 *
 	 * @since   1.0
 	 *
@@ -217,14 +217,14 @@ class PNElementTransitionTest extends TestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers  PNElementTransition::getGuard
+	 * @covers  PNTransition::getGuard
 	 * @since   1.0
 	 */
 	public function testGetGuard()
 	{
 		$this->assertNull($this->object->getGuard());
 
-		$guard = new PNElementGuard;
+		$guard = new PNGuard;
 		TestReflection::setValue($this->object, 'guard', $guard);
 
 		$this->assertEquals($guard, $this->object->getGuard());
@@ -235,14 +235,14 @@ class PNElementTransitionTest extends TestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers  PNElementTransition::isGuarded
+	 * @covers  PNTransition::isGuarded
 	 * @since   1.0
 	 */
 	public function testIsGuarded()
 	{
 		$this->assertFalse($this->object->isGuarded());
 
-		$guard = new PNElementGuard;
+		$guard = new PNGuard;
 		TestReflection::setValue($this->object, 'guard', $guard);
 
 		$this->assertTrue($this->object->isGuarded());
@@ -253,32 +253,32 @@ class PNElementTransitionTest extends TestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers  PNElementTransition::isEnabled
+	 * @covers  PNTransition::isEnabled
 	 * @since   1.0
 	 */
 	public function testIsEnabled()
 	{
 		// Generate a guarded transition where the guard returns false.
-		$var = new PNElementVariable('test', 'test');
+		$var = new PNVariable('test', 'test');
 		$op = new PNConditionComparisonEq;
-		$guard = new PNElementGuard($op, $var, 8);
+		$guard = new PNGuard($op, $var, 8);
 
 		$this->object->setGuard($guard);
 
 		$this->assertFalse($this->object->isEnabled());
 
 		// Generate a guarded transition where the guard returns true.
-		$guard = new PNElementGuard($op, $var, 'test');
+		$guard = new PNGuard($op, $var, 'test');
 		$this->object->setGuard($guard);
 
 		// PlaceBefore contains 0 tokens.
-		$placeBefore = new PNElementPlace;
-		$placeAfter = new PNElementPlace;
+		$placeBefore = new PNPlace;
+		$placeAfter = new PNPlace;
 
-		$input = new PNElementArcInput;
+		$input = new PNArcInput;
 		$input->setInput($placeBefore)->setOutput($this->object);
 
-		$output = new PNElementArcOutput;
+		$output = new PNArcOutput;
 		$output->setInput($this->object, $placeAfter);
 
 		$this->object->addInput($input)->addOutput($output);
@@ -296,27 +296,27 @@ class PNElementTransitionTest extends TestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers  PNElementTransition::execute
+	 * @covers  PNTransition::execute
 	 * @since   1.0
 	 */
 	public function testExecute()
 	{
 		// Generate a mini enabled Petri net transition.
-		$placeBefore1 = new PNElementPlace;
+		$placeBefore1 = new PNPlace;
 		$placeBefore1->addToken(new stdClass);
 
-		$placeBefore2 = new PNElementPlace;
+		$placeBefore2 = new PNPlace;
 		$placeBefore2->addToken(new stdClass);
 
-		$placeAfter = new PNElementPlace;
+		$placeAfter = new PNPlace;
 
-		$input1 = new PNElementArcInput;
+		$input1 = new PNArcInput;
 		$input1->setInput($placeBefore1)->setOutput($this->object);
 
-		$input2 = new PNElementArcInput;
+		$input2 = new PNArcInput;
 		$input2->setInput($placeBefore2)->setOutput($this->object);
 
-		$output = new PNElementArcOutput;
+		$output = new PNArcOutput;
 		$output->setInput($this->object)->setOutput($placeAfter);
 
 		TestReflection::setValue($this->object, 'inputs', array($input1, $input2));
@@ -332,23 +332,23 @@ class PNElementTransitionTest extends TestCase
 		$this->assertEquals(1, $placeAfter->getTokenCount());
 
 		// Try with a new one.
-		$placeBefore1 = new PNElementPlace;
+		$placeBefore1 = new PNPlace;
 
 		// Add two tokens in this place.
 		$placeBefore1->addToken(new stdClass)->addToken(new stdClass);
 
-		$placeBefore2 = new PNElementPlace;
+		$placeBefore2 = new PNPlace;
 		$placeBefore2->addToken(new stdClass);
 
-		$placeAfter = new PNElementPlace;
+		$placeAfter = new PNPlace;
 
-		$input1 = new PNElementArcInput;
+		$input1 = new PNArcInput;
 		$input1->setInput($placeBefore1)->setOutput($this->object);
 
-		$input2 = new PNElementArcInput;
+		$input2 = new PNArcInput;
 		$input2->setInput($placeBefore2)->setOutput($this->object);
 
-		$output = new PNElementArcOutput;
+		$output = new PNArcOutput;
 		$output->setInput($this->object)->setOutput($placeAfter);
 
 		// Set the arc's weight to 2.
@@ -375,7 +375,7 @@ class PNElementTransitionTest extends TestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers  PNElementTransition::accept
+	 * @covers  PNTransition::accept
 	 * @since   1.0
 	 */
 	public function testAccept()

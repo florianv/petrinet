@@ -14,7 +14,7 @@
  * @subpackage  Element
  * @since       1.0
  */
-class PNElementTransition implements PNBaseVisitable
+class PNTransition implements PNBaseVisitable
 {
 	/**
 	 * @var    array  The input Arcs of this Transition.
@@ -29,7 +29,7 @@ class PNElementTransition implements PNBaseVisitable
 	protected $outputs;
 
 	/**
-	 * @var    PNElementGuard  A Guard for this Transition.
+	 * @var    PNGuard  A Guard for this Transition.
 	 * @since  1.0
 	 */
 	protected $guard;
@@ -37,13 +37,13 @@ class PNElementTransition implements PNBaseVisitable
 	/**
 	 * Constructor.
 	 *
-	 * @param   PNElementGuard  $guard    A Guard for this Transition.
-	 * @param   array           $inputs   The input arcs of this Transition (PNElementArcInput).
-	 * @param   array           $outputs  The output arcs of this Transition (PNElementArcOutput).
+	 * @param   PNGuard  $guard    A Guard for this Transition.
+	 * @param   array           $inputs   The input arcs of this Transition (PNArcInput).
+	 * @param   array           $outputs  The output arcs of this Transition (PNArcOutput).
 	 *
 	 * @since   1.0
 	 */
-	public function __construct(PNElementGuard $guard = null, array $inputs = array(), array $outputs = array())
+	public function __construct(PNGuard $guard = null, array $inputs = array(), array $outputs = array())
 	{
 		$this->guard = $guard;
 
@@ -77,13 +77,13 @@ class PNElementTransition implements PNBaseVisitable
 	/**
 	 * Add an input Arc to this Transition.
 	 *
-	 * @param   PNElementArcInput  $arc  The input Arc.
+	 * @param   PNArcInput  $arc  The input Arc.
 	 *
-	 * @return  PNElementTransition This method is chainable.
+	 * @return  PNTransition This method is chainable.
 	 *
 	 * @since   1.0
 	 */
-	public function addInput(PNElementArcInput $arc)
+	public function addInput(PNArcInput $arc)
 	{
 		$this->inputs[] = $arc;
 
@@ -93,7 +93,7 @@ class PNElementTransition implements PNBaseVisitable
 	/**
 	 * Get the input Arcs of this Transition.
 	 *
-	 * @return  array  An array of PNElementArc objects.
+	 * @return  array  An array of PNArc objects.
 	 *
 	 * @since   1.0
 	 */
@@ -105,13 +105,13 @@ class PNElementTransition implements PNBaseVisitable
 	/**
 	 * Add an ouput Arc to this Transition.
 	 *
-	 * @param   PNElementArcOutput  $arc  The input Arc.
+	 * @param   PNArcOutput  $arc  The input Arc.
 	 *
-	 * @return  PNElementTransition This method is chainable.
+	 * @return  PNTransition This method is chainable.
 	 *
 	 * @since   1.0
 	 */
-	public function addOutput(PNElementArcOutput $arc)
+	public function addOutput(PNArcOutput $arc)
 	{
 		$this->outputs[] = $arc;
 
@@ -121,7 +121,7 @@ class PNElementTransition implements PNBaseVisitable
 	/**
 	 * Get the output Arcs of this Transition.
 	 *
-	 * @return  array  An array of PNElementArc objects.
+	 * @return  array  An array of PNArc objects.
 	 *
 	 * @since   1.0
 	 */
@@ -133,13 +133,13 @@ class PNElementTransition implements PNBaseVisitable
 	/**
 	 * Set a Guard for this Transition.
 	 *
-	 * @param   PNElementGuard  $guard  The Guard.
+	 * @param   PNGuard  $guard  The Guard.
 	 *
-	 * @return  PNElementTransition This method is chainable.
+	 * @return  PNTransition This method is chainable.
 	 *
 	 * @since   1.0
 	 */
-	public function setGuard(PNElementGuard $guard)
+	public function setGuard(PNGuard $guard)
 	{
 		$this->guard = $guard;
 
@@ -149,7 +149,7 @@ class PNElementTransition implements PNBaseVisitable
 	/**
 	 * Get the Guard of this Transition.
 	 *
-	 * @return  PNElementGuard  $guard  The Guard.
+	 * @return  PNGuard  $guard  The Guard.
 	 *
 	 * @since   1.0
 	 */

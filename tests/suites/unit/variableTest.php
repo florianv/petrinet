@@ -8,16 +8,16 @@
  */
 
 /**
- * Test Class for PNElementVariable.
+ * Test Class for PNVariable.
  *
  * @package     Tests.Unit
  * @subpackage  Element
  * @since       1.0
  */
-class PNElementVariableTest extends TestCase
+class PNVariableTest extends TestCase
 {
 	/**
-	 * @var    PNElementVariable  A PNElementVariable instance.
+	 * @var    PNVariable  A PNVariable instance.
 	 * @since  1.0
 	 */
 	protected $object;
@@ -33,7 +33,7 @@ class PNElementVariableTest extends TestCase
 	{
 		parent::setUp();
 
-		$this->object = new PNElementVariable('test', 8);
+		$this->object = new PNVariable('test', 8);
 	}
 
 	/**
@@ -41,12 +41,12 @@ class PNElementVariableTest extends TestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers  PNElementVariable::__construct
+	 * @covers  PNVariable::__construct
 	 * @since   1.0
 	 */
 	public function test__construct()
 	{
-		$var = new PNElementVariable('test', 'test');
+		$var = new PNVariable('test', 'test');
 		$name = TestReflection::getValue($var, 'name');
 		$value = TestReflection::getValue($var, 'value');
 
@@ -59,7 +59,7 @@ class PNElementVariableTest extends TestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers  PNElementVariable::getName
+	 * @covers  PNVariable::getName
 	 * @since   1.0
 	 */
 	public function testGetName()
@@ -74,7 +74,7 @@ class PNElementVariableTest extends TestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers  PNElementVariable::setValue
+	 * @covers  PNVariable::setValue
 	 * @since   1.0
 	 */
 	public function testSetValue()
@@ -99,11 +99,11 @@ class PNElementVariableTest extends TestCase
 	}
 
 	/**
-	 * Tests the exception thrown by the PNElementVariable::setValue method.
+	 * Tests the exception thrown by the PNVariable::setValue method.
 	 *
 	 * @return  void
 	 *
-	 * @covers  PNElementVariable::setValue
+	 * @covers  PNVariable::setValue
 	 * @since   1.0
 	 * @expectedException InvalidArgumentException
 	 */
@@ -118,7 +118,7 @@ class PNElementVariableTest extends TestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers  PNElementVariable::getValue
+	 * @covers  PNVariable::getValue
 	 * @since   1.0
 	 */
 	public function testGetValue()

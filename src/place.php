@@ -14,7 +14,7 @@
  * @subpackage  Element
  * @since       1.0
  */
-class PNElementPlace implements PNBaseVisitable
+class PNPlace implements PNBaseVisitable
 {
 	/**
 	 * @var    array  The input Arcs of this Place.
@@ -29,7 +29,7 @@ class PNElementPlace implements PNBaseVisitable
 	protected $outputs;
 
 	/**
-	 * @var    PNElementSet  The tokens Set.
+	 * @var    PNSet  The tokens Set.
 	 * @since  1.0
 	 */
 	protected $tokenSet;
@@ -37,15 +37,15 @@ class PNElementPlace implements PNBaseVisitable
 	/**
 	 * Constructor.
 	 *
-	 * @param   PNElementSet  $tokenSet  A bag of tokens to add to this place.
-	 * @param   array         $inputs    An array of input arcs of this place (PNElementArcOutput).
-	 * @param   array         $outputs   An array of output arcs of this place (PNElementArcInput).
+	 * @param   PNSet  $tokenSet  A bag of tokens to add to this place.
+	 * @param   array         $inputs    An array of input arcs of this place (PNArcOutput).
+	 * @param   array         $outputs   An array of output arcs of this place (PNArcInput).
 	 *
 	 * @since   1.0
 	 */
-	public function __construct(PNElementSet $tokenSet = null, array $inputs = array(), array $outputs = array())
+	public function __construct(PNSet $tokenSet = null, array $inputs = array(), array $outputs = array())
 	{
-		$this->tokenSet = $tokenSet ? $tokenSet : new PNElementSet;
+		$this->tokenSet = $tokenSet ? $tokenSet : new PNSet;
 
 		if (empty($inputs))
 		{
@@ -77,13 +77,13 @@ class PNElementPlace implements PNBaseVisitable
 	/**
 	 * Add an input Arc to this Place.
 	 *
-	 * @param   PNElementArcOutput  $arc  The input Arc.
+	 * @param   PNArcOutput  $arc  The input Arc.
 	 *
-	 * @return  PNElementPlace  This method is chainable.
+	 * @return  PNPlace  This method is chainable.
 	 *
 	 * @since   1.0
 	 */
-	public function addInput(PNElementArcOutput $arc)
+	public function addInput(PNArcOutput $arc)
 	{
 		$this->inputs[] = $arc;
 
@@ -105,13 +105,13 @@ class PNElementPlace implements PNBaseVisitable
 	/**
 	 * Add an output Arc to this Place.
 	 *
-	 * @param   PNElementArcInput  $arc  The output Arc.
+	 * @param   PNArcInput  $arc  The output Arc.
 	 *
-	 * @return  PNElementPlace  This method is chainable.
+	 * @return  PNPlace  This method is chainable.
 	 *
 	 * @since   1.0
 	 */
-	public function addOutput(PNElementArcInput $arc)
+	public function addOutput(PNArcInput $arc)
 	{
 		$this->outputs[] = $arc;
 
@@ -133,9 +133,9 @@ class PNElementPlace implements PNBaseVisitable
 	/**
 	 * Add a Token in this Place.
 	 *
-	 * @param   PNElementToken  $token  The token.
+	 * @param   PNToken  $token  The token.
 	 *
-	 * @return  PNElementPlace  This method is chainable.
+	 * @return  PNPlace  This method is chainable.
 	 *
 	 * @since   1.0
 	 */
@@ -151,7 +151,7 @@ class PNElementPlace implements PNBaseVisitable
 	 *
 	 * @param   array  $tokens  An array of tokens.
 	 *
-	 * @return  PNElementPlace  This method is chainable.
+	 * @return  PNPlace  This method is chainable.
 	 *
 	 * @since   1.0
 	 */
@@ -165,9 +165,9 @@ class PNElementPlace implements PNBaseVisitable
 	/**
 	 * Remove a Token from this Place.
 	 *
-	 * @param   PNElementToken  $token  The token.
+	 * @param   PNToken  $token  The token.
 	 *
-	 * @return  PNElementPlace  This method is chainable.
+	 * @return  PNPlace  This method is chainable.
 	 *
 	 * @since   1.0
 	 */

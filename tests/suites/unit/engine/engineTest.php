@@ -205,23 +205,23 @@ class PNEngineTest extends TestCase
 	public function testRefresh()
 	{
 		// Create 3 mocked transitions.
-		$transition1 = $this->getMock('PNElementTransition');
+		$transition1 = $this->getMock('PNTransition');
 		$transition1->expects($this->once())
 			->method('isEnabled')
 			->will($this->returnValue(true));
 
-		$transition2 = $this->getMock('PNElementTransition');
+		$transition2 = $this->getMock('PNTransition');
 		$transition2->expects($this->once())
 			->method('isEnabled')
 			->will($this->returnValue(false));
 
-		$transition3 = $this->getMock('PNElementTransition');
+		$transition3 = $this->getMock('PNTransition');
 		$transition3->expects($this->once())
 			->method('isEnabled')
 			->will($this->returnValue(true));
 
 		// Create a net and inject the mocked transitions.
-		$net = new PNElementPetrinet('test');
+		$net = new PNPetrinet('test');
 		TestReflection::setValue($net, 'transitions', array($transition1, $transition2, $transition3));
 		TestReflection::setValue($this->object, 'net', $net);
 
@@ -261,7 +261,7 @@ class PNEngineTest extends TestCase
 	 */
 	public function testSetNet()
 	{
-		$net = new PNElementPetrinet('test');
+		$net = new PNPetrinet('test');
 		$this->object->setNet($net);
 		$this->assertEquals($net, TestReflection::getValue($this->object, 'net'));
 	}

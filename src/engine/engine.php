@@ -17,7 +17,7 @@
 class PNEngine
 {
 	/**
-	 * @var    PNElementPetrinet  The Petri Net.
+	 * @var    PNPetrinet  The Petri Net.
 	 * @since  1.0
 	 */
 	protected $net;
@@ -227,13 +227,13 @@ class PNEngine
 	/**
 	 * Set a Petri Net for execution.
 	 *
-	 * @param   PNElementPetrinet  $net  The Petri Net.
+	 * @param   PNPetrinet  $net  The Petri Net.
 	 *
 	 * @return  PNEngine  This method is chainable.
 	 *
 	 * @since   1.0
 	 */
-	public function setNet(PNElementPetrinet $net)
+	public function setNet(PNPetrinet $net)
 	{
 		// Set the property.
 		$this->net = $net;
@@ -244,7 +244,7 @@ class PNEngine
 	/**
 	 * Get the executing Petri Net.
 	 *
-	 * @return  PNElementPetrinet  The Petri Net.
+	 * @return  PNPetrinet  The Petri Net.
 	 *
 	 * @since   1.0
 	 */
