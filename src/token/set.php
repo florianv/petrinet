@@ -83,7 +83,7 @@ class PNTokenSet implements Countable, IteratorAggregate
 	 *
 	 * @param   PNToken  $token  The token.
 	 *
-	 * @return  PNSet  This method is chainable.
+	 * @return  PNTokenSet  This method is chainable.
 	 *
 	 * @since   1.0
 	 */
@@ -165,6 +165,27 @@ class PNTokenSet implements Countable, IteratorAggregate
 		$this->tokens = array();
 
 		return $tokens;
+	}
+
+	/**
+	 * Get the number of occurrences of the given token in the set.
+	 *
+	 * @param   PNToken  $token  The token.
+	 *
+	 * @return  integer  The number of occurrences.
+	 *
+	 * @since   1.0
+	 */
+	public function getTokenCount(PNToken $token)
+	{
+		$tokenSignature = serialize($token);
+
+		if (isset($this->tokens[$tokenSignature]))
+		{
+			return count($this->tokens[$tokenSignature]);
+		}
+
+		return 0;
 	}
 
 	/**

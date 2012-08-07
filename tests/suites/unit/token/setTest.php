@@ -209,6 +209,31 @@ class PNTokenSetTest extends TestCase
 	}
 
 	/**
+	 * Get the number of occurrences of the given token in the set.
+	 *
+	 * @return  void
+	 *
+	 * @covers  PNTokenSet::getTokenCount
+	 * @since   1.0
+	 */
+	public function testGetTokenCount()
+	{
+		$color1 = new PNColor(array('8', 'test', 'test'));
+		$color2 = new PNColor(array('9', 'test', 'test'));
+
+		$token1 = new PNToken($color1);
+		$token2 = new PNToken($color1);
+		$token3 = new PNToken($color2);
+
+		$this->object->addToken($token1)
+			->addToken($token2)
+			->addToken($token3);
+
+		$this->assertEquals(1, $this->object->getTokenCount($token3));
+		$this->assertEquals(2, $this->object->getTokenCount($token1));
+	}
+
+	/**
 	 * Get the set size.
 	 *
 	 * @return  void
