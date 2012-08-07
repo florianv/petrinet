@@ -12,16 +12,11 @@
  * Associated with a place, it is used to determine the tokens that can reside in it depending
  * on their color.
  *
- * Example :
- * $set = new PNColorSet(array('integer', 'float')) associated with a place,
- * will only allow tokens carrying data (color) which is a 2-tuple where the first element is an integer
- * and the second element a float.
- *
  * @package     Petrinet
  * @subpackage  Color
  * @since       1.0
  */
-class PNColorSet implements Countable
+class PNColorSet implements Countable, Serializable, IteratorAggregate
 {
 	/**
 	 * @var    array  A tuple of types.
@@ -161,6 +156,18 @@ class PNColorSet implements Countable
 	}
 
 	/**
+	 * Get an iterator on the color set.
+	 *
+	 * @return  Traversable  The Iterator.
+	 *
+	 * @since   1.0
+	 */
+	public function getIterator()
+	{
+		return new ArrayIterator($this->type);
+	}
+
+	/**
 	 * Get the set size.
 	 *
 	 * @return  integer  The number of types.
@@ -170,5 +177,31 @@ class PNColorSet implements Countable
 	public function count()
 	{
 		return count($this->type);
+	}
+
+	/**
+	 * Serialize the set.
+	 *
+	 * @return  string  The serialized set.
+	 *
+	 * @since   1.0
+	 */
+	public function serialize()
+	{
+		return serialize($this->type);
+	}
+
+	/**
+	 * Unserialize the set.
+	 *
+	 * @param   string  $set  The serialized set.
+	 *
+	 * @return  void
+	 *
+	 * @since   1.0
+	 */
+	public function unserialize($set)
+	{
+		$this->type = unserialize($set);
 	}
 }

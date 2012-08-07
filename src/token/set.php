@@ -14,7 +14,7 @@
  * @subpackage  Token
  * @since       1.0
  */
-class PNTokenSet implements Countable, IteratorAggregate
+class PNTokenSet implements Countable, Serializable, IteratorAggregate
 {
 	/**
 	 * @var    array  The tokens in this set.
@@ -205,5 +205,31 @@ class PNTokenSet implements Countable, IteratorAggregate
 		}
 
 		return $count;
+	}
+
+	/**
+	 * Serialize the set.
+	 *
+	 * @return  string  The serialized set.
+	 *
+	 * @since   1.0
+	 */
+	public function serialize()
+	{
+		return serialize($this->tokens);
+	}
+
+	/**
+	 * Unserialize the set.
+	 *
+	 * @param   string  $set  The serialized set.
+	 *
+	 * @return  void
+	 *
+	 * @since   1.0
+	 */
+	public function unserialize($set)
+	{
+		$this->tokens = unserialize($set);
 	}
 }

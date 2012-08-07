@@ -254,4 +254,29 @@ class PNTokenSetTest extends TestCase
 
 		$this->assertEquals(4, count($this->object));
 	}
+
+	/**
+	 * Serialize the set.
+	 *
+	 * @return  void
+	 *
+	 * @covers  PNTokenSet::serialize
+	 * @covers  PNTokenSet::unserialize
+	 * @since   1.0
+	 */
+	public function testSerializeUnserialize()
+	{
+		$color1 = new PNColor(array('random', 'test', array()));
+		$token1 = new PNToken;
+		$token2 = new PNToken($color1);
+
+		$this->object->addToken($token1)
+			->addToken($token2);
+
+		$ser = serialize($this->object);
+
+		$unserialized = unserialize($ser);
+
+		$this->assertEquals($unserialized, $this->object);
+	}
 }

@@ -177,6 +177,39 @@ class PNColorSetTest extends TestCase
 	}
 
 	/**
+	 * Get an iterator on the color set.
+	 *
+	 * @return  void
+	 *
+	 * @covers  PNColorSet::getIterator
+	 * @since   1.0
+	 */
+	public function getIterator()
+	{
+		$this->assertInstanceOf('ArrayIterator', $this->object->getIterator());
+	}
+
+	/**
+	 * Serialize the set.
+	 *
+	 * @return  void
+	 *
+	 * @covers  PNColorSet::serialize
+	 * @covers  PNColorSet::unserialize
+	 * @since   1.0
+	 */
+	public function testSerializeUnserialize()
+	{
+		$colorSet = new PNColorSet(array('integer', 'float', 'array', 'float'));
+
+		$ser = serialize($colorSet);
+
+		$unserialized = unserialize($ser);
+
+		$this->assertEquals($colorSet, $unserialized);
+	}
+
+	/**
 	 * Get the set size.
 	 *
 	 * @return  integer  void
