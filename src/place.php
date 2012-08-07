@@ -17,36 +17,48 @@
 class PNPlace implements PNBaseVisitable
 {
 	/**
-	 * @var    array  The input Arcs of this Place.
+	 * @var    array  The input arcs of this Place.
 	 * @since  1.0
 	 */
 	protected $inputs;
 
 	/**
-	 * @var    array  The ouput Arcs of this Place.
+	 * @var    array  The ouput arcs of this Place.
 	 * @since  1.0
 	 */
 	protected $outputs;
 
 	/**
-	 * @var    PNSet  The tokens Set.
+	 * @var    PNTokenSet  The tokens set.
 	 * @since  1.0
 	 */
 	protected $tokenSet;
 
 	/**
+	 * @var    PNColorSet  The color set.
+	 * @since  1.0
+	 */
+	protected $colorSet;
+
+	/**
 	 * Constructor.
 	 *
-	 * @param   PNSet  $tokenSet  A bag of tokens to add to this place.
-	 * @param   array  $inputs    An array of input arcs of this place (PNArcOutput).
-	 * @param   array  $outputs   An array of output arcs of this place (PNArcInput).
+	 * @param   PNTokenSet  $tokenSet  A token set to add to this place.
+	 * @param   PNColorSet  $colorSet  A color set to add to this place.
+	 * @param   array       $inputs    An array of input arcs of this place (PNArcOutput).
+	 * @param   array       $outputs   An array of output arcs of this place (PNArcInput).
 	 *
 	 * @since   1.0
 	 */
-	public function __construct(PNSet $tokenSet = null, array $inputs = array(), array $outputs = array())
+	public function __construct(PNTokenSet $tokenSet = null, PNColorSet $colorSet = null, array $inputs = array(), array $outputs = array())
 	{
-		$this->tokenSet = $tokenSet ? $tokenSet : new PNSet;
+		// Use the given token set or create an empty one.
+		$this->tokenSet = $tokenSet ? $tokenSet : new PNTokenSet;
 
+		// Use the given color set or create an empty one.
+		$this->colorSet = $colorSet ? $colorSet : new PNColorSet;
+
+		// If no input is given.
 		if (empty($inputs))
 		{
 			$this->inputs = $inputs;
@@ -54,12 +66,14 @@ class PNPlace implements PNBaseVisitable
 
 		else
 		{
+			// Try to add each input arc.
 			foreach ($inputs as $input)
 			{
 				$this->addInput($input);
 			}
 		}
 
+		// If no output is given.
 		if (empty($outputs))
 		{
 			$this->outputs = $outputs;
@@ -67,6 +81,7 @@ class PNPlace implements PNBaseVisitable
 
 		else
 		{
+			// Try to add each output arc.
 			foreach ($outputs as $output)
 			{
 				$this->addOutput($output);
@@ -131,6 +146,67 @@ class PNPlace implements PNBaseVisitable
 	}
 
 	/**
+	 * Set the color set of this Place.
+	 *
+	 * @param   PNColorSet  $set  The color set.
+	 *
+	 * @return  PNPlace  This method is chainable.
+	 *
+	 * @since   1.0
+	 */
+	public function setColorSet(PNColorSet $set)
+	{
+		$this->colorSet = $set;
+
+		return $this;
+	}
+
+	/**
+	 * Get the color set of this Place.
+	 *
+	 * @return  PNColorSet  The color set.
+	 *
+	 * @since   1.0
+	 */
+	public function getColorSet()
+	{
+		return $this->colorSet;
+	}
+
+	/**
+	 * Check if the given token can be added to this place.
+	 *
+	 * @param   PNToken  $token  The token.
+	 *
+	 * @return  boolean  True or false.
+	 *
+	 * @since   1.0
+	 */
+	public function isAllowed(PNToken $token)
+	{
+		// If the token is colored.
+		if ($token->isColored())
+		{
+			// It can be added only if its color matches the place color set.
+			if (!$this->colorSet->matches($token->getColor()))
+			{
+				return false;
+			}
+		}
+
+		else
+		{
+			// If the token is not colored and a color set is specified for this place.
+			if (count($this->colorSet) > 0)
+			{
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	/**
 	 * Add a Token in this Place.
 	 *
 	 * @param   PNToken  $token  The token.
@@ -139,9 +215,9 @@ class PNPlace implements PNBaseVisitable
 	 *
 	 * @since   1.0
 	 */
-	public function addToken($token)
+	public function addToken(PNToken $token)
 	{
-		$this->tokenSet->add($token);
+		$this->tokenSet->addToken($token);
 
 		return $this;
 	}
@@ -157,7 +233,10 @@ class PNPlace implements PNBaseVisitable
 	 */
 	public function addTokens(array $tokens)
 	{
-		$this->tokenSet->addMultiple($tokens);
+		foreach ($tokens as $token)
+		{
+			$this->tokenSet->addToken($token);
+		}
 
 		return $this;
 	}
@@ -171,9 +250,9 @@ class PNPlace implements PNBaseVisitable
 	 *
 	 * @since   1.0
 	 */
-	public function removeToken($token)
+	public function removeToken(PNToken $token)
 	{
-		$this->tokenSet->remove($token);
+		$this->tokenSet->removeToken($token);
 
 		return $this;
 	}
@@ -199,7 +278,7 @@ class PNPlace implements PNBaseVisitable
 	 */
 	public function getTokens()
 	{
-		return $this->tokenSet->getElements();
+		return $this->tokenSet->getTokens();
 	}
 
 	/**

@@ -36,8 +36,8 @@ class PNPlaceTest extends TestCase
 		$this->object = new PNPlace;
 
 		// Mock the token set.
-		$setMock = $this->getMock('PNSet');
-		TestReflection::setValue($this->object, 'tokenSet', $setMock);
+		$tokenSetMock = $this->getMock('PNTokenSet');
+		TestReflection::setValue($this->object, 'tokenSet', $tokenSetMock);
 	}
 
 	/**
@@ -53,18 +53,21 @@ class PNPlaceTest extends TestCase
 		// Test without param.
 		$place = new PNPlace;
 
-		$this->assertInstanceOf('PNSet', TestReflection::getValue($place, 'tokenSet'));
+		$this->assertInstanceOf('PNTokenSet', TestReflection::getValue($place, 'tokenSet'));
+		$this->assertInstanceOf('PNColorSet', TestReflection::getValue($place, 'colorSet'));
 		$this->assertEmpty(TestReflection::getValue($place, 'inputs'));
 		$this->assertEmpty(TestReflection::getValue($place, 'outputs'));
 
 		// Test with params.
-		$set = new PNSet;
+		$tokenSet = new PNTokenSet;
+		$colorSet = new PNColorSet;
 		$inputs = array(new PNArcOutput, new PNArcOutput);
 		$outputs = array(new PNArcInput, new PNArcInput);
 
-		$place = new PNPlace($set, $inputs, $outputs);
+		$place = new PNPlace($tokenSet, $colorSet, $inputs, $outputs);
 
-		$this->assertEquals($set, TestReflection::getValue($place, 'tokenSet'));
+		$this->assertEquals($tokenSet, TestReflection::getValue($place, 'tokenSet'));
+		$this->assertEquals($colorSet, TestReflection::getValue($place, 'colorSet'));
 		$this->assertEquals($inputs, TestReflection::getValue($place, 'inputs'));
 		$this->assertEquals($outputs, TestReflection::getValue($place, 'outputs'));
 	}
@@ -103,7 +106,7 @@ class PNPlaceTest extends TestCase
 	 * @since   1.0
 	 * @expectedException PHPUnit_Framework_Error
 	 */
-	public function testAddInputException()
+	public function testAddInputError()
 	{
 		$this->object->addInput(new stdClass);
 	}
@@ -167,7 +170,7 @@ class PNPlaceTest extends TestCase
 	 * @since   1.0
 	 * @expectedException PHPUnit_Framework_Error
 	 */
-	public function testAddOutputException()
+	public function testAddOutputError()
 	{
 		$this->object->addOutput(new stdClass);
 	}
@@ -198,6 +201,70 @@ class PNPlaceTest extends TestCase
 	}
 
 	/**
+	 * Set the color set of this Place.
+	 *
+	 * @return  void
+	 *
+	 * @covers  PNPlace::setColorSet
+	 * @since   1.0
+	 */
+	public function testSetColorSet()
+	{
+		$set = new PNColorSet(array('integer', 'float'));
+		$this->object->setColorSet($set);
+
+		$this->assertEquals(TestReflection::getValue($this->object, 'colorSet'), $set);
+	}
+
+	/**
+	 * Get the color set of this Place.
+	 *
+	 * @return  void
+	 *
+	 * @covers  PNPlace::getColorSet
+	 * @since   1.0
+	 */
+	public function testGetColorSet()
+	{
+		TestReflection::setValue($this->object, 'colorSet', true);
+		$this->assertTrue($this->object->getColorSet());
+	}
+
+	/**
+	 * Check if the given token can be added to this place.
+	 *
+	 * @return  void
+	 *
+	 * @covers  PNPlace::isAllowed
+	 * @since   1.0
+	 */
+	public function testIsAllowed()
+	{
+		$colorSet = new PNColorSet(array('integer', 'float', 'float'));
+		TestReflection::setValue($this->object, 'colorSet', $colorSet);
+
+		$color = new PNColor(array(1, 1.2, 2.2));
+		$token = new PNToken($color);
+
+		// Try with an allowed token.
+		$this->assertTrue($this->object->isAllowed($token));
+
+		$color = new PNColor(array(1, '1.2', 2.2));
+		$token = new PNToken($color);
+
+		// Try with a not allowed token.
+		$this->assertFalse($this->object->isAllowed($token));
+
+		// Try with an non coloured token.
+		$token = new PNToken;
+		$this->assertFalse($this->object->isAllowed($token));
+
+		// Try with a non specified color set and notcolored token.
+		TestReflection::setValue($this->object, 'colorSet', new PNColorSet);
+		$this->assertTrue($this->object->isAllowed($token));
+	}
+
+	/**
 	 * Add a Token in this Place.
 	 *
 	 * @return  void
@@ -211,9 +278,9 @@ class PNPlaceTest extends TestCase
 		$mock = TestReflection::getValue($this->object, 'tokenSet');
 
 		$mock->expects($this->once())
-			->method('add');
+			->method('addToken');
 
-		$this->object->addToken(new stdClass);
+		$this->object->addToken(new PNToken);
 	}
 
 	/**
@@ -229,10 +296,10 @@ class PNPlaceTest extends TestCase
 		// Get the mocked tokenset.
 		$mock = TestReflection::getValue($this->object, 'tokenSet');
 
-		$mock->expects($this->once())
-			->method('addMultiple');
+		$mock->expects($this->exactly(3))
+			->method('addToken');
 
-		$this->object->addTokens(array());
+		$this->object->addTokens(array(new PNToken, new PNToken, new PNToken));
 	}
 
 	/**
@@ -249,9 +316,9 @@ class PNPlaceTest extends TestCase
 		$mock = TestReflection::getValue($this->object, 'tokenSet');
 
 		$mock->expects($this->once())
-			->method('remove');
+			->method('removeToken');
 
-		$this->object->removeToken(new stdClass);
+		$this->object->removeToken(new PNToken);
 	}
 
 	/**
@@ -287,7 +354,7 @@ class PNPlaceTest extends TestCase
 		$mock = TestReflection::getValue($this->object, 'tokenSet');
 
 		$mock->expects($this->once())
-			->method('getElements');
+			->method('getTokens');
 
 		$this->object->getTokens();
 	}
