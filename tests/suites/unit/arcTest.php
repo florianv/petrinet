@@ -135,6 +135,6 @@ class PNArcTest extends TestCase
 	public function testGetExpression()
 	{
 		TestReflection::setValue($this->object, 'expression', true);
-		$this->assertTrue(TestReflection::getValue($this->object, 'expression'));
+		$this->assertTrue($this->object->getExpression());
 	}
 }
