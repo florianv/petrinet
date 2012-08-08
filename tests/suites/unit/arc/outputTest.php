@@ -49,13 +49,16 @@ class PNArcOutputTest extends TestCase
 		$arc = new PNArcOutput;
 		$this->assertNull(TestReflection::getValue($arc, 'input'));
 		$this->assertNull(TestReflection::getValue($arc, 'output'));
+		$this->assertNull(TestReflection::getValue($arc, 'expression'));
 
 		$transition = new PNTransition;
 		$place = new PNPlace;
-		$arc = new PNArcOutput($transition, $place);
+		$expression = $this->getMockForAbstractClass('PNArcExpression');
+		$arc = new PNArcOutput($transition, $place, $expression);
 
 		$this->assertEquals(TestReflection::getValue($arc, 'input'), $transition);
 		$this->assertEquals(TestReflection::getValue($arc, 'output'), $place);
+		$this->assertEquals(TestReflection::getValue($arc, 'expression'), $expression);
 	}
 
 	/**

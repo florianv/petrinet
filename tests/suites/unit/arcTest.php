@@ -37,6 +37,24 @@ class PNArcTest extends TestCase
 	}
 
 	/**
+	 * Constructor.
+	 *
+	 * @return  void
+	 *
+	 * @covers  PNArc::getInput
+	 * @since   1.0
+	 */
+	public function test__construct()
+	{
+		$this->assertNull(TestReflection::getValue($this->object, 'expression'));
+
+		$expression = $this->getMockForAbstractClass('PNArcExpression');
+		$arc = $this->getMockForAbstractClass('PNArc', array($expression));
+
+		$this->assertEquals(TestReflection::getValue($arc, 'expression'), $expression);
+	}
+
+	/**
 	 * Get the input Place or Transition of this Arc.
 	 *
 	 * @return  void
@@ -105,6 +123,24 @@ class PNArcTest extends TestCase
 		// Change the weight.
 		TestReflection::setValue($this->object, 'weight', 8);
 		$this->assertEquals(8, $this->object->getWeight());
+	}
+
+	/**
+	 * Check if the arc has an expression attached to it.
+	 *
+	 * @return  void
+	 *
+	 * @covers  PNArc::hasExpression
+	 * @since   1.0
+	 */
+	public function testHasExpression()
+	{
+		$this->assertFalse($this->object->hasExpression());
+
+		$expression = $this->getMockForAbstractClass('PNArcExpression');
+		TestReflection::setValue($this->object, 'expression', $expression);
+
+		$this->assertTrue($this->object->hasExpression());
 	}
 
 	/**

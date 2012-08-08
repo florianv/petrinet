@@ -43,6 +43,18 @@ abstract class PNArc
 	protected $weight = 1;
 
 	/**
+	 * Constructor.
+	 *
+	 * @param   PNArcExpression  $expression  The arc's expression.
+	 *
+	 * @since   1.0
+	 */
+	public function __construct(PNArcExpression $expression = null)
+	{
+		$this->expression = $expression;
+	}
+
+	/**
 	 * Get the input Place or Transition of this Arc.
 	 *
 	 * @return  object  The input Place or Transition.
@@ -92,6 +104,18 @@ abstract class PNArc
 	public function getWeight()
 	{
 		return $this->weight;
+	}
+
+	/**
+	 * Check if the arc has an expression attached to it.
+	 *
+	 * @return  boolean  True if it's the case, false otherwise.
+	 *
+	 * @since   1.0
+	 */
+	public function hasExpression()
+	{
+		return !is_null($this->expression);
 	}
 
 	/**

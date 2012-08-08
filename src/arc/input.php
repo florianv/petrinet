@@ -20,15 +20,18 @@ class PNArcInput extends PNArc implements PNBaseVisitable
 	/**
 	 * Constructor.
 	 *
-	 * @param   PNPlace       $input   The input Place.
-	 * @param   PNTransition  $output  The output Transition.
+	 * @param   PNPlace          $input       The input Place.
+	 * @param   PNTransition     $output      The output Transition.
+	 * @param   PNArcExpression  $expression  The arc expression.
 	 *
 	 * @since   1.0
 	 */
-	public function __construct(PNPlace $input = null, PNTransition $output = null)
+	public function __construct(PNPlace $input = null, PNTransition $output = null, PNArcExpression $expression = null)
 	{
 		$this->input = $input;
 		$this->output = $output;
+
+		parent::__construct($expression);
 	}
 
 	/**
