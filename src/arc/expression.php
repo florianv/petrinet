@@ -9,6 +9,8 @@
 
 /**
  * Base class for PHP expressions associated with an arc.
+ * Arcs expressions are used to transform the token color (ie. operating on its values).
+ *
  * The expression arguments property contains an (ordered) array of PHP types.
  * The arc expression arguments must match the attached place color set.
  *
@@ -60,7 +62,7 @@ abstract class PNArcExpression
 	 * The execute method can return array($arguments[0]+1, $arguments[1]+2).
 	 *
 	 * The execution engine will bind different values (token colors) to $arguments[0] and $arguments[1]
-	 * and execute your expression, to verify/produce tokens.
+	 * and execute the expression to produce new tokens.
 	 *
 	 * @param   array  $arguments  The expression arguments.
 	 *
@@ -73,7 +75,7 @@ abstract class PNArcExpression
 	/**
 	 * Check if the argument is allowed.
 	 *
-	 * @param   mixed  $argument  The argument.
+	 * @param   string  $argument  The argument.
 	 *
 	 * @return  boolean  True if allowed, false otherwise.
 	 *
