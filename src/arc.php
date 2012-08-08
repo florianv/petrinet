@@ -107,6 +107,15 @@ abstract class PNArc
 	}
 
 	/**
+	 * Check if the arc expression is valid.
+	 *
+	 * @return  boolean  True if it's the case, false otherwise.
+	 *
+	 * @since   1.0
+	 */
+	abstract public function validateExpression();
+
+	/**
 	 * Check if the arc has an expression attached to it.
 	 *
 	 * @return  boolean  True if it's the case, false otherwise.

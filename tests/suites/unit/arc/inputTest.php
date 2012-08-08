@@ -112,6 +112,39 @@ class PNArcInputTest extends TestCase
 	}
 
 	/**
+	 * Check if the arc expression is valid.
+	 *
+	 * @return  void
+	 *
+	 * @covers  PNArcInput::validateExpression
+	 * @since   1.0
+	 */
+	public function testValidateExpression()
+	{
+		$this->assertFalse($this->object->validateExpression());
+
+		// Add an expression.
+		$expression = $this->getMockForAbstractClass('PNArcExpression', array(array('integer', 'float', 'array')));
+		TestReflection::setValue($this->object, 'expression', $expression);
+
+		$this->assertFalse($this->object->validateExpression());
+
+		// Add a place with a corresponding color set.
+		$colorSet = new PNColorSet(array('integer', 'float', 'array'));
+		$place = new PNPlace(new PNTokenSet, $colorSet);
+		TestReflection::setValue($this->object, 'input', $place);
+
+		$this->assertTrue($this->object->validateExpression());
+
+		// Test with a place with a different color set.
+		$colorSet = new PNColorSet(array('float', 'float', 'array'));
+		$place = new PNPlace(new PNTokenSet, $colorSet);
+		TestReflection::setValue($this->object, 'input', $place);
+
+		$this->assertFalse($this->object->validateExpression());
+	}
+
+	/**
 	 * Tests the error thrown by the PNArcInput::setOutput method.
 	 *
 	 * @return  void
@@ -120,7 +153,7 @@ class PNArcInputTest extends TestCase
 	 * @since   1.0
 	 * @expectedException PHPUnit_Framework_Error
 	 */
-	public function testSetOutputException()
+	public function testSetOutputError()
 	{
 		$this->object->setOutput(new stdClass);
 	}
