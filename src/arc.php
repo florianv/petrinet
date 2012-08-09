@@ -116,6 +116,87 @@ abstract class PNArc
 	abstract public function validateExpression();
 
 	/**
+	 * Check if the arc expression is valid.
+	 *
+	 * @param   PNPlace       $place       The Place.
+	 * @param   PNTransition  $transition  The transition.
+	 *
+	 * @return  boolean  True if it's the case, false otherwise.
+	 *
+	 * @since   1.0
+	 */
+	protected function doValidateExpression(PNPlace $place, PNTransition $transition)
+	{
+		if ($this->hasExpression())
+		{
+			// The arc expression arguments must match the place color set.
+			$expressionArgs = $this->expression->getArguments();
+			$colorSet = $place->getColorSet()->getType();
+
+			$diff = array_diff($expressionArgs, $colorSet);
+
+			if (empty($diff))
+			{
+				// The arc expression must evaluate to a colour in the transition color set.
+				$arguments = array();
+
+				// Generate arguments.
+				foreach ($expressionArgs as $argument)
+				{
+					// Create a random variable.
+					$lambdaVar = 'test';
+
+					// Cast the variable.
+					settype($lambdaVar, $argument);
+
+					$arguments[] = $lambdaVar;
+				}
+
+				// Execute the expression.
+				try
+				{
+					$return = $this->expression->execute($arguments);
+				}
+				catch (Exception $e)
+				{
+					return false;
+				}
+
+				if (!is_array($return))
+				{
+					return false;
+				}
+
+				$types = array();
+
+				foreach ($return as $value)
+				{
+					if (is_float($value))
+					{
+						$types[] = 'float';
+					}
+
+					else
+					{
+						$types[] = gettype($value);
+					}
+				}
+
+				// Verify the returned values types are a sub-set of the output transition color set.
+				$transitionColorSet = $transition->getColorSet()->getType();
+				$diff = array_diff($transitionColorSet, $types);
+
+				if (count($diff) == (count($transitionColorSet) - count($types)))
+				{
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
+	/**
 	 * Check if the arc has an expression attached to it.
 	 *
 	 * @return  boolean  True if it's the case, false otherwise.

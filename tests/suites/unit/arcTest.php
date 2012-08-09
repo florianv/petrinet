@@ -126,6 +126,65 @@ class PNArcTest extends TestCase
 	}
 
 	/**
+	 * Check if the arc expression is valid.
+	 *
+	 * @return  void
+	 *
+	 * @covers  PNArcInput::doValidateExpression
+	 * @since   1.0
+	 */
+	public function testDoValidateExpression()
+	{
+		// Create a place.
+		$colorSet = new PNColorSet(array('integer', 'float', 'array'));
+		$place = new PNPlace(new PNTokenSet, $colorSet);
+		TestReflection::setValue($this->object, 'input', $place);
+
+		// Create a transition.
+		$colorSet = new PNColorSet(array('integer', 'float', 'array'));
+		$transition = new PNTransition($colorSet);
+		TestReflection::setValue($this->object, 'output', $transition);
+
+		// No expression set.
+		$this->assertFalse(TestReflection::invoke($this->object, 'doValidateExpression', $place, $transition));
+
+		// Mock the expression.
+		$expression1 = $this->getMockForAbstractClass('PNArcExpression', array(array('integer', 'float', 'array')));
+		$expression1->expects($this->once())
+			->method('execute')
+			->will($this->returnValue(array(8, 8.2, array())));
+
+		TestReflection::setValue($this->object, 'expression', $expression1);
+
+		$this->assertTrue(TestReflection::invoke($this->object, 'doValidateExpression', $place, $transition));
+
+		// Test a sub-set of the transition color set.
+		$expression2 = $this->getMockForAbstractClass('PNArcExpression', array(array('integer', 'float', 'array')));
+		$expression2->expects($this->once())
+			->method('execute')
+			->will($this->returnValue(array(8, 8.2)));
+
+		TestReflection::setValue($this->object, 'expression', $expression2);
+
+		$this->assertTrue(TestReflection::invoke($this->object, 'doValidateExpression', $place, $transition));
+
+		// Test with non matching transition color set return values types.
+		$expression3 = $this->getMockForAbstractClass('PNArcExpression', array(array('integer', 'float', 'array')));
+		$expression3->expects($this->once())
+			->method('execute')
+			->will($this->returnValue(array(8, 8.2, 3)));
+
+		TestReflection::setValue($this->object, 'expression', $expression3);
+
+		$this->assertFalse(TestReflection::invoke($this->object, 'doValidateExpression', $place, $transition));
+
+		// Test with non matching expression arguments.
+		$expression4 = $this->getMockForAbstractClass('PNArcExpression', array(array('float', 'float', 'array')));
+		TestReflection::setValue($this->object, 'expression', $expression4);
+		$this->assertFalse(TestReflection::invoke($this->object, 'doValidateExpression', $place, $transition));
+	}
+
+	/**
 	 * Check if the arc has an expression attached to it.
 	 *
 	 * @return  void

@@ -75,21 +75,9 @@ class PNArcOutput extends PNArc implements PNBaseVisitable
 	 */
 	public function validateExpression()
 	{
-		if ($this->hasExpression())
+		if (!is_null($this->output) && !is_null($this->input))
 		{
-			if (!is_null($this->output))
-			{
-				// The arc expression must evaluate to a colour in the colour set of the attached place.
-				$expressionArgs = $this->expression->getArguments();
-				$colorSet = $this->output->getColorSet()->getType();
-
-				$diff = array_diff($expressionArgs, $colorSet);
-
-				if (empty($diff))
-				{
-					return true;
-				}
-			}
+			return parent::doValidateExpression($this->output, $this->input);
 		}
 
 		return false;
