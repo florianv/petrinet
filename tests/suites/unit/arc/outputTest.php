@@ -112,19 +112,6 @@ class PNArcOutputTest extends TestCase
 	}
 
 	/**
-	 * Check if the arc expression is valid.
-	 *
-	 * @return  void
-	 *
-	 * @covers  PNArcInput::validateExpression
-	 * @since   1.0
-	 */
-	public function testValidateExpression()
-	{
-		$this->assertFalse($this->object->validateExpression());
-	}
-
-	/**
 	 * Tests the error thrown by the PNArcOutput::setOutput method.
 	 *
 	 * @return  void

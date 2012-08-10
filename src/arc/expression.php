@@ -11,8 +11,8 @@
  * Base class for PHP expressions associated with an arc.
  * Arcs expressions are used to transform the token color (ie. operating on its values).
  *
- * The expression arguments property contains an (ordered) array of PHP types.
- * The arc expression arguments must match the attached place color set.
+ * The expression arguments property contains an (ordered) array of PHP types
+ * that must match the attached place/transition color set.
  *
  * @package     Petrinet
  * @subpackage  Arc
@@ -54,8 +54,7 @@ abstract class PNArcExpression
 
 	/**
 	 * Execute the expression.
-	 * The method must return an array of the same size than the $arguments class property,
-	 * and containing elements of the same type.
+	 * The method must return an array of data compatible with the output place/transition color set.
 	 *
 	 * Example :
 	 * The expression arguments are : $arguments = array('integer', 'float').

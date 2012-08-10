@@ -130,11 +130,12 @@ class PNArcTest extends TestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers  PNArcInput::doValidateExpression
+	 * @covers  PNArcInput::validateExpression
 	 * @since   1.0
 	 */
-	public function testDoValidateExpression()
+	public function testValidateExpression()
 	{
+		// From a a place to a transition.
 		// Create a place.
 		$colorSet = new PNColorSet(array('integer', 'float', 'array'));
 		$place = new PNPlace(new PNTokenSet, $colorSet);
@@ -146,7 +147,7 @@ class PNArcTest extends TestCase
 		TestReflection::setValue($this->object, 'output', $transition);
 
 		// No expression set.
-		$this->assertFalse(TestReflection::invoke($this->object, 'doValidateExpression', $place, $transition));
+		$this->assertFalse($this->object->validateExpression());
 
 		// Mock the expression.
 		$expression1 = $this->getMockForAbstractClass('PNArcExpression', array(array('integer', 'float', 'array')));
@@ -156,7 +157,7 @@ class PNArcTest extends TestCase
 
 		TestReflection::setValue($this->object, 'expression', $expression1);
 
-		$this->assertTrue(TestReflection::invoke($this->object, 'doValidateExpression', $place, $transition));
+		$this->assertTrue($this->object->validateExpression());
 
 		// Test a sub-set of the transition color set.
 		$expression2 = $this->getMockForAbstractClass('PNArcExpression', array(array('integer', 'float', 'array')));
@@ -166,7 +167,7 @@ class PNArcTest extends TestCase
 
 		TestReflection::setValue($this->object, 'expression', $expression2);
 
-		$this->assertTrue(TestReflection::invoke($this->object, 'doValidateExpression', $place, $transition));
+		$this->assertTrue($this->object->validateExpression());
 
 		// Test with non matching transition color set return values types.
 		$expression3 = $this->getMockForAbstractClass('PNArcExpression', array(array('integer', 'float', 'array')));
@@ -176,12 +177,32 @@ class PNArcTest extends TestCase
 
 		TestReflection::setValue($this->object, 'expression', $expression3);
 
-		$this->assertFalse(TestReflection::invoke($this->object, 'doValidateExpression', $place, $transition));
+		$this->assertFalse($this->object->validateExpression());
 
 		// Test with non matching expression arguments.
 		$expression4 = $this->getMockForAbstractClass('PNArcExpression', array(array('float', 'float', 'array')));
 		TestReflection::setValue($this->object, 'expression', $expression4);
-		$this->assertFalse(TestReflection::invoke($this->object, 'doValidateExpression', $place, $transition));
+		$this->assertFalse($this->object->validateExpression());
+
+		// From a transition to a place.
+		// Create a transition.
+		$colorSet = new PNColorSet(array('integer', 'float', 'array'));
+		$transition = new PNTransition($colorSet);
+		TestReflection::setValue($this->object, 'input', $transition);
+
+		$colorSet = new PNColorSet(array('integer', 'float', 'array'));
+		$place = new PNPlace(new PNTokenSet, $colorSet);
+		TestReflection::setValue($this->object, 'output', $place);
+
+		// Mock the expression.
+		$expression1 = $this->getMockForAbstractClass('PNArcExpression', array(array('integer', 'float', 'array')));
+		$expression1->expects($this->once())
+			->method('execute')
+			->will($this->returnValue(array(8, 8.2, array())));
+
+		TestReflection::setValue($this->object, 'expression', $expression1);
+
+		$this->assertTrue($this->object->validateExpression());
 	}
 
 	/**

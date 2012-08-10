@@ -67,23 +67,6 @@ class PNArcOutput extends PNArc implements PNBaseVisitable
 	}
 
 	/**
-	 * Check if the arc expression is valid.
-	 *
-	 * @return  boolean  True if it's the case, false otherwise.
-	 *
-	 * @since   1.0
-	 */
-	public function validateExpression()
-	{
-		if (!is_null($this->output) && !is_null($this->input))
-		{
-			return parent::doValidateExpression($this->output, $this->input);
-		}
-
-		return false;
-	}
-
-	/**
 	 * Accept the Visitor.
 	 *
 	 * @param   PNBaseVisitor  $visitor  The Visitor.
