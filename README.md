@@ -96,15 +96,12 @@ $transition = new PNTransition($colorSet);
 <?php
 
 // Creating a Petri Net.
-$net = new PNPetrinet('MyPetrinet');
+$net = new PNPetrinet('MyPetrinet'); // Or $net = PNPetrinet::getInstance('MyPetrinet');
 
-// Or.
-$net = PNPetrinet::getInstance('MyPetrinet');
-
-// Creating a Color Set.
+// Creating a Color Set for The Place and Transition.
 $colorSet = new PNColorSet(array('integer', 'float'));
 
-// Creating one Place.
+// Creating a Place.
 $place = $net->createPlace($colorSet);
 
 // Creating a Color Token.
