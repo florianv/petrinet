@@ -3,17 +3,16 @@ Petrinet
 
 A simple colored Petri net Framework written in PHP.
 
-Requirements
-============
+## Requirements
 
 You must be familiar with Colored Petri Nets.
 
 See :
 (www.daimi.au.dk/~kjensen/papers_books/use.pdf)
 
-# Using the framework.
+## Using the framework.
 
-## Creating a color set
+### Creating a color set
 
 ```php
 <?php
@@ -23,7 +22,7 @@ See :
 $colorSet = new PNColorSet(array('integer', 'float'));
 ```
 
-## Creating a color
+### Creating a color
 
 ```php
 <?php
