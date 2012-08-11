@@ -138,7 +138,7 @@ class PNArcTest extends TestCase
 		// From a a place to a transition.
 		// Create a place.
 		$colorSet = new PNColorSet(array('integer', 'float', 'array'));
-		$place = new PNPlace(new PNTokenSet, $colorSet);
+		$place = new PNPlace($colorSet);
 		TestReflection::setValue($this->object, 'input', $place);
 
 		// Create a transition.
@@ -191,7 +191,7 @@ class PNArcTest extends TestCase
 		TestReflection::setValue($this->object, 'input', $transition);
 
 		$colorSet = new PNColorSet(array('integer', 'float', 'array'));
-		$place = new PNPlace(new PNTokenSet, $colorSet);
+		$place = new PNPlace($colorSet);
 		TestReflection::setValue($this->object, 'output', $place);
 
 		// Mock the expression.
