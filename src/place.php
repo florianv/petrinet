@@ -207,7 +207,9 @@ class PNPlace implements PNBaseVisitable
 	}
 
 	/**
-	 * Add a Token in this Place.
+	 * Add a Token in this Place without checking if the token color matches
+	 * the place color set.
+	 * Do not use this method.
 	 *
 	 * @param   PNToken  $token  The token.
 	 *
@@ -215,11 +217,32 @@ class PNPlace implements PNBaseVisitable
 	 *
 	 * @since   1.0
 	 */
-	public function addToken(PNToken $token)
+	public function addTokenWithoutCheck(PNToken $token)
 	{
 		$this->tokenSet->addToken($token);
 
 		return $this;
+	}
+
+	/**
+	 * Add a Token in this Place, only if it is allowed.
+	 * This method is used to set the initial marking.
+	 *
+	 * @param   PNToken  $token  The token.
+	 *
+	 * @return  boolean  True if the token is successfully added, false otherwise.
+	 *
+	 * @since   1.0
+	 */
+	public function addToken(PNToken $token)
+	{
+		if ($this->isAllowed($token))
+		{
+			$this->tokenSet->addToken($token);
+			return true;
+		}
+
+		return false;
 	}
 
 	/**
@@ -235,7 +258,7 @@ class PNPlace implements PNBaseVisitable
 	{
 		foreach ($tokens as $token)
 		{
-			$this->tokenSet->addToken($token);
+			$this->addToken($token);
 		}
 
 		return $this;

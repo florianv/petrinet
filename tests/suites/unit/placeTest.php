@@ -269,10 +269,10 @@ class PNPlaceTest extends TestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers  PNPlace::addToken
+	 * @covers  PNPlace::addTokenWithoutCheck
 	 * @since   1.0
 	 */
-	public function testAddToken()
+	public function testAddTokenWithoutCheck()
 	{
 		// Get the mocked tokenset.
 		$mock = TestReflection::getValue($this->object, 'tokenSet');
@@ -281,6 +281,32 @@ class PNPlaceTest extends TestCase
 			->method('addToken');
 
 		$this->object->addToken(new PNToken);
+	}
+
+	/**
+	 * Add a Token in this Place, only if it is allowed.
+	 *
+	 * @return  void
+	 *
+	 * @covers  PNPlace::addToken
+	 * @since   1.0
+	 */
+	public function testAddToken()
+	{
+		// Test with an allowed token.
+		$color = new PNColor(array(1, 'test'));
+		$token = new PNToken($color);
+
+		$colorSet = new PNColorSet(array('integer', 'string'));
+		TestReflection::setValue($this->object, 'colorSet', $colorSet);
+
+		$this->assertTrue($this->object->addToken($token));
+
+		// Test with non allowed token.
+		$color = new PNColor(array(1, 1));
+		$token = new PNToken($color);
+
+		$this->assertFalse($this->object->addToken($token));
 	}
 
 	/**
@@ -293,13 +319,48 @@ class PNPlaceTest extends TestCase
 	 */
 	public function testAddTokens()
 	{
-		// Get the mocked tokenset.
-		$mock = TestReflection::getValue($this->object, 'tokenSet');
+		// Set the token set.
+		TestReflection::setValue($this->object, 'tokenSet', new PNTokenSet);
 
-		$mock->expects($this->exactly(3))
-			->method('addToken');
+		// Test with a allowed tokens.
+		$color1 = new PNColor(array(1, 'test'));
+		$token1 = new PNToken($color1);
 
-		$this->object->addTokens(array(new PNToken, new PNToken, new PNToken));
+		$color2 = new PNColor(array(22, 'hello'));
+		$token2 = new PNToken($color2);
+
+		// Set the place color set.
+		$colorSet = new PNColorSet(array('integer', 'string'));
+		TestReflection::setValue($this->object, 'colorSet', $colorSet);
+
+		// Add the tokens.
+		$this->object->addTokens(array($token1, $token2));
+
+		$tokenSet = TestReflection::getValue($this->object, 'tokenSet');
+		$tokens = $tokenSet->getTokens();
+
+		$tokens = array_values($tokens);
+
+		$this->assertContains($token1, $tokens[0]);
+		$this->assertContains($token2, $tokens[1]);
+
+		// Reset the tokenSet.
+		TestReflection::setValue($this->object, 'tokenSet', new PNTokenSet);
+
+		// Test with non allowed tokens.
+		$color1 = new PNColor(array('test', 'test'));
+		$token1 = new PNToken($color1);
+
+		$color2 = new PNColor(array(array(3), 'hello'));
+		$token2 = new PNToken($color2);
+
+		// Add the tokens.
+		$this->object->addTokens(array($token1, $token2));
+
+		$tokenSet = TestReflection::getValue($this->object, 'tokenSet');
+		$tokens = $tokenSet->getTokens();
+
+		$this->assertEmpty($tokens);
 	}
 
 	/**

@@ -170,7 +170,7 @@ abstract class PNArc
 					}
 				}
 
-				// Verify the returned values types are a sub-set of the output transition color set.
+				// Verify the returned values types are a sub-set of the output transition/place color set.
 				$transitionColorSet = $this->output->getColorSet()->getType();
 				$diff = array_diff($transitionColorSet, $types);
 
