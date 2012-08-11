@@ -29,23 +29,24 @@ class PNTransition implements PNBaseVisitable
 	protected $outputs;
 
 	/**
-	 * @var    PNGuard  A Guard for this Transition.
+	 * @var    PNColorSet  The Transition color set.
 	 * @since  1.0
 	 */
-	protected $guard;
+	protected $colorSet;
 
 	/**
 	 * Constructor.
 	 *
-	 * @param   PNGuard  $guard    A Guard for this Transition.
-	 * @param   array    $inputs   The input arcs of this Transition (PNArcInput).
-	 * @param   array    $outputs  The output arcs of this Transition (PNArcOutput).
+	 * @param   PNColorSet  $colorSet  The transition color set.
+	 * @param   array       $inputs    The input arcs of this Transition (PNArcInput).
+	 * @param   array       $outputs   The output arcs of this Transition (PNArcOutput).
 	 *
 	 * @since   1.0
 	 */
-	public function __construct(PNGuard $guard = null, array $inputs = array(), array $outputs = array())
+	public function __construct(PNColorSet $colorSet = null, array $inputs = array(), array $outputs = array())
 	{
-		$this->guard = $guard;
+		// Take the given color set or create an empty one.
+		$this->colorSet = $colorSet ? $colorSet : new PNColorSet;
 
 		if (empty($inputs))
 		{
@@ -131,43 +132,31 @@ class PNTransition implements PNBaseVisitable
 	}
 
 	/**
-	 * Set a Guard for this Transition.
+	 * Set the color set of this Transition.
 	 *
-	 * @param   PNGuard  $guard  The Guard.
+	 * @param   PNColorSet  $set  The color set.
 	 *
-	 * @return  PNTransition This method is chainable.
+	 * @return  PNPlace  This method is chainable.
 	 *
 	 * @since   1.0
 	 */
-	public function setGuard(PNGuard $guard)
+	public function setColorSet(PNColorSet $set)
 	{
-		$this->guard = $guard;
+		$this->colorSet = $set;
 
 		return $this;
 	}
 
 	/**
-	 * Get the Guard of this Transition.
+	 * Get the color set of this Transition.
 	 *
-	 * @return  PNGuard  $guard  The Guard.
-	 *
-	 * @since   1.0
-	 */
-	public function getGuard()
-	{
-		return $this->guard;
-	}
-
-	/**
-	 * Check if this Transition is Guarded.
-	 *
-	 * @return  boolean  True if Guarded, false otherwise.
+	 * @return  PNColorSet  The color set.
 	 *
 	 * @since   1.0
 	 */
-	public function isGuarded()
+	public function getColorSet()
 	{
-		return $this->guard ? true : false;
+		return $this->colorSet;
 	}
 
 	/**
@@ -179,15 +168,13 @@ class PNTransition implements PNBaseVisitable
 	 */
 	public function isEnabled()
 	{
-		// If the Transition is Guarded.
-		if ($this->isGuarded())
+		if (empty($this->inputs) || empty($this->outputs))
 		{
-			// Verify the Guard returns true.
-			if (!$this->guard->execute())
-			{
-				return false;
-			}
+			return false;
 		}
+
+		// Get the transition color set.
+		$setTypes = $this->colorSet->getType();
 
 		// A transition is enabled if each input place p of t is marked with at least
 		// w(p,t) tokens, where w(p,t) is the weight of the arc from p to t.
@@ -200,16 +187,64 @@ class PNTransition implements PNBaseVisitable
 			{
 				return false;
 			}
+
+			// Verify the arc expression is valid.
+			// @todo remove double check in arc dovalidatexpression
+			if ($arc->hasExpression())
+			{
+				if (!$arc->validateExpression())
+				{
+					return false;
+				}
+			}
+
+			// Transition is enabled if we can find a binding so that each input arc expression evaluates
+			// to one or more colours in the transition color set.
+
+			// Get the place tokens.
+			$tokens = $place->getTokens();
+
+			// Get a random token.
+			shuffle($tokens);
+			$token = $tokens[0];
+
+			// Get the token color.
+			$color = $token->getColor()->getData();
+
+			// Execute the arc expression.
+			$return = $arc->getExpression()->execute($color);
+
+			// Build an array containing the type of the returned values.
+			$data = array();
+
+			foreach ($return as $value)
+			{
+				if (is_float($value))
+				{
+					$data[] = 'float';
+				}
+
+				else
+				{
+					$data[] = gettype($value);
+				}
+			}
+
+			// Remove the returned types from the transition color set.
+			$setTypes = array_diff($setTypes, $data);
+
+			// If the set is empty it means we can create a token matching the transition color set.
+			if (empty($setTypes))
+			{
+				return true;
+			}
 		}
 
-		return true;
+		return false;
 	}
 
 	/**
 	 * Execute (fire) the Transition (it supposes it is enabled).
-	 * A firing of an enabled transition t removes w(p,t) tokens from each
-	 * input place p of t, and adds w(t,p) tokens to each output place p of t, where
-	 * w(p,t) is the weight of the arc from p to t and w(p,t) is the weight of the arc from t to p
 	 *
 	 * @return  boolean  False if it's the last Transition, true if not.
 	 *
@@ -217,36 +252,7 @@ class PNTransition implements PNBaseVisitable
 	 */
 	public function execute()
 	{
-		foreach ($this->inputs as $inputArc)
-		{
-			$inputPlace = $inputArc->getInput();
-			$tokens = $inputPlace->getTokens();
-			$inputWeight = $inputArc->getWeight();
 
-			for ($i = 0; $i < $inputWeight; $i++)
-			{
-				$inputPlace->removeToken($tokens[$i]);
-			}
-		}
-
-		foreach ($this->outputs as $arc)
-		{
-			$place = $arc->getOutput();
-
-			for ($i = 0; $i < $arc->getWeight(); $i++)
-			{
-				// Add tokens to the output places.
-				$place->addToken(new stdClass);
-			}
-
-			// If the place is an End Place (Petrinet has ended).
-			if ($place->isEnd())
-			{
-				return false;
-			}
-		}
-
-		return true;
 	}
 
 	/**

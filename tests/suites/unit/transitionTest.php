@@ -49,18 +49,18 @@ class PNTransitionTest extends TestCase
 		// Test without param.
 		$transition = new PNTransition;
 
-		$this->assertNull(TestReflection::getValue($transition, 'guard'));
+		$this->assertInstanceOf('PNColorSet', TestReflection::getValue($transition, 'colorSet'));
 		$this->assertEmpty(TestReflection::getValue($transition, 'inputs'));
 		$this->assertEmpty(TestReflection::getValue($transition, 'outputs'));
 
 		// Test with params.
-		$guard = new PNGuard;
+		$colorSet = new PNColorSet;
 		$inputs = array(new PNArcInput, new PNArcInput);
 		$outputs = array(new PNArcOutput, new PNArcOutput);
 
-		$transition = new PNTransition($guard, $inputs, $outputs);
+		$transition = new PNTransition($colorSet, $inputs, $outputs);
 
-		$this->assertEquals($guard, TestReflection::getValue($transition, 'guard'));
+		$this->assertEquals($colorSet, TestReflection::getValue($transition, 'colorSet'));
 		$this->assertEquals($inputs, TestReflection::getValue($transition, 'inputs'));
 		$this->assertEquals($outputs, TestReflection::getValue($transition, 'outputs'));
 	}
@@ -181,74 +181,6 @@ class PNTransitionTest extends TestCase
 	}
 
 	/**
-	 * Set a Guard for this Transition.
-	 *
-	 * @return  void
-	 *
-	 * @covers  PNTransition::setGuard
-	 * @since   1.0
-	 */
-	public function testSetGuard()
-	{
-		$guard = new PNGuard;
-		$this->object->setGuard($guard);
-
-		$this->assertEquals($guard, TestReflection::getValue($this->object, 'guard'));
-	}
-
-	/**
-	 * Tests the error thrown by the PNTransition::setGuard method.
-	 *
-	 * @return  void
-	 *
-	 * @covers  PNTransition::setGuard
-	 *
-	 * @since   1.0
-	 *
-	 * @expectedException PHPUnit_Framework_Error
-	 */
-	public function testSetGuardException()
-	{
-		$this->object->setGuard(new stdClass);
-	}
-
-	/**
-	 * Get the Guard of this Transition.
-	 *
-	 * @return  void
-	 *
-	 * @covers  PNTransition::getGuard
-	 * @since   1.0
-	 */
-	public function testGetGuard()
-	{
-		$this->assertNull($this->object->getGuard());
-
-		$guard = new PNGuard;
-		TestReflection::setValue($this->object, 'guard', $guard);
-
-		$this->assertEquals($guard, $this->object->getGuard());
-	}
-
-	/**
-	 * Check if this Transition is Guarded.
-	 *
-	 * @return  void
-	 *
-	 * @covers  PNTransition::isGuarded
-	 * @since   1.0
-	 */
-	public function testIsGuarded()
-	{
-		$this->assertFalse($this->object->isGuarded());
-
-		$guard = new PNGuard;
-		TestReflection::setValue($this->object, 'guard', $guard);
-
-		$this->assertTrue($this->object->isGuarded());
-	}
-
-	/**
 	 * Verify if this Transition is Enabled.
 	 *
 	 * @return  void
@@ -258,37 +190,6 @@ class PNTransitionTest extends TestCase
 	 */
 	public function testIsEnabled()
 	{
-		// Generate a guarded transition where the guard returns false.
-		$var = new PNVariable('test', 'test');
-		$op = new PNConditionComparisonEq;
-		$guard = new PNGuard($op, $var, 8);
-
-		$this->object->setGuard($guard);
-
-		$this->assertFalse($this->object->isEnabled());
-
-		// Generate a guarded transition where the guard returns true.
-		$guard = new PNGuard($op, $var, 'test');
-		$this->object->setGuard($guard);
-
-		// PlaceBefore contains 0 tokens.
-		$placeBefore = new PNPlace;
-		$placeAfter = new PNPlace;
-
-		$input = new PNArcInput;
-		$input->setInput($placeBefore)->setOutput($this->object);
-
-		$output = new PNArcOutput;
-		$output->setInput($this->object, $placeAfter);
-
-		$this->object->addInput($input)->addOutput($output);
-
-		$this->assertFalse($this->object->isEnabled());
-
-		// Add one token in placeBefore.
-		$placeBefore->addToken(new stdClass);
-
-		$this->assertTrue($this->object->isEnabled());
 	}
 
 	/**
@@ -301,73 +202,6 @@ class PNTransitionTest extends TestCase
 	 */
 	public function testExecute()
 	{
-		// Generate a mini enabled Petri net transition.
-		$placeBefore1 = new PNPlace;
-		$placeBefore1->addToken(new stdClass);
-
-		$placeBefore2 = new PNPlace;
-		$placeBefore2->addToken(new stdClass);
-
-		$placeAfter = new PNPlace;
-
-		$input1 = new PNArcInput;
-		$input1->setInput($placeBefore1)->setOutput($this->object);
-
-		$input2 = new PNArcInput;
-		$input2->setInput($placeBefore2)->setOutput($this->object);
-
-		$output = new PNArcOutput;
-		$output->setInput($this->object)->setOutput($placeAfter);
-
-		TestReflection::setValue($this->object, 'inputs', array($input1, $input2));
-		TestReflection::setValue($this->object, 'outputs', array($output));
-
-		$this->object->execute();
-
-		// Verify placeBefore1 and placeBefore2 contains no token.
-		$this->assertEquals(0, $placeBefore1->getTokenCount());
-		$this->assertEquals(0, $placeBefore2->getTokenCount());
-
-		// And placeAfter contains one token.
-		$this->assertEquals(1, $placeAfter->getTokenCount());
-
-		// Try with a new one.
-		$placeBefore1 = new PNPlace;
-
-		// Add two tokens in this place.
-		$placeBefore1->addToken(new stdClass)->addToken(new stdClass);
-
-		$placeBefore2 = new PNPlace;
-		$placeBefore2->addToken(new stdClass);
-
-		$placeAfter = new PNPlace;
-
-		$input1 = new PNArcInput;
-		$input1->setInput($placeBefore1)->setOutput($this->object);
-
-		$input2 = new PNArcInput;
-		$input2->setInput($placeBefore2)->setOutput($this->object);
-
-		$output = new PNArcOutput;
-		$output->setInput($this->object)->setOutput($placeAfter);
-
-		// Set the arc's weight to 2.
-		$output->setWeight(2);
-
-		TestReflection::setValue($this->object, 'inputs', array($input1, $input2));
-		TestReflection::setValue($this->object, 'outputs', array($output));
-
-		// Set the weight of the output arc to 2.
-		$output->setWeight(2);
-
-		$this->object->execute();
-
-		// Verify placeBefore1 contains one token and placeBefore2 contains no token.
-		$this->assertEquals(1, $placeBefore1->getTokenCount());
-		$this->assertEquals(0, $placeBefore2->getTokenCount());
-
-		// And placeAfter contains two tokens.
-		$this->assertEquals(2, $placeAfter->getTokenCount());
 	}
 
 	/**
