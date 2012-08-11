@@ -6,8 +6,6 @@ A simple Colored Petri Net Framework written in PHP.
 
 You must be familiar with Colored Petri Nets.
 
-See :
-
 1) www.cs.au.dk/~cpnbook/slides/CPN2.ppt  
 2) www.daimi.au.dk/~kjensen/papers_books/use.pdf
 
@@ -94,4 +92,31 @@ $transition = new PNTransition($colorSet);
 ### Creating a Petri Net
 ------------------------
 
+```php
+<?php
+
+// Creating a Petri Net.
+$net = new PNPetrinet('MyPetrinet');
+
+// Or.
+$net = PNPetrinet::getInstance('MyPetrinet');
+
+// Creating a Color Set.
+$colorSet = new PNColorSet(array('integer', 'float'));
+
+// Creating one Place.
+$place = $net->createPlace($colorSet);
+
+// Creating a Color Token.
+$token = new PNToken(new PNColor(1, 2.2));
+
+// Adding the Token in the Place.
+$place->addToken($token);
+
+// Creating a Transition.
+$transition = $net->createTransition($colorSet);
+
+// Linking the Place and the Transition (order is important).
+$arc = $net->connect($place, $transition);
+```
 
