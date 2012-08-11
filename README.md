@@ -1,6 +1,3 @@
-Petrinet
-========
-
 A simple Colored Petri Net Framework written in PHP.
 
 ## Requirements
@@ -13,7 +10,9 @@ See :
 
 ## Using the framework
 
-#### Creating a Color Set.
+### The elements
+
+#### Creating a Color Set
 
 ```php
 <?php
@@ -23,7 +22,7 @@ See :
 $colorSet = new PNColorSet(array('integer', 'float'));
 ```
 
-#### Creating a Color.
+#### Creating a Color
 
 ```php
 <?php
@@ -32,7 +31,7 @@ $colorSet = new PNColorSet(array('integer', 'float'));
 $color = new PNColor(array(1, 1.2));
 ```
 
-#### Creating a Token.
+#### Creating a Token
 
 ```php
 <?php
@@ -45,7 +44,7 @@ $color = new PNColor(array(1, 1.2));
 $token = new PNToken($color);
 ```
 
-#### Creating a Place.
+#### Creating a Place
 
 ```php
 <?php
@@ -58,12 +57,12 @@ $colorSet = new PNColorSet(array('integer', 'float'));
 $place = new PNPlace($colorSet);
 ```
 
-#### Marking a Place.
+#### Marking a Place
 
 ```php
 <?php
 
-// Creating a Place with a color set.
+// Creating a Place with a Color Set.
 $colorSet = new PNColorSet(array('integer', 'float'));
 $place = new PNPlace($colorSet);
 
@@ -75,7 +74,7 @@ $token = new PNToken($color);
 $place->addToken($token);
 ```
 
-#### Creating a Transition.
+#### Creating a Transition
 
 ```php
 <?php
@@ -87,3 +86,7 @@ $transition = new PNTransition();
 $colorSet = new PNColorSet(array('integer', 'float'));
 $transition = new PNTransition($colorSet);
 ```
+
+### Creating a Petri Net
+
+
