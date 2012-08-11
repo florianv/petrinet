@@ -7,7 +7,9 @@ A simple Colored Petri Net Framework written in PHP.
 You must be familiar with Colored Petri Nets.
 
 See :
+
 1) www.cs.au.dk/~cpnbook/slides/CPN2.ppt
+
 2) www.daimi.au.dk/~kjensen/papers_books/use.pdf
 
 ## Using the framework
