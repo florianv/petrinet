@@ -89,13 +89,47 @@ $colorSet = new PNColorSet(array('integer', 'float'));
 $transition = new PNTransition($colorSet);
 ```
 
-### Creating a Petri Net
-------------------------
+#### Creating an Arc
 
 ```php
 <?php
 
-// Creating a Petri Net.
+$place = new PNPlace();
+$transition = new PNTransition();
+
+// Creating an input Arc.
+$inputArc = new PNArcInput($place, $transtion);
+
+// Creating an output Arc.
+$outputArc = new PNArcOutput($transition, $place);
+```
+
+#### Creating an Arc Expression
+
+```php
+<?php
+
+class MyExpression extends PNArcExpression
+{
+	public function __construct()
+	{
+		parent::__construct(array('integer', 'float');
+	}
+	
+	public function execute(array $arguments)
+	{
+		return array($arguments[0]+1, $arguments[1]+1.5);
+	}
+}
+```
+
+### Creating a simple Petri Net
+------------------------------
+
+```php
+<?php
+
+// Creating the Petri Net.
 $net = new PNPetrinet('MyPetrinet'); // Or $net = PNPetrinet::getInstance('MyPetrinet');
 
 // Creating a Color Set for The Place and Transition.
