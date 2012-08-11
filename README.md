@@ -104,7 +104,7 @@ $colorSet = new PNColorSet(array('integer', 'float'));
 // Creating a Place.
 $place = $net->createPlace($colorSet);
 
-// Creating a Color Token.
+// Creating a Colored Token.
 $token = new PNToken(new PNColor(1, 2.2));
 
 // Adding the Token in the Place.
@@ -115,5 +115,21 @@ $transition = $net->createTransition($colorSet);
 
 // Linking the Place and the Transition (order is important).
 $arc = $net->connect($place, $transition);
+```
+
+### Executing the Petri Net
+---------------------------
+
+```php
+<?php
+
+// Instanciating the Engine.
+$engine = PNEngine::getInstance();
+
+// Passing the Petri Net to the Engine.
+$engine->setNet($net);
+
+// Starting the execution.
+$engine->start();
 ```
 
