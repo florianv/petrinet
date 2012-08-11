@@ -168,6 +168,7 @@ class PNTransition implements PNBaseVisitable
 	 */
 	public function isEnabled()
 	{
+		// If no input or output arcs the transition is not enabled.
 		if (empty($this->inputs) || empty($this->outputs))
 		{
 			return false;
@@ -176,13 +177,14 @@ class PNTransition implements PNBaseVisitable
 		// Get the transition color set.
 		$setTypes = $this->colorSet->getType();
 
-		// A transition is enabled if each input place p of t is marked with at least
-		// w(p,t) tokens, where w(p,t) is the weight of the arc from p to t.
+		// Iterate the input arcs.
 		foreach ($this->inputs as $arc)
 		{
-			// Get the input place
+			// Get the input place of the current arc.
 			$place = $arc->getInput();
 
+			// Verify that the place is marked with at least n tokens
+			// where n is the value of its weight.
 			if ($place->getTokenCount() < $arc->getWeight())
 			{
 				return false;
@@ -198,26 +200,26 @@ class PNTransition implements PNBaseVisitable
 				}
 			}
 
-			// Transition is enabled if we can find a binding so that each input arc expression evaluates
-			// to one or more colours in the transition color set.
-
 			// Get the place tokens.
-			$tokens = $place->getTokens();
+			$tokens = array_values($place->getTokens());
 
-			// Get a random token.
-			shuffle($tokens);
-			$token = $tokens[0];
+			// Get the first token.
+			$token = $tokens[0][0];
 
-			// Get the token color.
-			$color = $token->getColor()->getData();
+			// Get its color.
+			$datas = $token->getColor()->getData();
 
-			// Execute the arc expression.
-			$return = $arc->getExpression()->execute($color);
+			// If the arc has an expression.
+			if ($arc->hasExpression())
+			{
+				// Execute the arc expression.
+				$datas = $arc->getExpression()->execute($datas);
+			}
 
 			// Build an array containing the type of the returned values.
 			$data = array();
 
-			foreach ($return as $value)
+			foreach ($datas as $value)
 			{
 				if (is_float($value))
 				{

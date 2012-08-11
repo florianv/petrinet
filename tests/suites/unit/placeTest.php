@@ -64,7 +64,7 @@ class PNPlaceTest extends TestCase
 		$inputs = array(new PNArcOutput, new PNArcOutput);
 		$outputs = array(new PNArcInput, new PNArcInput);
 
-		$place = new PNPlace($tokenSet, $colorSet, $inputs, $outputs);
+		$place = new PNPlace($colorSet, $tokenSet, $inputs, $outputs);
 
 		$this->assertEquals($tokenSet, TestReflection::getValue($place, 'tokenSet'));
 		$this->assertEquals($colorSet, TestReflection::getValue($place, 'colorSet'));

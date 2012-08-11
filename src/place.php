@@ -43,14 +43,14 @@ class PNPlace implements PNBaseVisitable
 	/**
 	 * Constructor.
 	 *
-	 * @param   PNTokenSet  $tokenSet  A token set to add to this place.
 	 * @param   PNColorSet  $colorSet  A color set to add to this place.
+	 * @param   PNTokenSet  $tokenSet  A token set to add to this place.
 	 * @param   array       $inputs    An array of input arcs of this place (PNArcOutput).
 	 * @param   array       $outputs   An array of output arcs of this place (PNArcInput).
 	 *
 	 * @since   1.0
 	 */
-	public function __construct(PNTokenSet $tokenSet = null, PNColorSet $colorSet = null, array $inputs = array(), array $outputs = array())
+	public function __construct(PNColorSet $colorSet = null, PNTokenSet $tokenSet = null, array $inputs = array(), array $outputs = array())
 	{
 		// Use the given token set or create an empty one.
 		$this->tokenSet = $tokenSet ? $tokenSet : new PNTokenSet;
