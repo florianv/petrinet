@@ -12,7 +12,7 @@ See :
 
 ## Using the framework.
 
-### Creating a Color Set.
+#### Creating a Color Set.
 
 ```php
 <?php
@@ -22,7 +22,7 @@ See :
 $colorSet = new PNColorSet(array('integer', 'float'));
 ```
 
-### Creating a Color.
+#### Creating a Color.
 
 ```php
 <?php
@@ -31,7 +31,7 @@ $colorSet = new PNColorSet(array('integer', 'float'));
 $color = new PNColor(array(1, 1.2));
 ```
 
-### Creating a Token.
+#### Creating a Token.
 
 ```php
 <?php
@@ -44,7 +44,7 @@ $color = new PNColor(array(1, 1.2));
 $token = new PNToken($color);
 ```
 
-### Creating a Place.
+#### Creating a Place.
 
 ```php
 <?php
@@ -57,7 +57,7 @@ $colorSet = new PNColorSet(array('integer', 'float'));
 $place = new PNPlace($colorSet);
 ```
 
-### Marking a Place.
+#### Marking a Place.
 
 ```php
 <?php
@@ -74,7 +74,7 @@ $token = new PNToken($color);
 $place->addToken($token);
 ```
 
-### Creating a Transition.
+#### Creating a Transition.
 
 ```php
 <?php
