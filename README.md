@@ -131,5 +131,11 @@ $engine->setNet($net);
 
 // Starting the execution.
 $engine->start();
+
+// Stopping the execution.
+$engine->stop();
+
+// Resuming the execution.
+$engine->resume();
 ```
 
