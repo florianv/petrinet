@@ -10,8 +10,7 @@ See :
 
 ## Using the framework
 
-The elements
-------------
+### *** The elements
 
 #### Creating a Color Set
 
@@ -88,7 +87,6 @@ $colorSet = new PNColorSet(array('integer', 'float'));
 $transition = new PNTransition($colorSet);
 ```
 
-Creating a Petri Net
---------------------
+### *** Creating a Petri Net
 
 
