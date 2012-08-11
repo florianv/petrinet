@@ -107,7 +107,7 @@ abstract class PNArc
 	}
 
 	/**
-	 * Check if the arc expression is valid.
+	 * Check if the arc expression is valid (it supposes it has an expression...).
 	 *
 	 * @return  boolean  True if it's the case, false otherwise.
 	 *
@@ -115,69 +115,66 @@ abstract class PNArc
 	 */
 	public function validateExpression()
 	{
-		if ($this->hasExpression())
+		// The arc expression arguments must match the input place/transition color set.
+		$expressionArgs = $this->expression->getArguments();
+		$colorSet = $this->input->getColorSet()->getType();
+
+		$diff = array_diff($expressionArgs, $colorSet);
+
+		if (empty($diff))
 		{
-			// The arc expression arguments must match the input place/transition color set.
-			$expressionArgs = $this->expression->getArguments();
-			$colorSet = $this->input->getColorSet()->getType();
+			// The arc expression must evaluate to a colour in the output place/transition color set.
+			$arguments = array();
 
-			$diff = array_diff($expressionArgs, $colorSet);
-
-			if (empty($diff))
+			// Generate arguments.
+			foreach ($expressionArgs as $argument)
 			{
-				// The arc expression must evaluate to a colour in the output place/transition color set.
-				$arguments = array();
+				// Create a random variable.
+				$lambdaVar = 'test';
 
-				// Generate arguments.
-				foreach ($expressionArgs as $argument)
+				// Cast the variable.
+				settype($lambdaVar, $argument);
+
+				$arguments[] = $lambdaVar;
+			}
+
+			// Execute the expression.
+			try
+			{
+				$return = $this->expression->execute($arguments);
+			}
+			catch (Exception $e)
+			{
+				return false;
+			}
+
+			if (!is_array($return))
+			{
+				return false;
+			}
+
+			$types = array();
+
+			foreach ($return as $value)
+			{
+				if (is_float($value))
 				{
-					// Create a random variable.
-					$lambdaVar = 'test';
-
-					// Cast the variable.
-					settype($lambdaVar, $argument);
-
-					$arguments[] = $lambdaVar;
+					$types[] = 'float';
 				}
 
-				// Execute the expression.
-				try
+				else
 				{
-					$return = $this->expression->execute($arguments);
+					$types[] = gettype($value);
 				}
-				catch (Exception $e)
-				{
-					return false;
-				}
+			}
 
-				if (!is_array($return))
-				{
-					return false;
-				}
+			// Verify the returned values types are a sub-set of the output transition/place color set.
+			$transitionColorSet = $this->output->getColorSet()->getType();
+			$diff = array_diff($transitionColorSet, $types);
 
-				$types = array();
-
-				foreach ($return as $value)
-				{
-					if (is_float($value))
-					{
-						$types[] = 'float';
-					}
-
-					else
-					{
-						$types[] = gettype($value);
-					}
-				}
-
-				// Verify the returned values types are a sub-set of the output transition/place color set.
-				$transitionColorSet = $this->output->getColorSet()->getType();
-				$diff = array_diff($transitionColorSet, $types);
-
-				if (count($diff) == (count($transitionColorSet) - count($types)))
-				{
-					return true;
-				}
+			if (count($diff) == (count($transitionColorSet) - count($types)))
+			{
+				return true;
 			}
 		}
 

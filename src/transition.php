@@ -191,7 +191,6 @@ class PNTransition implements PNBaseVisitable
 			}
 
 			// Verify the arc expression is valid.
-			// @todo remove double check in arc dovalidatexpression
 			if ($arc->hasExpression())
 			{
 				if (!$arc->validateExpression())

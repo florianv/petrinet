@@ -146,9 +146,6 @@ class PNArcTest extends TestCase
 		$transition = new PNTransition($colorSet);
 		TestReflection::setValue($this->object, 'output', $transition);
 
-		// No expression set.
-		$this->assertFalse($this->object->validateExpression());
-
 		// Mock the expression.
 		$expression1 = $this->getMockForAbstractClass('PNArcExpression', array(array('integer', 'float', 'array')));
 		$expression1->expects($this->once())
