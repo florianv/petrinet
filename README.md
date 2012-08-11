@@ -8,9 +8,10 @@ A simple Colored Petri Net Framework written in PHP.
 You must be familiar with Colored Petri Nets.
 
 See :
-(www.daimi.au.dk/~kjensen/papers_books/use.pdf)
+1) www.daimi.au.dk/~kjensen/papers_books/use.pdf
 
-## Using the framework.
+
+## Using the framework
 
 #### Creating a Color Set.
 
