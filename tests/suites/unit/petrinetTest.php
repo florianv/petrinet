@@ -85,7 +85,7 @@ class PNPetrinetTest extends TestCase
 		$this->assertEquals($place, $places[0]);
 
 		// Create a new place.
-		$place1  = $this->object->createPlace();
+		$place1  = $this->object->createPlace(new PNColorSet(array('integer', 'float')));
 
 		$places = TestReflection::getValue($this->object, 'places');
 
@@ -110,7 +110,7 @@ class PNPetrinetTest extends TestCase
 		$this->assertEquals($transition, $transitions[0]);
 
 		// Create a new place.
-		$transition1  = $this->object->createTransition();
+		$transition1  = $this->object->createTransition(new PNColorSet(array('integer', 'float')));
 
 		$transitions = TestReflection::getValue($this->object, 'transitions');
 
@@ -127,16 +127,18 @@ class PNPetrinetTest extends TestCase
 	 */
 	public function testConnect()
 	{
-		// Try connect a place to a transition.
+		// Try connect a place to a transition with arc expression.
 		$place = new PNPlace;
 		$transition = new PNTransition;
 
-		$arc = $this->object->connect($place, $transition);
+		$expression = $this->getMockForAbstractClass('PNArcExpression');
+
+		$arc = $this->object->connect($place, $transition, $expression);
 
 		$this->assertInstanceOf('PNArcInput', $arc);
 		$this->assertEquals(TestReflection::getValue($arc, 'input'), $place);
 		$this->assertEquals(TestReflection::getValue($arc, 'output'), $transition);
-		$this->assertEquals(TestReflection::getValue($arc, 'weight'), 1);
+		$this->assertEquals(TestReflection::getValue($arc, 'expression'), $expression);
 
 		$placeOutputs = TestReflection::getValue($place, 'outputs');
 		$this->assertEquals($placeOutputs[0], $arc);
@@ -147,16 +149,16 @@ class PNPetrinetTest extends TestCase
 		$inputArcs = TestReflection::getValue($this->object, 'inputArcs');
 		$this->assertEquals($inputArcs[0], $arc);
 
-		// Try connect a transition to a place with weight 3.
+		// Try connect a transition to a place without arc expression.
 		$place = new PNPlace;
 		$transition = new PNTransition;
 
-		$arc = $this->object->connect($transition, $place, 3);
+		$arc = $this->object->connect($transition, $place);
 
 		$this->assertInstanceOf('PNArcOutput', $arc);
 		$this->assertEquals(TestReflection::getValue($arc, 'input'), $transition);
 		$this->assertEquals(TestReflection::getValue($arc, 'output'), $place);
-		$this->assertEquals(TestReflection::getValue($arc, 'weight'), 3);
+		$this->assertNull(TestReflection::getValue($arc, 'expression'));
 
 		$placeInputs = TestReflection::getValue($place, 'inputs');
 		$this->assertEquals($placeInputs[0], $arc);

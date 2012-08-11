@@ -86,13 +86,15 @@ class PNPetrinet implements PNBaseVisitable
 	/**
 	 * Create a new Place.
 	 *
+	 * @param   PNColorSet  $colorSet  The place color set.
+	 *
 	 * @return  PNPlace  The Place.
 	 *
 	 * @since   1.0
 	 */
-	public function createPlace()
+	public function createPlace(PNColorSet $colorSet = null)
 	{
-		$place = new PNPlace;
+		$place = new PNPlace($colorSet);
 
 		$this->places[] = $place;
 
@@ -102,13 +104,15 @@ class PNPetrinet implements PNBaseVisitable
 	/**
 	 * Create a new Transition.
 	 *
+	 * @param   PNColorSet  $colorSet  The place color set.
+	 *
 	 * @return  PNTransition  The Transition.
 	 *
 	 * @since   1.0
 	 */
-	public function createTransition()
+	public function createTransition(PNColorSet $colorSet = null)
 	{
-		$transition = new PNTransition;
+		$transition = new PNTransition($colorSet);
 
 		$this->transitions[] = $transition;
 
@@ -118,9 +122,9 @@ class PNPetrinet implements PNBaseVisitable
 	/**
 	 * Connect a place to a Transition or vice-versa.
 	 *
-	 * @param   mixed    $from    The source Place or Transition.
-	 * @param   mixed    $to      The target Place or Transition.
-	 * @param   integer  $weight  The Arc weight.
+	 * @param   PNPlace|PNTransition  $from        The source Place or Transition.
+	 * @param   PNPlace|PNTransition  $to          The target Place or Transition.
+	 * @param   PNArcExpression       $expression  The arc's expression.
 	 *
 	 * @return  object  The Arc object.
 	 *
@@ -128,25 +132,25 @@ class PNPetrinet implements PNBaseVisitable
 	 *
 	 * @since   1.0
 	 */
-	public function connect($from, $to, $weight = 1)
+	public function connect($from, $to, PNArcExpression $expression = null)
 	{
 		// Input Arc.
 		if ($from instanceof PNPlace && $to instanceof PNTransition)
 		{
-			$arc = new PNArcInput($from, $to);
+			// Create the arc.
+			$arc = new PNArcInput($from, $to, $expression);
 
-			$arc->setWeight($weight);
-
+			// Store it.
 			$this->inputArcs[] = $arc;
 		}
 
 		// Output Arc.
 		elseif ($from instanceof PNTransition && $to instanceof PNPlace)
 		{
-			$arc = new PNArcOutput($from, $to);
+			// Create the arc.
+			$arc = new PNArcOutput($from, $to, $expression);
 
-			$arc->setWeight($weight);
-
+			// Store it.
 			$this->outputArcs[] = $arc;
 		}
 
