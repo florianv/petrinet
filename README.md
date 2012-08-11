@@ -151,7 +151,7 @@ $transition = $net->createTransition($colorSet);
 $arc = $net->connect($place, $transition);
 ```
 
-### Executing the Petri Net
+### Executing a Petri Net
 ---------------------------
 
 ```php
