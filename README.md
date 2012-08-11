@@ -49,10 +49,10 @@ $token = new PNToken($color);
 ```php
 <?php
 
-// Creating a simple place.
+// Creating a simple Place.
 $place = new PNPlace();
 
-// Creating a Place with a color set.
+// Creating a Place with a Color Set.
 $colorSet = new PNColorSet(array('integer', 'float'));
 $place = new PNPlace($colorSet);
 ```
@@ -70,6 +70,7 @@ $place = new PNPlace($colorSet);
 $color = new PNColor(array(1, 1.2));
 $token = new PNToken($color);
 
+// Adding the Token in the Place.
 $place->addToken($token);
 ```
 
@@ -81,7 +82,7 @@ $place->addToken($token);
 // Creating a simple Transition.
 $transition = new PNTransition();
 
-// Creating a Transition with a color set.
+// Creating a Transition with a Color Set.
 $colorSet = new PNColorSet(array('integer', 'float'));
 $transition = new PNTransition($colorSet);
 ```
