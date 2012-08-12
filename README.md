@@ -111,7 +111,7 @@ $outputArc = new PNArcOutput($transition, $place);
 
 /**
  * An expression manipulating the Token Color (data) 
- * when it transit through the arc.
+ * when it transits through the arc.
  */
 class MyExpression extends PNArcExpression
 {
