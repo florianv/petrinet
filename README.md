@@ -146,7 +146,7 @@ class MyExpression extends PNArcExpression
 // Creating the Petri Net.
 $net = new PNPetrinet('MyPetrinet'); // Or $net = PNPetrinet::getInstance('MyPetrinet');
 
-// Creating a Color Set for The Place and Transition.
+// Creating a Color Set for the Place and Transition.
 $colorSet = new PNColorSet(array('integer', 'float'));
 
 // Creating a Place.
@@ -161,7 +161,7 @@ $place->addToken($token);
 // Creating a Transition.
 $transition = $net->createTransition($colorSet);
 
-// Linking the Place and the Transition (order is important).
+// Linking the Place and the Transition (order is important : from the place to the transition).
 $arc = $net->connect($place, $transition);
 ```
 
