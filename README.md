@@ -1,8 +1,10 @@
 # Petrinet
+----------
 
 A simple Colored Petri Net Framework written in PHP.
 
 ## Requirements
+---------------
 
 You must be familiar with Colored Petri Nets.
 
@@ -10,6 +12,7 @@ You must be familiar with Colored Petri Nets.
 2) www.daimi.au.dk/~kjensen/papers_books/use.pdf
 
 ## Using the framework
+----------------------
 
 ### The elements
 ----------------
@@ -19,8 +22,9 @@ You must be familiar with Colored Petri Nets.
 ```php
 <?php
 
-// Creating a set that can only contain Colors where the first element is an integer,
+// Creating a set (of PHP types) that can only contain Colors (data) where the first element is an integer,
 // and the second element a float.
+// Atm the allowed types are : integer, float, boolean, array, string.
 $colorSet = new PNColorSet(array('integer', 'float'));
 ```
 
