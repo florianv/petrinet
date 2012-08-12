@@ -121,7 +121,7 @@ class MyExpression extends PNArcExpression
 	 */
 	public function __construct()
 	{
-		parent::__construct(array('integer', 'float');
+		parent::__construct(array('integer', 'float'));
 	}
 	
 	/**
