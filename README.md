@@ -68,7 +68,7 @@ $place = new PNPlace($colorSet);
 $colorSet = new PNColorSet(array('integer', 'float'));
 $place = new PNPlace($colorSet);
 
-// Creating a Colored Token.
+// Creating a Colored Token matching the place color set.
 $color = new PNColor(array(1, 1.2));
 $token = new PNToken($color);
 
