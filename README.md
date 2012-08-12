@@ -197,3 +197,10 @@ $engine->stop();
 $engine->resume();
 ```
 
+## Future work
+---------------
+
+- Allow arc expressions to return empty arrays (non matching output node color set) for if-else expressions.
+- Improve the Transition enabling (binding) algorithm.
+- Database storage and loading of a Petri Net at a given state.
+- General improvement to allow mapping to BPMN processes (eng.alexu.edu.eg/.../bpmnFormalization.pdf).
