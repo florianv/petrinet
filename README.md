@@ -149,20 +149,26 @@ $net = new PNPetrinet('MyPetrinet'); // Or $net = PNPetrinet::getInstance('MyPet
 // Creating a Color Set for the Place and Transition.
 $colorSet = new PNColorSet(array('integer', 'float'));
 
-// Creating a Place.
-$place = $net->createPlace($colorSet);
+// Creating the start Place.
+$startPlace = $net->createPlace($colorSet);
+
+// Creating the end Place.
+$endPlace = $net->createPlace($colorSet);
 
 // Creating a Colored Token.
 $token = new PNToken(new PNColor(1, 2.2));
 
-// Adding the Token in the Place.
-$place->addToken($token);
+// Adding the Token in the start Place.
+$startPlace->addToken($token);
 
 // Creating a Transition.
 $transition = $net->createTransition($colorSet);
 
-// Linking the Place and the Transition (order is important : from the place to the transition).
-$arc = $net->connect($place, $transition);
+// Linking the start Place and the Transition (order is important : from the place to the transition).
+$arc = $net->connect($startPlace, $transition);
+
+// Linking the Transition and the end Place.
+$arc = $net->connect($transition, $endPlace);
 ```
 
 ### Executing a Petri Net
