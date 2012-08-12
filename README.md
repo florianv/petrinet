@@ -110,12 +110,13 @@ $outputArc = new PNArcOutput($transition, $place);
 <?php
 
 /**
- * Manipulating the Token Color (data) when it transit through the arc.
+ * An expression manipulating the Token Color (data) 
+ * when it transit through the arc.
  */
 class MyExpression extends PNArcExpression
 {
 	/**
-	 * Override the parent constructor to define the expression arguments.
+	 * Method to define the expression arguments.
 	 * The arc expression arguments must match the attached place/transition color set (or a sub-set of it).
 	 */
 	public function __construct()
