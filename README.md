@@ -205,6 +205,6 @@ $engine->resume();
 - More color types (allow objects and custom instance of objects in the colors/color sets).
 - Allow both colored and non-colored Petri nets creation.
 - Database storage and loading of a Petri Net at a given state.
-- Use the Visitor Pattern to traverse the graph and validate the Petri Net definition.
-- Allow mapping to BPMN [Document](https://docs.google.com/viewer?a=v&q=cache:DST7lP9yJcoJ:eng.alexu.edu.eg/~elmongui/papers/bpmnFormalization.pdf+&hl=fr&gl=fr&pid=bl&srcid=ADGEESgZJ65Z-tgQ1WXYW2CtkCv2M_pdEGRRvFl-blX8ZBxg79-N9pm8emclxiLBcms0T8oFRrmXKr2migwk9GeH0vusODYs7jOhydn-q4uSmXxzIyIicRgbX34_VtSmohp6i6ld9csW&sig=AHIEtbQhN7uhnEZxSJp7YznCohfRTS3fTQ&pli=1)
+- Use the Visitor Pattern to traverse the graph and validate the Petri Net definition according to Petri Net properties.
+- Allow mapping to BPMN : [Document](https://docs.google.com/viewer?a=v&q=cache:DST7lP9yJcoJ:eng.alexu.edu.eg/~elmongui/papers/bpmnFormalization.pdf+&hl=fr&gl=fr&pid=bl&srcid=ADGEESgZJ65Z-tgQ1WXYW2CtkCv2M_pdEGRRvFl-blX8ZBxg79-N9pm8emclxiLBcms0T8oFRrmXKr2migwk9GeH0vusODYs7jOhydn-q4uSmXxzIyIicRgbX34_VtSmohp6i6ld9csW&sig=AHIEtbQhN7uhnEZxSJp7YznCohfRTS3fTQ&pli=1)
 - BPMN/XPDL parser to import workflow definitions.
