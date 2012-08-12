@@ -117,7 +117,7 @@ class MyExpression extends PNArcExpression
 {
 	/**
 	 * Method to define the expression arguments.
-	 * The arc expression arguments must match the attached place/transition color set (or a sub-set of it).
+	 * The arc expression arguments must match the input place/transition color set (or a sub-set of it).
 	 */
 	public function __construct()
 	{
@@ -128,6 +128,7 @@ class MyExpression extends PNArcExpression
      * Execute the expression.
      * If a token with a color (1, 2.2) transit through this arc, a new token with color (1+1, 2.2+1.5) = (2, 3.7)
      * will be produced after executing the expression.
+     * The types of the values contained in the returned array, must match the output place/transition color set.
      */
 	public function execute(array $arguments)
 	{
