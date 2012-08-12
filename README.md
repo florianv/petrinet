@@ -1,7 +1,7 @@
 # Petrinet
 ----------
 
-A simple Colored Petri Net Framework written in PHP.
+A simple Colored Petri Net API written in PHP.
 
 ## Requirements
 ---------------
@@ -11,7 +11,7 @@ You must be familiar with Colored Petri Nets.
 1) www.cs.au.dk/~cpnbook/slides/CPN2.ppt  
 2) www.daimi.au.dk/~kjensen/papers_books/use.pdf
 
-## Using the framework
+## Using the API
 ----------------------
 
 ### The elements
