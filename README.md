@@ -197,10 +197,14 @@ $engine->stop();
 $engine->resume();
 ```
 
-## Future work
----------------
+## Some Future work
+-------------------
 
 - Allow arc expressions to return empty arrays (non matching output node color set) for if-else expressions.
 - Improve the Transition enabling (binding) algorithm.
+- More color types (allow objects and custom instance of objects in the colors/color sets).
+- Allow both colored and non-colored Petri nets creation.
 - Database storage and loading of a Petri Net at a given state.
-- General improvement to allow mapping to BPMN processes (eng.alexu.edu.eg/.../bpmnFormalization.pdf).
+- Use the Visitor Pattern to traverse the graph and validate the Petri Net definition.
+- Allow mapping to BPMN (http://eng.alexu.edu.eg/.../bpmnFormalization.pdf).
+- BPMN/XPDL parser to import Petri Net definitions.
