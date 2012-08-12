@@ -70,7 +70,7 @@ class PNArcTest extends TestCase
 
 		// Add an input.
 		TestReflection::setValue($this->object, 'input', true);
-		$this->assertTrue(TestReflection::getValue($this->object, 'input'));
+		$this->assertTrue($this->object->getInput());
 	}
 
 	/**
@@ -89,7 +89,7 @@ class PNArcTest extends TestCase
 
 		// Add an output.
 		TestReflection::setValue($this->object, 'output', true);
-		$this->assertTrue(TestReflection::getValue($this->object, 'output'));
+		$this->assertTrue($this->object->getOutput());
 	}
 
 	/**

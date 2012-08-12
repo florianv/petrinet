@@ -87,7 +87,7 @@ class PNTokenTest extends TestCase
 		$color = new PNColor;
 		TestReflection::setValue($this->object, 'color', $color);
 
-		$this->assertEquals(TestReflection::getValue($this->object, 'color'), $color);
+		$this->assertEquals($this->object->getColor(), $color);
 	}
 
 	/**

@@ -1,10 +1,8 @@
 # Petrinet
-----------
 
 A simple Colored Petri Net API written in PHP.
 
 ## Requirements
----------------
 
 You must be familiar with Colored Petri Nets.
 
@@ -12,10 +10,8 @@ You must be familiar with Colored Petri Nets.
 2) www.daimi.au.dk/~kjensen/papers_books/use.pdf
 
 ## Using the API
-----------------------
 
 ### The elements
-----------------
 
 #### Creating a Color Set
 
@@ -142,7 +138,6 @@ class MyExpression extends PNArcExpression
 ```
 
 ### Creating a simple Petri Net
-------------------------------
 
 ```php
 <?php
@@ -176,7 +171,6 @@ $arc = $net->connect($transition, $endPlace);
 ```
 
 ### Executing a Petri Net
----------------------------
 
 ```php
 <?php
@@ -198,7 +192,6 @@ $engine->resume();
 ```
 
 ## Some Future work
--------------------
 
 - Allow arc expressions to return empty arrays (non matching output node color set) for if-else expressions.
 - Improve the Transition enabling (binding) algorithm.
