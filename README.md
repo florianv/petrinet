@@ -167,7 +167,7 @@ class MyExpression extends PNArcExpression
 $net = new PNPetrinet('MyPetrinet'); // Or $net = PNPetrinet::getInstance('MyPetrinet');
 
 // Creating a Color Set for the Place and Transition.
-$colorSet = new PNColorSet(array('integer', 'double'));
+$colorSet = $net->createColorSet(array('integer', 'double'));
 
 // Creating the start Place.
 $startPlace = $net->createPlace($colorSet);
