@@ -62,13 +62,8 @@ $place = new PNPlace($colorSet);
 #### Marking a Place
 
 ```php
-<?php
 
-// Creating a Place with a Color Set.
-$colorSet = new PNColorSet(array('integer', 'float'));
-$place = new PNPlace($colorSet);
-
-// Creating a Colored Token matching the place color set.
+// Creating a Colored Token matching the preceding place color set.
 $color = new PNColor(array(1, 1.2));
 $token = new PNToken($color);
 
