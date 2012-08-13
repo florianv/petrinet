@@ -466,6 +466,9 @@ class PNTransitionTest extends TestCase
 	 */
 	public function testExecute()
 	{
+		$this->markTestIncomplete(
+			'This test has not been implemented yet.'
+		);
 	}
 
 	/**
