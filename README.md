@@ -1,6 +1,6 @@
 # Petrinet
 
-(https://secure.travis-ci.org/florianv/Petrinet.png)
+![Build status](https://secure.travis-ci.org/florianv/Petrinet.png)
 
 A simple Colored Petri Net API written in PHP.
 
