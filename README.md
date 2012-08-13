@@ -62,6 +62,7 @@ $place = new PNPlace($colorSet);
 #### Marking a Place
 
 ```php
+<?php
 
 // Creating a Colored Token matching the preceding place color set.
 $color = new PNColor(array(1, 1.2));
