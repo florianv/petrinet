@@ -4,15 +4,15 @@
 
 A simple Colored Petri Net API written in PHP.
 
-1. [Requirements](https://github.com/florianv/Petrinet#requirements)  
-2. [Installation](https://github.com/florianv/Petrinet#installation)  
-3. [Running unit tests](https://github.com/florianv/Petrinet#running-unit-tests)  
+1. [Requirements](https://github.com/florianv/Petrinet#requirements)
+2. [Installation](https://github.com/florianv/Petrinet#installation)
+3. [Running unit tests](https://github.com/florianv/Petrinet#running-unit-tests)
 4. [Using the API](https://github.com/florianv/Petrinet#using-the-api)
-   * [The elements](https://github.com/florianv/Petrinet#the-elements)  
-   * [Creating a simple Petri Net](https://github.com/florianv/Petrinet#creating-a-simple-petri-net)  
+   * [The elements](https://github.com/florianv/Petrinet#the-elements)
+   * [Creating a simple Petri Net](https://github.com/florianv/Petrinet#creating-a-simple-petri-net)
    * [Executing a Petri Net](https://github.com/florianv/Petrinet#executing-a-petri-net)
-     
-5. [Some Future work](https://github.com/florianv/Petrinet#some-future-work) 
+
+5. [Some Future work](https://github.com/florianv/Petrinet#some-future-work)
 
 ## Requirements
 
@@ -20,7 +20,7 @@ Requires PHP 5.3.1+.
 
 You must be familiar with Colored Petri Nets.
 
-1) www.cs.au.dk/~cpnbook/slides/CPN2.ppt  
+1) www.cs.au.dk/~cpnbook/slides/CPN2.ppt
 2) www.daimi.au.dk/~kjensen/papers_books/use.pdf
 
 ## Installation
@@ -45,9 +45,8 @@ Cd to the Petrinet root folder, and type the command : `phpunit`
 <?php
 
 // Creating a set (of PHP types) that can only contain Colors (data) where the first element is an integer,
-// and the second element a float.
-// Atm the allowed types are : integer, float, boolean, array, string.
-$colorSet = new PNColorSet(array('integer', 'float'));
+// and the second element a double (double).
+$colorSet = new PNColorSet(array('integer', 'double'));
 ```
 
 #### Creating a Color
@@ -81,7 +80,7 @@ $token = new PNToken($color);
 $place = new PNPlace();
 
 // Creating a Place with a Color Set.
-$colorSet = new PNColorSet(array('integer', 'float'));
+$colorSet = new PNColorSet(array('integer', 'double'));
 $place = new PNPlace($colorSet);
 ```
 
@@ -107,7 +106,7 @@ $place->addToken($token);
 $transition = new PNTransition();
 
 // Creating a Transition with a Color Set.
-$colorSet = new PNColorSet(array('integer', 'float'));
+$colorSet = new PNColorSet(array('integer', 'double'));
 $transition = new PNTransition($colorSet);
 ```
 
@@ -132,7 +131,7 @@ $outputArc = new PNArcOutput($transition, $place);
 <?php
 
 /**
- * An expression manipulating the Token Color (data) 
+ * An expression manipulating the Token Color (data)
  * when it transits through the arc.
  */
 class MyExpression extends PNArcExpression
@@ -143,9 +142,9 @@ class MyExpression extends PNArcExpression
 	 */
 	public function __construct()
 	{
-		parent::__construct(array('integer', 'float'));
+		parent::__construct(array('integer', 'double'));
 	}
-	
+
 	/**
      * Execute the expression.
      * If a token with a color (1, 2.2) transit through this arc, a new token with color (1+1, 2.2+1.5) = (2, 3.7)
@@ -168,7 +167,7 @@ class MyExpression extends PNArcExpression
 $net = new PNPetrinet('MyPetrinet'); // Or $net = PNPetrinet::getInstance('MyPetrinet');
 
 // Creating a Color Set for the Place and Transition.
-$colorSet = new PNColorSet(array('integer', 'float'));
+$colorSet = new PNColorSet(array('integer', 'double'));
 
 // Creating the start Place.
 $startPlace = $net->createPlace($colorSet);
