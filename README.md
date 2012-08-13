@@ -16,7 +16,7 @@ A simple Colored Petri Net API written in PHP.
 
 ## Requirements
 
-The software and Joomla requires PHP 5.3.1+.
+Requires PHP 5.3.1+.
 
 You must be familiar with Colored Petri Nets.
 
