@@ -9,7 +9,8 @@
 
 /**
  * Base class for PHP expressions associated with an arc.
- * Arcs expressions are used to transform the token color (ie. operating on its values).
+ * Arcs expressions are used to transform the token color (ie. operating on its values),
+ * or asserting they match certain values.
  *
  * The expression arguments property contains an (ordered) array of PHP types
  * that must match the attached place/transition color set.
@@ -27,41 +28,32 @@ abstract class PNArcExpression
 	protected $arguments;
 
 	/**
-	 * @var    array  The allowed arguments.
+	 * @var    PNTypeManager  The type Manager.
 	 * @since  1.0
 	 */
-	protected $allowedArguments = array(
-		'integer',
-		'float',
-		'boolean',
-		'string',
-		'array'
-	);
+	protected $typeManager;
 
 	/**
 	 * Constructor.
 	 *
-	 * @param   array  $arguments  The expression arguments.
+	 * @param   array          $arguments  The expression arguments.
+	 * @param   PNTypeManager  $manager    The type Manager.
 	 *
 	 * @throws  InvalidArgumentException
 	 *
 	 * @since   1.0
 	 */
-	public function __construct(array $arguments = array())
+	public function __construct(array $arguments = array(), PNTypeManager $manager = null)
 	{
+		// Use the given type manager, or create a new one.
+		$this->typeManager = $manager ? $manager : new PNTypeManager;
+
 		$this->setArguments($arguments);
 	}
 
 	/**
 	 * Execute the expression.
 	 * The method must return an array of data compatible with the output place/transition color set.
-	 *
-	 * Example :
-	 * The expression arguments are : $arguments = array('integer', 'float').
-	 * The execute method can return array($arguments[0]+1, $arguments[1]+2).
-	 *
-	 * The execution engine will bind different values (token colors) to $arguments[0] and $arguments[1]
-	 * and execute the expression to produce new tokens.
 	 *
 	 * @param   array  $arguments  The expression arguments.
 	 *
@@ -70,20 +62,6 @@ abstract class PNArcExpression
 	 * @since   1.0
 	 */
 	abstract public function execute(array $arguments);
-
-	/**
-	 * Check if the argument is allowed.
-	 *
-	 * @param   string  $argument  The argument.
-	 *
-	 * @return  boolean  True if allowed, false otherwise.
-	 *
-	 * @since   1.0
-	 */
-	protected function isAllowed($argument)
-	{
-		return in_array($argument, $this->allowedArguments);
-	}
 
 	/**
 	 * Set the expression arguments.
@@ -101,12 +79,13 @@ abstract class PNArcExpression
 		// Verify all arguments are allowed.
 		foreach ($arguments as $argument)
 		{
-			if (!$this->isAllowed($argument))
+			if (!$this->typeManager->isAllowed($argument))
 			{
 				throw new InvalidArgumentException('Argument : ' . $argument . ' is not allowed');
 			}
 		}
 
+		// Store them.
 		$this->arguments = $arguments;
 	}
 

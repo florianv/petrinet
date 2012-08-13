@@ -49,6 +49,7 @@ class PNColorSetTest extends TestCase
 		// Test without param.
 		$set = new PNColorSet;
 		$this->assertEmpty(TestReflection::getValue($set, 'type'));
+		$this->assertInstanceOf('PNTypeManager', TestReflection::getValue($set, 'typeManager'));
 
 		$type = array('integer');
 		$set = $this->getMock('PNColorSet');
@@ -70,7 +71,7 @@ class PNColorSetTest extends TestCase
 	public function testSetType()
 	{
 		// Test with all valid types.
-		$types = array('integer', 'float', 'array', 'array', 'boolean', 'string');
+		$types = array('integer', 'double', 'array', 'array', 'boolean', 'string');
 		$this->object->setType($types);
 		$this->assertEquals(TestReflection::getValue($this->object, 'type'), $types);
 	}
@@ -101,24 +102,24 @@ class PNColorSetTest extends TestCase
 	{
 		// Test with position.
 		$this->object->addType('integer', 1);
-		$this->object->addType('float', 10);
+		$this->object->addType('double', 10);
 
 		$types = TestReflection::getValue($this->object, 'type');
 
 		$this->assertEquals($types[1], 'integer');
-		$this->assertEquals($types[10], 'float');
+		$this->assertEquals($types[10], 'double');
 
 		// Reset the types.
 		TestReflection::setValue($this->object, 'type', array());
 
 		// Test without position.
 		$this->object->addType('integer');
-		$this->object->addType('float');
+		$this->object->addType('double');
 
 		$types = TestReflection::getValue($this->object, 'type');
 
 		$this->assertEquals($types[0], 'integer');
-		$this->assertEquals($types[1], 'float');
+		$this->assertEquals($types[1], 'double');
 	}
 
 	/**
@@ -167,7 +168,7 @@ class PNColorSetTest extends TestCase
 
 		// Test with unmatching types.
 		$color = new PNColor(array(8, array()));
-		$set = new PNColorSet(array('integer', 'float'));
+		$set = new PNColorSet(array('integer', 'double'));
 		$this->assertFalse($set->matches($color));
 
 		// Test with matching types.
@@ -200,7 +201,7 @@ class PNColorSetTest extends TestCase
 	 */
 	public function testSerializeUnserialize()
 	{
-		$colorSet = new PNColorSet(array('integer', 'float', 'array', 'float'));
+		$colorSet = new PNColorSet(array('integer', 'double', 'array', 'double'));
 
 		$ser = serialize($colorSet);
 

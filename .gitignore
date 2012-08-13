@@ -1,4 +1,5 @@
 .idea/
 .DS_STORE
+.travis.yml
 /config/config.json
 /www/index.php

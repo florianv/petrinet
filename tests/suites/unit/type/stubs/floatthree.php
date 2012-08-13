@@ -1,20 +1,20 @@
 <?php
 /**
- * @package     Petrinet
- * @subpackage  Type
+ * @package     Tests.Unit
+ * @subpackage  Type.stubs
  *
  * @copyright   Copyright (C) 2012 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
 /**
- * Interface for custom types.
+ * A Type of float greater than three.
  *
- * @package     Petrinet
- * @subpackage  Type
+ * @package     Tests.Unit
+ * @subpackage  Type.stubs
  * @since       1.0
  */
-interface PNType
+class FloatThree implements PNType
 {
 	/**
 	 * Check the given variable matches the type.
@@ -25,7 +25,10 @@ interface PNType
 	 *
 	 * @since   1.0
 	 */
-	public function check($var);
+	public function check($var)
+	{
+		return $var > 3;
+	}
 
 	/**
 	 * Return a value compatible with this type.
@@ -34,5 +37,8 @@ interface PNType
 	 *
 	 * @since   1.0
 	 */
-	public function test();
+	public function test()
+	{
+		return 3.5;
+	}
 }

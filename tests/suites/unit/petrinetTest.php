@@ -85,7 +85,7 @@ class PNPetrinetTest extends TestCase
 		$this->assertEquals($place, $places[0]);
 
 		// Create a new place.
-		$place1  = $this->object->createPlace(new PNColorSet(array('integer', 'float')));
+		$place1  = $this->object->createPlace(new PNColorSet(array('integer', 'double')));
 
 		$places = TestReflection::getValue($this->object, 'places');
 
@@ -110,7 +110,7 @@ class PNPetrinetTest extends TestCase
 		$this->assertEquals($transition, $transitions[0]);
 
 		// Create a new place.
-		$transition1  = $this->object->createTransition(new PNColorSet(array('integer', 'float')));
+		$transition1  = $this->object->createTransition(new PNColorSet(array('integer', 'double')));
 
 		$transitions = TestReflection::getValue($this->object, 'transitions');
 

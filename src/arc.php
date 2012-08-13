@@ -35,6 +35,12 @@ abstract class PNArc
 	protected $expression;
 
 	/**
+	 * @var    PNTypeManager  The type Manager.
+	 * @since  1.0
+	 */
+	protected $typeManager;
+
+	/**
 	 * This value specifies how many tokens can transit through this Arc.
 	 *
 	 * @var    integer  The weight of this Arc.
@@ -46,11 +52,15 @@ abstract class PNArc
 	 * Constructor.
 	 *
 	 * @param   PNArcExpression  $expression  The arc's expression.
+	 * @param   PNTypeManager    $manager     The type Manager.
 	 *
 	 * @since   1.0
 	 */
-	public function __construct(PNArcExpression $expression = null)
+	public function __construct(PNArcExpression $expression = null, PNTypeManager $manager = null)
 	{
+		// Use the given type manager, or create a new one.
+		$this->typeManager = $manager ? $manager : new PNTypeManager;
+
 		$this->expression = $expression;
 	}
 
@@ -111,6 +121,8 @@ abstract class PNArc
 	 *
 	 * @return  boolean  True if it's the case, false otherwise.
 	 *
+	 * @throws  UnexpectedValueException
+	 *
 	 * @since   1.0
 	 */
 	public function validateExpression()
@@ -129,13 +141,31 @@ abstract class PNArc
 			// Generate arguments.
 			foreach ($expressionArgs as $argument)
 			{
-				// Create a random variable.
-				$lambdaVar = 'test';
+				// If it's a basic type.
+				if ($this->typeManager->isBasicType($argument))
+				{
+					// Create a random variable.
+					$lambdaVar = 'test';
 
-				// Cast the variable.
-				settype($lambdaVar, $argument);
+					// Cast the variable.
+					settype($lambdaVar, $argument);
+				}
+
+				// Custom type.
+				elseif ($this->typeManager->isCustomType($argument))
+				{
+					$object = $this->typeManager->getCustomTypeObject($argument);
+					$lambdaVar = $object->test();
+				}
+
+				// Object type.
+				else
+				{
+					$lambdaVar = new $argument;
+				}
 
 				$arguments[] = $lambdaVar;
+
 			}
 
 			// Execute the expression.
@@ -148,31 +178,26 @@ abstract class PNArc
 				return false;
 			}
 
+			// If the returned array if not an array, return false.
 			if (!is_array($return))
 			{
 				return false;
 			}
 
+			// Get the type of the output Color set.
+			$outputColorSet = $this->output->getColorSet()->getType();
+
 			$types = array();
 
-			foreach ($return as $value)
+			// Get the type of the returned values.
+			for ($i = 0; $i < count($return); $i++)
 			{
-				if (is_float($value))
-				{
-					$types[] = 'float';
-				}
-
-				else
-				{
-					$types[] = gettype($value);
-				}
+				$types = array_merge($this->typeManager->getTypes($return[$i]), $types);
 			}
 
-			// Verify the returned values types are a sub-set of the output transition/place color set.
-			$transitionColorSet = $this->output->getColorSet()->getType();
-			$diff = array_diff($transitionColorSet, $types);
+			$diff = array_diff($outputColorSet, $types);
 
-			if (count($diff) == (count($transitionColorSet) - count($types)))
+			if (count($diff) < count($outputColorSet))
 			{
 				return true;
 			}

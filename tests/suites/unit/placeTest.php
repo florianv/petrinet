@@ -210,7 +210,7 @@ class PNPlaceTest extends TestCase
 	 */
 	public function testSetColorSet()
 	{
-		$set = new PNColorSet(array('integer', 'float'));
+		$set = new PNColorSet(array('integer', 'double'));
 		$this->object->setColorSet($set);
 
 		$this->assertEquals(TestReflection::getValue($this->object, 'colorSet'), $set);
@@ -240,7 +240,7 @@ class PNPlaceTest extends TestCase
 	 */
 	public function testIsAllowed()
 	{
-		$colorSet = new PNColorSet(array('integer', 'float', 'float'));
+		$colorSet = new PNColorSet(array('integer', 'double', 'double'));
 		TestReflection::setValue($this->object, 'colorSet', $colorSet);
 
 		$color = new PNColor(array(1, 1.2, 2.2));

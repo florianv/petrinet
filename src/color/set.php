@@ -25,35 +25,33 @@ class PNColorSet implements Countable, Serializable, IteratorAggregate
 	protected $type;
 
 	/**
-	 * @var    array  The allowed types.
+	 * @var    PNTypeManager  The type Manager.
 	 * @since  1.0
 	 */
-	protected $allowedTypes = array(
-		'integer',
-		'float',
-		'boolean',
-		'string',
-		'array'
-	);
+	protected $typeManager;
 
 	/**
 	 * Constructor.
 	 *
-	 * @param   array  $type  A tuple of types.
+	 * @param   array          $type     A tuple of types.
+	 * @param   PNTypeManager  $manager  The type Manager.
 	 *
 	 * @throws  InvalidArgumentException
 	 *
 	 * @since   1.0
 	 */
-	public function __construct(array $type = array())
+	public function __construct(array $type = array(), PNTypeManager $manager = null)
 	{
+		// Use the given type manager, or create a new one.
+		$this->typeManager = $manager ? $manager : new PNTypeManager;
+
 		empty($type) ? $this->type = array() : $this->setType($type);
 	}
 
 	/**
 	 * Set the type.
 	 *
-	 * @param   array  $type  A tuple of types.
+	 * @param   array  $types  A tuple of types.
 	 *
 	 * @return  void
 	 *
@@ -61,17 +59,19 @@ class PNColorSet implements Countable, Serializable, IteratorAggregate
 	 *
 	 * @since   1.0
 	 */
-	public function setType(array $type)
+	public function setType(array $types)
 	{
-		// Check there are only allowed types.
-		$intersection = array_intersect($type, $this->allowedTypes);
-
-		if (count($intersection) != count($type))
+		// Verify all types are allowed.
+		foreach ($types as $type)
 		{
-			throw new InvalidArgumentException('A type is not allowed');
+			if (!$this->typeManager->isAllowed($type))
+			{
+				throw new InvalidArgumentException('Type : ' . $type . ' is not allowed.');
+			}
 		}
 
-		$this->type = $type;
+		// Store them.
+		$this->type = $types;
 	}
 
 	/**
@@ -88,13 +88,16 @@ class PNColorSet implements Countable, Serializable, IteratorAggregate
 	 */
 	public function addType($type, $position = null)
 	{
-		if (in_array($type, $this->allowedTypes))
+		// If the type is allowed.
+		if ($this->typeManager->isAllowed($type))
 		{
+			// Add it at the end.
 			if (is_null($position))
 			{
 				$this->type[] = $type;
 			}
 
+			// Insert it at the given position.
 			else
 			{
 				$this->type[$position] = $type;
@@ -132,27 +135,7 @@ class PNColorSet implements Countable, Serializable, IteratorAggregate
 	 */
 	public function matches(PNColor $color)
 	{
-		$size = count($this->type);
-
-		if (count($color) != $size)
-		{
-			return false;
-		}
-
-		$colorData = $color->getData();
-
-		for ($i = 0; $i < $size; $i++)
-		{
-			$className = 'PNType' . ucfirst($this->type[$i]);
-			$class = new $className;
-
-			if (!$class->execute($colorData[$i]))
-			{
-				return false;
-			}
-		}
-
-		return true;
+		return $this->typeManager->matchMultiple($color->getData(), $this->type);
 	}
 
 	/**
@@ -188,7 +171,7 @@ class PNColorSet implements Countable, Serializable, IteratorAggregate
 	 */
 	public function serialize()
 	{
-		return serialize($this->type);
+		return serialize(array($this->type, $this->typeManager));
 	}
 
 	/**
@@ -202,6 +185,6 @@ class PNColorSet implements Countable, Serializable, IteratorAggregate
 	 */
 	public function unserialize($set)
 	{
-		$this->type = unserialize($set);
+		list($this->type, $this->typeManager) = unserialize($set);
 	}
 }
