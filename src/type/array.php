@@ -8,13 +8,13 @@
  */
 
 /**
- * Condition checking if a variable is a boolean.
+ * Condition checking if a variable is an array.
  *
  * @package     Petrinet
  * @subpackage  Type
  * @since       1.0
  */
-class PNConditionTypeBoolean implements PNConditionType
+class PNTypeArray implements PNType
 {
 	/**
 	 * Evaluate the condition.
@@ -27,6 +27,6 @@ class PNConditionTypeBoolean implements PNConditionType
 	 */
 	public function execute($var)
 	{
-		return is_bool($var);
+		return is_array($var);
 	}
 }

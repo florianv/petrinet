@@ -143,7 +143,7 @@ class PNColorSet implements Countable, Serializable, IteratorAggregate
 
 		for ($i = 0; $i < $size; $i++)
 		{
-			$className = 'PNConditionType' . ucfirst($this->type[$i]);
+			$className = 'PNType' . ucfirst($this->type[$i]);
 			$class = new $className;
 
 			if (!$class->execute($colorData[$i]))

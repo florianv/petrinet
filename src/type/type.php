@@ -1,20 +1,20 @@
 <?php
 /**
  * @package     Petrinet
- * @subpackage  Type
+ * @subpackage  Condition
  *
  * @copyright   Copyright (C) 2012 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
 /**
- * Condition checking if a variable is an integer.
+ * Interface for type conditions.
  *
  * @package     Petrinet
- * @subpackage  Type
+ * @subpackage  Condition
  * @since       1.0
  */
-class PNConditionTypeInteger implements PNConditionType
+interface PNType
 {
 	/**
 	 * Evaluate the condition.
@@ -25,8 +25,5 @@ class PNConditionTypeInteger implements PNConditionType
 	 *
 	 * @since   1.0
 	 */
-	public function execute($var)
-	{
-		return is_int($var);
-	}
+	public function execute($var);
 }

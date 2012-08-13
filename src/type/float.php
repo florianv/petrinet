@@ -14,7 +14,7 @@
  * @subpackage  Type
  * @since       1.0
  */
-class PNConditionTypeFloat implements PNConditionType
+class PNTypeFloat implements PNType
 {
 	/**
 	 * Evaluate the condition.

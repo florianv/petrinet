@@ -466,9 +466,7 @@ class PNTransitionTest extends TestCase
 	 */
 	public function testExecute()
 	{
-		$this->markTestIncomplete(
-			'This test has not been implemented yet.'
-		);
+		$this->assertTrue(FALSE, 'Without this method, the api does not work');
 	}
 
 	/**

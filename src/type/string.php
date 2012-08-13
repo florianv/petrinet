@@ -1,20 +1,20 @@
 <?php
 /**
  * @package     Petrinet
- * @subpackage  Condition
+ * @subpackage  Type
  *
  * @copyright   Copyright (C) 2012 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
 /**
- * Interface for type conditions.
+ * Condition checking if a variable is a string.
  *
  * @package     Petrinet
- * @subpackage  Condition
+ * @subpackage  Type
  * @since       1.0
  */
-interface PNConditionType
+class PNTypeString implements PNType
 {
 	/**
 	 * Evaluate the condition.
@@ -25,5 +25,8 @@ interface PNConditionType
 	 *
 	 * @since   1.0
 	 */
-	public function execute($var);
+	public function execute($var)
+	{
+		return is_string($var);
+	}
 }

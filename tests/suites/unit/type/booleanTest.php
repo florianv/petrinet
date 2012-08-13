@@ -8,16 +8,16 @@
  */
 
 /**
- * Test class for PNConditionTypeBoolean.
+ * Test class for PNTypeBoolean.
  *
  * @package     Tests.Unit
  * @subpackage  Type
  * @since       1.0
  */
-class PNConditionTypeBooleanTest extends TestCase
+class PNTypeBooleanTest extends TestCase
 {
 	/**
-	 * @var    PNConditionTypeBoolean  A PNConditionTypeBoolean instance.
+	 * @var    PNTypeBoolean  A PNTypeBoolean instance.
 	 * @since  1.0
 	 */
 	protected $object;
@@ -33,7 +33,7 @@ class PNConditionTypeBooleanTest extends TestCase
 	{
 		parent::setUp();
 
-		$this->object = new PNConditionTypeBoolean;
+		$this->object = new PNTypeBoolean;
 	}
 
 	/**
@@ -60,7 +60,7 @@ class PNConditionTypeBooleanTest extends TestCase
 	 * @return  void
 	 *
 	 * @dataProvider  provider
-	 * @covers        PNConditionTypeBoolean::execute
+	 * @covers        PNTypeBoolean::execute
 	 * @since         1.0
 	 */
 	public function testExecute($var, $expected)

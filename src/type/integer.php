@@ -8,13 +8,13 @@
  */
 
 /**
- * Condition checking if a variable is a string.
+ * Condition checking if a variable is an integer.
  *
  * @package     Petrinet
  * @subpackage  Type
  * @since       1.0
  */
-class PNConditionTypeString implements PNConditionType
+class PNTypeInteger implements PNType
 {
 	/**
 	 * Evaluate the condition.
@@ -27,6 +27,6 @@ class PNConditionTypeString implements PNConditionType
 	 */
 	public function execute($var)
 	{
-		return is_string($var);
+		return is_int($var);
 	}
 }

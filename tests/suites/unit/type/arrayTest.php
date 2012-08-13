@@ -8,16 +8,16 @@
  */
 
 /**
- * Test class for PNConditionTypeFloat.
+ * Test class for PNTypeArray.
  *
  * @package     Tests.Unit
  * @subpackage  Type
  * @since       1.0
  */
-class PNConditionTypeFloatTest extends TestCase
+class PNTypeArrayTest extends TestCase
 {
 	/**
-	 * @var    PNConditionTypeFloat  A PNConditionTypeFloat instance.
+	 * @var    PNTypeArray  A PNTypeArray instance.
 	 * @since  1.0
 	 */
 	protected $object;
@@ -33,7 +33,7 @@ class PNConditionTypeFloatTest extends TestCase
 	{
 		parent::setUp();
 
-		$this->object = new PNConditionTypeFloat;
+		$this->object = new PNTypeArray;
 	}
 
 	/**
@@ -46,8 +46,8 @@ class PNConditionTypeFloatTest extends TestCase
 	public function provider()
 	{
 		return array(
-			array(3.0, true),
-			array('2.2', false)
+			array(array(), true),
+			array('3', false)
 		);
 	}
 
@@ -60,7 +60,7 @@ class PNConditionTypeFloatTest extends TestCase
 	 * @return  void
 	 *
 	 * @dataProvider  provider
-	 * @covers        PNConditionTypeFloat::execute
+	 * @covers        PNTypeArray::execute
 	 * @since         1.0
 	 */
 	public function testExecute($var, $expected)

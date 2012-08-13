@@ -8,16 +8,16 @@
  */
 
 /**
- * Test class for PNConditionTypeString.
+ * Test class for PNTypeInteger.
  *
  * @package     Tests.Unit
  * @subpackage  Type
  * @since       1.0
  */
-class PNConditionTypeStringTest extends TestCase
+class PNTypeIntegerTest extends TestCase
 {
 	/**
-	 * @var    PNConditionTypeString  A PNConditionTypeString instance.
+	 * @var    PNTypeInteger  A PNTypeInteger instance.
 	 * @since  1.0
 	 */
 	protected $object;
@@ -33,7 +33,7 @@ class PNConditionTypeStringTest extends TestCase
 	{
 		parent::setUp();
 
-		$this->object = new PNConditionTypeString;
+		$this->object = new PNTypeInteger;
 	}
 
 	/**
@@ -46,8 +46,8 @@ class PNConditionTypeStringTest extends TestCase
 	public function provider()
 	{
 		return array(
-			array('test', true),
-			array(22, false)
+			array(3, true),
+			array('2.2', false)
 		);
 	}
 
@@ -60,7 +60,7 @@ class PNConditionTypeStringTest extends TestCase
 	 * @return  void
 	 *
 	 * @dataProvider  provider
-	 * @covers        PNConditionTypeString::execute
+	 * @covers        PNTypeInteger::execute
 	 * @since         1.0
 	 */
 	public function testExecute($var, $expected)
