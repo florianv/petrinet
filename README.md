@@ -2,12 +2,12 @@
 
 A simple Colored Petri Net API written in PHP.
 
-I  [Requirements](https://github.com/florianv/Petrinet#requirements)  
-II [Using the API](https://github.com/florianv/Petrinet#using-the-api)  
-   1. [The elements](https://github.com/florianv/Petrinet#the-elements)  
-   2. [Creating a simple Petri Net](https://github.com/florianv/Petrinet#creating-a-simple-petri-net)  
-   3. [Executing a Petri Net](https://github.com/florianv/Petrinet#executing-a-petri-net)  
-III [Some Future work](https://github.com/florianv/Petrinet#some-future-work) 
+[Requirements](https://github.com/florianv/Petrinet#requirements)  
+[Using the API](https://github.com/florianv/Petrinet#using-the-api)  
+   * [The elements](https://github.com/florianv/Petrinet#the-elements)  
+   * [Creating a simple Petri Net](https://github.com/florianv/Petrinet#creating-a-simple-petri-net)  
+   * [Executing a Petri Net](https://github.com/florianv/Petrinet#executing-a-petri-net)  
+[Some Future work](https://github.com/florianv/Petrinet#some-future-work) 
 
 ## Requirements
 
