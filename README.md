@@ -202,7 +202,6 @@ $engine->resume();
 
 - Allow arc expressions to return empty arrays (non matching output node color set) for if-else expressions.
 - Improve the Transition enabling (binding) algorithm.
-- More color types (allow objects and custom instance of objects in the colors/color sets).
 - Allow both colored and non-colored Petri nets creation.
 - Database storage and loading of a Petri Net at a given state.
 - Use the Visitor Pattern to traverse the graph and validate the Petri Net definition according to Petri Net properties.
