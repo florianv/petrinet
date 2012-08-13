@@ -53,7 +53,7 @@ abstract class PNArcExpression
 
 	/**
 	 * Execute the expression.
-	 * The method must return an array of data compatible with the output place/transition color set.
+	 * The method must return an array of which is a subset of the output place/transition color set.
 	 *
 	 * @param   array  $arguments  The expression arguments.
 	 *
@@ -87,6 +87,20 @@ abstract class PNArcExpression
 
 		// Store them.
 		$this->arguments = $arguments;
+	}
+
+	/**
+	 * Set the type Manager.
+	 *
+	 * @param   PNTypeManager  $manager  The type Manager.
+	 *
+	 * @return  void
+	 *
+	 * @since   1.0
+	 */
+	public function setTypeManager(PNTypeManager $manager)
+	{
+		$this->typeManager = $manager;
 	}
 
 	/**

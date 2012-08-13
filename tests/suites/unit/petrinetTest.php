@@ -48,6 +48,7 @@ class PNPetrinetTest extends TestCase
 	{
 		$petri = new PNPetrinet('test');
 		$this->assertEquals('test', TestReflection::getValue($petri, 'name'));
+		$this->assertInstanceOf('PNTypeManager', TestReflection::getValue($petri, 'typeManager'));
 	}
 
 	/**
@@ -93,6 +94,23 @@ class PNPetrinetTest extends TestCase
 	}
 
 	/**
+	 * Create a new Color set.
+	 *
+	 * @return  PNPlace  The Place.
+	 *
+	 * @covers  PNPetrinet::createColorSet
+	 * @since   1.0
+	 */
+	public function createColorSet()
+	{
+		$colorSet = $this->object->createColorSet();
+
+		$this->assertInstanceOf('PNColorSet', $colorSet);
+
+		$this->assertEquals(TestReflection::getValue($this->object, 'typeManager'), TestReflection::getValue($colorSet, 'typeManager'));
+	}
+
+	/**
 	 * Create a new Transition.
 	 *
 	 * @return  void
@@ -133,12 +151,20 @@ class PNPetrinetTest extends TestCase
 
 		$expression = $this->getMockForAbstractClass('PNArcExpression');
 
+		// Reset the type Manager.
+		TestReflection::setValue($expression, 'typeManager', null);
+
 		$arc = $this->object->connect($place, $transition, $expression);
 
 		$this->assertInstanceOf('PNArcInput', $arc);
 		$this->assertEquals(TestReflection::getValue($arc, 'input'), $place);
 		$this->assertEquals(TestReflection::getValue($arc, 'output'), $transition);
 		$this->assertEquals(TestReflection::getValue($arc, 'expression'), $expression);
+
+		// Assert the type manager was correctly injected in the expression.
+		$expression = TestReflection::getValue($arc, 'expression');
+		$manager = TestReflection::getValue($expression, 'typeManager');
+		$this->assertInstanceOf('PNTypeManager', $manager);
 
 		$placeOutputs = TestReflection::getValue($place, 'outputs');
 		$this->assertEquals($placeOutputs[0], $arc);
@@ -293,6 +319,41 @@ class PNPetrinetTest extends TestCase
 		$inputArcs = $this->object->getInputArcs();
 
 		$this->assertTrue($inputArcs[0]);
+	}
+
+	/**
+	 * Set the type Manager of this Petri net.
+	 *
+	 * @return  void
+	 *
+	 * @covers  PNPetrinet::setTypeManager
+	 * @since   1.0
+	 */
+	public function setTypeManager()
+	{
+		// Reset the type manager.
+		TestReflection::setValue($this->object, 'typeManager', null);
+
+		$manager = new PNTypeManager;
+
+		$this->object->setTypeManager($manager);
+
+		$this->assertEquals(TestReflection::getValue($this->object, 'typeManager'), $manager);
+	}
+
+	/**
+	 * Get the type Manager of this Petri net.
+	 *
+	 * @return  void
+	 *
+	 * @covers  PNPetrinet::setTypeManager
+	 * @since   1.0
+	 */
+	public function testGetTypeManager()
+	{
+		TestReflection::setValue($this->object, 'typeManager', true);
+
+		$this->assertTrue($this->object->getTypeManager());
 	}
 
 	/**

@@ -91,6 +91,25 @@ class PNArcExpressionTest extends TestCase
 	}
 
 	/**
+	 * Set the type Manager.
+	 *
+	 * @return  void
+	 *
+	 * @covers  PNArcExpression::setTypeManager
+	 * @since   1.0
+	 */
+	public function testSetTypeManager()
+	{
+		// Reset the type manager.
+		TestReflection::setValue($this->object, 'typeManager', null);
+
+		$manager = new PNTypeManager;
+		$this->object->setTypeManager($manager);
+
+		$this->assertEquals(TestReflection::getValue($this->object, 'typeManager'), $manager);
+	}
+
+	/**
 	 * Get the expression arguments.
 	 *
 	 * @return  void

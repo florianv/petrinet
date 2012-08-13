@@ -53,14 +53,24 @@ class PNPetrinet implements PNBaseVisitable
 	protected $outputArcs = array();
 
 	/**
+	 * @var    PNTypeManager  A type Manager for this petri net.
+	 * @since  1.0
+	 */
+	protected $typeManager;
+
+	/**
 	 * Constructor.
 	 *
-	 * @param   string  $name  The Petri Net name.
+	 * @param   string         $name     The Petri Net name.
+	 * @param   PNTypeManager  $manager  The type Manager.
 	 *
 	 * @since   1.0
 	 */
-	public function __construct($name)
+	public function __construct($name, PNTypeManager $manager = null)
 	{
+		// Use the given type manager, or create a new one.
+		$this->typeManager = $manager ? $manager : new PNTypeManager;
+
 		$this->name = $name;
 	}
 
@@ -102,6 +112,20 @@ class PNPetrinet implements PNBaseVisitable
 	}
 
 	/**
+	 * Create a new Color set.
+	 *
+	 * @param   array  $type  A tuple of types.
+	 *
+	 * @return  PNColorSet  The Color set.
+	 *
+	 * @since   1.0
+	 */
+	public function createColorSet(array $type = array())
+	{
+		return new PNColorSet($type, $this->typeManager);
+	}
+
+	/**
 	 * Create a new Transition.
 	 *
 	 * @param   PNColorSet  $colorSet  The place color set.
@@ -134,11 +158,18 @@ class PNPetrinet implements PNBaseVisitable
 	 */
 	public function connect($from, $to, PNArcExpression $expression = null)
 	{
+		// If an arc expression is given.
+		if ($expression)
+		{
+			// Inject the type manager.
+			$expression->setTypeManager($this->typeManager);
+		}
+
 		// Input Arc.
 		if ($from instanceof PNPlace && $to instanceof PNTransition)
 		{
-			// Create the arc.
-			$arc = new PNArcInput($from, $to, $expression);
+			// Create the arc, inject the expression and type manager.
+			$arc = new PNArcInput($from, $to, $expression, $this->typeManager);
 
 			// Store it.
 			$this->inputArcs[] = $arc;
@@ -147,8 +178,8 @@ class PNPetrinet implements PNBaseVisitable
 		// Output Arc.
 		elseif ($from instanceof PNTransition && $to instanceof PNPlace)
 		{
-			// Create the arc.
-			$arc = new PNArcOutput($from, $to, $expression);
+			// Create the arc, inject the expression and type manager.
+			$arc = new PNArcOutput($from, $to, $expression, $this->typeManager);
 
 			// Store it.
 			$this->outputArcs[] = $arc;
@@ -224,6 +255,34 @@ class PNPetrinet implements PNBaseVisitable
 	public function getInputArcs()
 	{
 		return $this->inputArcs;
+	}
+
+	/**
+	 * Set the type Manager of this Petri net.
+	 *
+	 * @param   PNTypeManager  $manager  The type Manager.
+	 *
+	 * @return  PNPetrinet  This method is chainable.
+	 *
+	 * @since   1.0
+	 */
+	public function setTypeManager(PNTypeManager $manager)
+	{
+		$this->typeManager = $manager;
+
+		return $this;
+	}
+
+	/**
+	 * Get the type Manager of this Petri net.
+	 *
+	 * @return  PNTypeManager  $manager  The type manager.
+	 *
+	 * @since   1.0
+	 */
+	public function getTypeManager()
+	{
+		return $this->typeManager;
 	}
 
 	/**

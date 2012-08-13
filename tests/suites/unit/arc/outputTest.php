@@ -50,6 +50,7 @@ class PNArcOutputTest extends TestCase
 		$this->assertNull(TestReflection::getValue($arc, 'input'));
 		$this->assertNull(TestReflection::getValue($arc, 'output'));
 		$this->assertNull(TestReflection::getValue($arc, 'expression'));
+		$this->assertInstanceOf('PNTypeManager', TestReflection::getValue($arc, 'typeManager'));
 
 		$transition = new PNTransition;
 		$place = new PNPlace;
