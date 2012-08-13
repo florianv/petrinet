@@ -33,9 +33,7 @@ Then register the API to the Joomla autoloader by adding : `JLoader::registerPre
 
 ## Running unit tests
 
-Cd to the Petrinet root folder, and type the command :
-
-`phpunit`
+Cd to the Petrinet root folder, and type the command : `phpunit`
 
 ## Using the API
 
