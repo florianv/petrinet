@@ -20,8 +20,8 @@ Requires PHP 5.3.1+.
 
 You must be familiar with Colored Petri Nets.
 
-1) www.cs.au.dk/~cpnbook/slides/CPN2.ppt
-2) www.daimi.au.dk/~kjensen/papers_books/use.pdf
+1) www.cs.au.dk/~cpnbook/slides/CPN2.ppt  
+2) www.daimi.au.dk/~kjensen/papers_books/use.pdf  
 
 ## Installation
 
