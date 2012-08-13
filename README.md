@@ -68,7 +68,7 @@ $place = new PNPlace($colorSet);
 $color = new PNColor(array(1, 1.2));
 $token = new PNToken($color);
 
-// Adding the Token in the Place.
+// Adding the Token to the Place.
 $place->addToken($token);
 ```
 
