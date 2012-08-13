@@ -4,6 +4,7 @@ A simple Colored Petri Net API written in PHP.
 
 1. [Requirements](https://github.com/florianv/Petrinet#requirements)  
 2. [Installation](https://github.com/florianv/Petrinet#installation)  
+2. [Running unit tests](https://github.com/florianv/Petrinet#installation)  
 3. [Using the API](https://github.com/florianv/Petrinet#using-the-api)
    * [The elements](https://github.com/florianv/Petrinet#the-elements)  
    * [Creating a simple Petri Net](https://github.com/florianv/Petrinet#creating-a-simple-petri-net)  
@@ -28,6 +29,12 @@ You must be familiar with Colored Petri Nets.
 * For using it in Joomla, despite it's not recommanded yet, copy the content of the `src` dir in `libraries/joomla/petrinet`.
 Then register the API to the Joomla autoloader by adding : `JLoader::registerPrefix('PN', '/path/to/libraries/joomla/petrinet');` in
 `libraries/import.php`.
+
+## Running unit tests
+
+Cd to the Petrinet root folder, and type the command :
+
+`phpunit`
 
 ## Using the API
 
