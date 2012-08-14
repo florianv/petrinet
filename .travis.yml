@@ -7,6 +7,6 @@ php:
 before_script:
 - pyrus install pear/PHP_CodeSniffer
 - phpenv rehash
-- phpcs --standard=build/phpcs/Joomla/ruleset.xml src/
+- phpcs --standard=platform/build/phpcs/Joomla/ruleset.xml src/
 
 script: phpunit --coverage-text
