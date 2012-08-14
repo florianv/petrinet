@@ -46,8 +46,7 @@ Cd to the Petrinet root folder, and type the command : `phpunit`
 ```php
 <?php
 
-// Creating a set (of PHP types) that can only contain Colors (data) where the first element is an integer,
-// and the second element a double (double).
+// Creating a Color Set.
 $colorSet = new PNColorSet(array('integer', 'double'));
 ```
 
@@ -218,7 +217,7 @@ $engine->resume();
 
 The default supported types are : `integer`, `double (float)`, `array`, `boolean` and `string`.
 
-Custom types and Object types allow are special types in the system.
+Custom types and Object types are special types in the system.
 
 Once declared and registered, they can be used in Color Set, Colors and arc expressions.
 
