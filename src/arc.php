@@ -119,7 +119,7 @@ abstract class PNArc
 	 */
 	public function isLoaded()
 	{
-		return $this->hasInput() && $this->hasOuput();
+		return $this->hasInput() && $this->hasOutput();
 	}
 
 	/**
