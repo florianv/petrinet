@@ -265,8 +265,12 @@ $myType = new IntegerGteFive;
 // Get an instance of the Type Manager.
 $typeManager = new PNTypeManager();
 
-// Registering the new type in the system.
-// The first param is the name of the new type, the second param the parent type, and the third param, an instance of the IntegerGteFive class.
+/**
+ * Registering the new type in the system.
+ * The first param is the name of the new type.
+ * The second param the parent type.
+ * The third param, an instance of the IntegerGteFive class.
+ */
 $typeManager->registerCustomType('IntegerGteFive', 'integer', $myType);
 
 // Creating a Petri Net and injecting the type manager.
