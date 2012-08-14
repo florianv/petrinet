@@ -109,6 +109,19 @@ class PNEngineStateStoppedTest extends TestCase
 	}
 
 	/**
+	 * Main execution method.
+	 *
+	 * @return  void
+	 *
+	 * @covers  PNEngineStateStopped::run
+	 * @since   1.0
+	 */
+	public function testRun()
+	{
+		$this->assertNull($this->object->run());
+	}
+
+	/**
 	 * End the execution.
 	 *
 	 * @return  void

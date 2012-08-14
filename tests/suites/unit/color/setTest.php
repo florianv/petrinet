@@ -160,21 +160,17 @@ class PNColorSetTest extends TestCase
 	 */
 	public function testMatches()
 	{
-		// Test with different sizes.
-		$color = new PNColor(array(8, 'test'));
-		$set = new PNColorSet(array('integer'));
+		// Get a type Manager mock.
+		$typeManagerMock = $this->getMock('PNTypeManager');
 
-		$this->assertFalse($set->matches($color));
+		// Expect the method matchMultiple to be called.
+		$typeManagerMock->expects($this->once())
+			->method('matchMultiple');
 
-		// Test with unmatching types.
-		$color = new PNColor(array(8, array()));
-		$set = new PNColorSet(array('integer', 'double'));
-		$this->assertFalse($set->matches($color));
+		// Inject it.
+		TestReflection::setValue($this->object, 'typeManager', $typeManagerMock);
 
-		// Test with matching types.
-		$color = new PNColor(array(8, array(), 'test', 'test2', true));
-		$set = new PNColorSet(array('integer', 'array', 'string', 'string', 'boolean'));
-		$this->assertTrue($set->matches($color));
+		$this->object->matches(new PNColor(array('test')));
 	}
 
 	/**
