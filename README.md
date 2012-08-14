@@ -268,7 +268,7 @@ $typeManager = new PNTypeManager();
 
 /**
  * Registering the new type in the system.
- * The first param is the name of the new type.
+ * The first param is the name of the new type (does no need to match the class name).
  * The second param the parent type.
  * The third param, an instance of the IntegerGteFive class.
  */
@@ -279,15 +279,38 @@ $net = new PNPetrinet('Test', $typeManager);
 
 // Now your custom type is recognized by the system.
 $colorSet = $net->createColorSet(array('IntegerGteFive'));
-
 $token = new PNToken(new PNColor(array(8));
-
 $place = $net->createPlace($colorSet);
 $place->addToken($token);
 ```
 
 Note : Once you create and register a custom type, you need to pass it to the Petri Net before creating anything.
 It will inject it in the elements which need it.
+
+### Object types
+
+An object type is the name of a php class.
+
+You can register a given class name as an 'object type' in the system.
+
+```php
+<?php
+
+// Get an instance of the Type Manager.
+$typeManager = new PNTypeManager();
+
+// Register the object type.
+$typeManager->registerObjectType('MyClass');
+
+// Creating a Petri Net and injecting the type manager.
+$net = new PNPetrinet('Test', $typeManager);
+
+// Now your custom type is recognized by the system.
+$colorSet = $net->createColorSet(array('MyClass'));
+$token = new PNToken(new PNColor(array(new MyClass));
+$place = $net->createPlace($colorSet);
+$place->addToken($token);
+```
 
 ## Some Future work
 
