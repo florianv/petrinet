@@ -39,6 +39,8 @@ abstract class PNEngineState
 	 *
 	 * @return  void
 	 *
+	 * @ignore
+	 *
 	 * @since   1.0
 	 */
 	abstract public function start();
