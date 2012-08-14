@@ -175,31 +175,6 @@ class PNTransition implements PNBaseVisitable
 		{
 			return false;
 		}
-
-		// Get the transition color set.
-		$setTypes = $this->colorSet->getType();
-
-		// Iterate the input arcs.
-		foreach ($this->inputs as $arc)
-		{
-			// Get the input place of the current arc.
-			$place = $arc->getInput();
-
-			// Verify there is at least one token in the place.
-			if ($place->getTokenCount() < 1)
-			{
-				return false;
-			}
-
-			// Verify the arc expression is valid.
-			if ($arc->hasExpression())
-			{
-				if (!$arc->validateExpression())
-				{
-					return false;
-				}
-			}
-		}
 	}
 
 	/**
