@@ -212,11 +212,11 @@ $engine->stop();
 $engine->resume();
 ```
 
-### Experimental stuff
+## Experimental stuff
 
 At this moment the only supported types in the API are : `integer`, `double (float)`, `array`, `boolean` and `string`.
 
-## Custom types
+### Custom types
 
 A custom type is a subset of the above mentionned types.
 
