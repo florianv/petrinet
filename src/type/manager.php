@@ -185,7 +185,7 @@ class PNTypeManager
 	}
 
 	/**
-	 * Get the registered custom type class corresponding to $type.
+	 * Get the registered custom type class instance corresponding to $type.
 	 *
 	 * @param   string  $type  The type name.
 	 *

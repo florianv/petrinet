@@ -5,6 +5,6 @@ php:
   - "5.4"
   
 before_script:
-- pear install PHP_CodeSniffer-1.3.6
+- pear install --alldeps PHP_CodeSniffer-1.3.6
 
 script: phpunit --coverage-text
