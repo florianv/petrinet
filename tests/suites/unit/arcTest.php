@@ -124,11 +124,11 @@ class PNArcTest extends TestCase
 	 */
 	public function testHasOutput()
 	{
-		$this->assertFalse($this->object->hasOuput());
+		$this->assertFalse($this->object->hasOutput());
 
 		TestReflection::setValue($this->object, 'output', new PNTransition);
 
-		$this->assertTrue($this->object->hasOuput());
+		$this->assertTrue($this->object->hasOutput());
 	}
 
 	/**

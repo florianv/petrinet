@@ -104,7 +104,7 @@ abstract class PNArc
 	 *
 	 * @since   1.0
 	 */
-	public function hasOuput()
+	public function hasOutput()
 	{
 		return !is_null($this->output);
 	}
