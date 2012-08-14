@@ -39,8 +39,6 @@ abstract class PNEngineState
 	 *
 	 * @return  void
 	 *
-	 * @codeCoverageIgnore
-	 *
 	 * @since   1.0
 	 */
 	abstract public function start();
@@ -49,8 +47,6 @@ abstract class PNEngineState
 	 * Stop the execution.
 	 *
 	 * @return  void
-	 *
-	 * @codeCoverageIgnore
 	 *
 	 * @since   1.0
 	 */
@@ -61,8 +57,6 @@ abstract class PNEngineState
 	 *
 	 * @return  void
 	 *
-	 * @codeCoverageIgnore
-	 *
 	 * @since   1.0
 	 */
 	abstract public function pause();
@@ -71,8 +65,6 @@ abstract class PNEngineState
 	 * Resume the execution.
 	 *
 	 * @return  void
-	 *
-	 * @codeCoverageIgnore
 	 *
 	 * @since   1.0
 	 */
@@ -83,8 +75,6 @@ abstract class PNEngineState
 	 *
 	 * @return  void
 	 *
-	 * @codeCoverageIgnore
-	 *
 	 * @since   1.0
 	 */
 	abstract public function run();
@@ -93,8 +83,6 @@ abstract class PNEngineState
 	 * End the execution.
 	 *
 	 * @return  void
-	 *
-	 * @codeCoverageIgnore
 	 *
 	 * @since   1.0
 	 */
