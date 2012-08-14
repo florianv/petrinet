@@ -4,6 +4,7 @@
 
 A simple Colored Petri Net API written in PHP.
 
+0. [TODO]
 1. [Requirements](https://github.com/florianv/Petrinet#requirements)
 2. [Installation](https://github.com/florianv/Petrinet#installation)
 3. [Running unit tests](https://github.com/florianv/Petrinet#running-unit-tests)
@@ -15,6 +16,11 @@ A simple Colored Petri Net API written in PHP.
    * [Custom types](https://github.com/florianv/Petrinet#custom-types)
    * [Object types](https://github.com/florianv/Petrinet#object-types)
 6. [Some Future work](https://github.com/florianv/Petrinet#some-future-work)
+
+## TODO
+
+The Petri Net execution is not working atm, two methods needs to be implemented (enabling a transition and firing a transition).
+http://ceur-ws.org/Vol-643/paper05.pdf
 
 ## Requirements
 
