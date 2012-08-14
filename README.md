@@ -278,7 +278,7 @@ $typeManager->registerCustomType('IntegerGteFive', 'integer', $myType);
 $net = new PNPetrinet('Test', $typeManager);
 
 // Now your custom type is recognized by the system.
-$colorSet = new PNColorSet(array('IntegerGteFive'));
+$colorSet = $net->createColorSet(array('IntegerGteFive'));
 
 $token = new PNToken(new PNColor(array(8));
 
