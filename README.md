@@ -296,7 +296,7 @@ It will inject it in the elements which need it.
 An object type is the name of a php class.
 You can register a given class name as an 'object type' in the system.
 
-It allow for tokens to transport instances of a given class.
+It allows tokens to transport instances of a given class.
 
 ```php
 <?php
