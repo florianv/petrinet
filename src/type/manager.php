@@ -99,7 +99,7 @@ class PNTypeManager
 		if (is_null($type))
 		{
 			// Try to find it.
-			if (!class_exists('PNType' . ucfirst($typeName)))
+			if (!class_exists($typeName))
 			{
 				throw new UnexpectedValueException('Type class not found for type : ' . $typeName);
 			}

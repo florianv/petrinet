@@ -26,6 +26,3 @@ if (!defined('JPATH_PLATFORM'))
 define('JPATH_SITE', realpath(__DIR__ . '/../src'));
 define('JPATH_BASE', realpath(__DIR__ . '/../www'));
 define('JPATH_ROOT', realpath(__DIR__ . '/..'));
-//define('JPATH_CONFIGURATION', JPATH_ROOT . '/config');
-//define('JPATH_DB', JPATH_ROOT . '/database');
-//define('JPATH_CACHE', JPATH_ROOT . '/cache');
