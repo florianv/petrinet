@@ -13,6 +13,7 @@ A simple Colored Petri Net API written in PHP.
    * [Executing a Petri Net](https://github.com/florianv/Petrinet#executing-a-petri-net)
 5. [Experimental stuff](https://github.com/florianv/Petrinet#experimental-stuff)
    * [Custom types](https://github.com/florianv/Petrinet#custom-types)
+   * [Object types](https://github.com/florianv/Petrinet#object-types)
 6. [Some Future work](https://github.com/florianv/Petrinet#some-future-work)
 
 ## Requirements
@@ -216,6 +217,9 @@ $engine->resume();
 ## Experimental stuff
 
 At this moment the only supported types in the API are : `integer`, `double (float)`, `array`, `boolean` and `string`.
+Custom types and Object types allow to declare special types in the system.
+
+Once declared and registered, they can be used in Color Set, Colors and arc expression.
 
 ### Custom types
 
@@ -290,8 +294,9 @@ It will inject it in the elements which need it.
 ### Object types
 
 An object type is the name of a php class.
-
 You can register a given class name as an 'object type' in the system.
+
+It allow for tokens to transport instances of a given class.
 
 ```php
 <?php
@@ -305,7 +310,7 @@ $typeManager->registerObjectType('MyClass');
 // Creating a Petri Net and injecting the type manager.
 $net = new PNPetrinet('Test', $typeManager);
 
-// Now your custom type is recognized by the system.
+// Now your object type is recognized by the system.
 $colorSet = $net->createColorSet(array('MyClass'));
 $token = new PNToken(new PNColor(array(new MyClass));
 $place = $net->createPlace($colorSet);
