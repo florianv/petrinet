@@ -11,8 +11,9 @@ A simple Colored Petri Net API written in PHP.
    * [The elements](https://github.com/florianv/Petrinet#the-elements)
    * [Creating a simple Petri Net](https://github.com/florianv/Petrinet#creating-a-simple-petri-net)
    * [Executing a Petri Net](https://github.com/florianv/Petrinet#executing-a-petri-net)
-
-5. [Some Future work](https://github.com/florianv/Petrinet#some-future-work)
+5. [Experimental stuff](https://github.com/florianv/Petrinet#experimental-stuff)
+   * [Custom types](https://github.com/florianv/Petrinet#custom-types)
+6. [Some Future work](https://github.com/florianv/Petrinet#some-future-work)
 
 ## Requirements
 
@@ -286,7 +287,7 @@ $place->addToken($token);
 ```
 
 Note : Once you create and register a custom type, you need to pass it to the Petri Net before creating anything.
-It will inject it in the elements which needs it.
+It will inject it in the elements which need it.
 
 ## Some Future work
 
