@@ -249,7 +249,7 @@ class IntegerGteFive implements PNType
      */
     public function test()
     {
-    	return 5;
+    	return 8;
     }
 }
 ```
@@ -266,6 +266,7 @@ $myType = new IntegerGteFive;
 $typeManager = new PNTypeManager();
 
 // Registering the new type in the system.
+// The first param is the name of the new type, the second param the parent type, and the third type an instance of the type class.
 $typeManager->registerCustomType('IntegerGteFive', 'integer', $myType);
 ```
 
