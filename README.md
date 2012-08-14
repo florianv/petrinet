@@ -223,7 +223,7 @@ A custom type is a subset of the above mentionned types.
 Example : I want to create the type of integers equal or greater than 5.
 It's a subset of the integers set.
 
-For this, you must declarate the type by implementing the `PNType` interface and declarating two methods.
+For this, you must declarate the type by implementing the `PNType` interface and declaring two methods.
 
 ```php
 <?php
@@ -279,7 +279,7 @@ $net = new PNPetrinet('Test', $typeManager);
 // Now your custom type is recognized by the system.
 $colorSet = new PNColorSet(array('IntegerGteFive'));
 
-$token = new PNToken(new PNColor(8));
+$token = new PNToken(new PNColor(array(8));
 
 $place = $net->createPlace($colorSet);
 $place->addToken($token);
