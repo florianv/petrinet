@@ -137,6 +137,22 @@ class PNPlaceTest extends TestCase
 	}
 
 	/**
+	 * Check if the place has at least one input arc.
+	 *
+	 * @return  void
+	 *
+	 * @covers  PNPlace::hasInput
+	 * @since   1.0
+	 */
+	public function testHasInput()
+	{
+		$this->assertFalse($this->object->hasInput());
+
+		TestReflection::setValue($this->object, 'inputs', array('test'));
+		$this->assertTrue($this->object->hasInput());
+	}
+
+	/**
 	 * Add an output Arc to this Place.
 	 *
 	 * @return  void
@@ -201,6 +217,49 @@ class PNPlaceTest extends TestCase
 	}
 
 	/**
+	 * Check if the place has at least one output arc.
+	 *
+	 * @return  void
+	 *
+	 * @covers  PNPlace::hasOutput
+	 * @since   1.0
+	 */
+	public function testHasOutput()
+	{
+		$this->assertFalse($this->object->hasOutput());
+
+		TestReflection::setValue($this->object, 'outputs', array('test'));
+		$this->assertTrue($this->object->hasOutput());
+	}
+
+	/**
+	 * Check if the place is loaded.
+	 * To be loaded it must have at least one input or output.
+	 *
+	 * @return  void
+	 *
+	 * @covers  PNPlace::isLoaded
+	 * @since   1.0
+	 */
+	public function testIsLoaded()
+	{
+		$this->assertFalse($this->object->isLoaded());
+
+		// Add an input.
+		TestReflection::setValue($this->object, 'inputs', array('test'));
+
+		$this->assertTrue($this->object->isLoaded());
+
+		// Reset the inputs.
+		TestReflection::setValue($this->object, 'inputs', array());
+
+		// Add an output.
+		TestReflection::setValue($this->object, 'outputs', array('test'));
+
+		$this->assertTrue($this->object->isLoaded());
+	}
+
+	/**
 	 * Set the color set of this Place.
 	 *
 	 * @return  void
@@ -228,6 +287,26 @@ class PNPlaceTest extends TestCase
 	{
 		TestReflection::setValue($this->object, 'colorSet', true);
 		$this->assertTrue($this->object->getColorSet());
+	}
+
+	/**
+	 * Check if the place has a color set.
+	 * Since an empty color set is created by default, it checks if it has at least one type.
+	 *
+	 * @return  void
+	 *
+	 * @covers  PNPlace::hasColorSet
+	 * @since   1.0
+	 */
+	public function testHasColorSet()
+	{
+		$this->assertFalse($this->object->hasColorSet());
+
+		$colorSet = new PNColorSet(array('integer'));
+
+		TestReflection::setValue($this->object, 'colorSet', $colorSet);
+
+		$this->assertTrue($this->object->hasColorSet());
 	}
 
 	/**
