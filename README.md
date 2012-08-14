@@ -274,10 +274,9 @@ $typeManager = new PNTypeManager();
 $typeManager->registerCustomType('IntegerGteFive', 'integer', $myType);
 
 // Creating a Petri Net and injecting the type manager.
-$net = new PNPetrinet('Test', $typeManager); // Or PNPetrinet::getInstance('Test')->setTypeManager($typeManager);
+$net = new PNPetrinet('Test', $typeManager);
 
 // Now your custom type is recognized by the system.
-
 $colorSet = new PNColorSet(array('IntegerGteFive'));
 
 $token = new PNToken(new PNColor(8));
