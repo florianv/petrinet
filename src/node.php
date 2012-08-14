@@ -112,7 +112,7 @@ abstract class PNNode implements PNBaseVisitable
 	 */
 	public function hasInput()
 	{
-		return !empty($this->inputs);
+		return empty($this->inputs) ? false : true;
 	}
 
 	/**
@@ -152,7 +152,7 @@ abstract class PNNode implements PNBaseVisitable
 	 */
 	public function hasOutput()
 	{
-		return !empty($this->outputs);
+		return empty($this->outputs) ? false : true;
 	}
 
 	/**

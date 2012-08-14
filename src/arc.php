@@ -82,7 +82,7 @@ abstract class PNArc
 	 */
 	public function hasInput()
 	{
-		return !is_null($this->input);
+		return is_null($this->input) ? false : true;
 	}
 
 	/**
@@ -106,7 +106,7 @@ abstract class PNArc
 	 */
 	public function hasOutput()
 	{
-		return !is_null($this->output);
+		return is_null($this->output) ? false : true;
 	}
 
 	/**
@@ -238,7 +238,7 @@ abstract class PNArc
 	 */
 	public function hasExpression()
 	{
-		return !is_null($this->expression);
+		return is_null($this->expression) ? false : true;
 	}
 
 	/**
