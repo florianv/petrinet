@@ -37,35 +37,6 @@ class PNTransitionTest extends TestCase
 	}
 
 	/**
-	 * Constructor.
-	 *
-	 * @return  void
-	 *
-	 * @covers  PNTransition::__construct
-	 * @since   1.0
-	 */
-	public function test__construct()
-	{
-		// Test without param.
-		$transition = new PNTransition;
-
-		$this->assertInstanceOf('PNColorSet', TestReflection::getValue($transition, 'colorSet'));
-		$this->assertEmpty(TestReflection::getValue($transition, 'inputs'));
-		$this->assertEmpty(TestReflection::getValue($transition, 'outputs'));
-
-		// Test with params.
-		$colorSet = new PNColorSet;
-		$inputs = array(new PNArcInput, new PNArcInput);
-		$outputs = array(new PNArcOutput, new PNArcOutput);
-
-		$transition = new PNTransition($colorSet, $inputs, $outputs);
-
-		$this->assertEquals($colorSet, TestReflection::getValue($transition, 'colorSet'));
-		$this->assertEquals($inputs, TestReflection::getValue($transition, 'inputs'));
-		$this->assertEquals($outputs, TestReflection::getValue($transition, 'outputs'));
-	}
-
-	/**
 	 * Add an input Arc to this Transition.
 	 *
 	 * @return  void
@@ -98,28 +69,9 @@ class PNTransitionTest extends TestCase
 	 *
 	 * @expectedException PHPUnit_Framework_Error
 	 */
-	public function testAddInputException()
+	public function testAddInputError()
 	{
 		$this->object->addInput(new stdClass);
-	}
-
-	/**
-	 * Get the input Arcs of this Transition.
-	 *
-	 * @return  void
-	 *
-	 * @covers  PNTransition::getInputs
-	 * @since   1.0
-	 */
-	public function testGetInputs()
-	{
-		$this->assertEmpty($this->object->getInputs());
-
-		// Add two input arcs.
-		$inputs = array(new PNArcInput, new PNArcInput);
-		TestReflection::setValue($this->object, 'inputs', $inputs);
-
-		$this->assertEquals($inputs, $this->object->getInputs());
 	}
 
 	/**
@@ -156,28 +108,32 @@ class PNTransitionTest extends TestCase
 	 *
 	 * @expectedException PHPUnit_Framework_Error
 	 */
-	public function testAddOutputException()
+	public function testAddOutputError()
 	{
 		$this->object->addOutput(new stdClass);
 	}
 
 	/**
-	 * Get the output Arcs of this Transition.
+	 * Check if the Transition is loaded.
 	 *
 	 * @return  void
 	 *
-	 * @covers  PNTransition::getOutputs
+	 * @covers  PNPlace::isLoaded
 	 * @since   1.0
 	 */
-	public function testGetOutputs()
+	public function testIsLoaded()
 	{
-		$this->assertEmpty($this->object->getOutputs());
+		$this->assertFalse($this->object->isLoaded());
 
-		// Add two output arcs.
-		$outputs = array(new PNArcOutput, new PNArcOutput);
-		TestReflection::setValue($this->object, 'outputs', $outputs);
+		// Add an input.
+		TestReflection::setValue($this->object, 'inputs', array('test'));
 
-		$this->assertEquals($outputs, $this->object->getOutputs());
+		$this->assertFalse($this->object->isLoaded());
+
+		// Add an output.
+		TestReflection::setValue($this->object, 'outputs', array('test'));
+
+		$this->assertTrue($this->object->isLoaded());
 	}
 
 	/**

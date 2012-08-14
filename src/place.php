@@ -14,20 +14,8 @@
  * @subpackage  Petrinet
  * @since       1.0
  */
-class PNPlace implements PNBaseVisitable
+class PNPlace extends PNNode
 {
-	/**
-	 * @var    array  The input arcs of this Place.
-	 * @since  1.0
-	 */
-	protected $inputs;
-
-	/**
-	 * @var    array  The ouput arcs of this Place.
-	 * @since  1.0
-	 */
-	protected $outputs;
-
 	/**
 	 * @var    PNTokenSet  The tokens set.
 	 * @since  1.0
@@ -35,18 +23,12 @@ class PNPlace implements PNBaseVisitable
 	protected $tokenSet;
 
 	/**
-	 * @var    PNColorSet  The color set.
-	 * @since  1.0
-	 */
-	protected $colorSet;
-
-	/**
 	 * Constructor.
 	 *
-	 * @param   PNColorSet  $colorSet  A color set to add to this place.
-	 * @param   PNTokenSet  $tokenSet  A token set to add to this place.
-	 * @param   array       $inputs    An array of input arcs of this place (PNArcOutput).
-	 * @param   array       $outputs   An array of output arcs of this place (PNArcInput).
+	 * @param   PNColorSet  $colorSet  A color set to add to this Place.
+	 * @param   PNTokenSet  $tokenSet  A token set to add to this Place.
+	 * @param   array       $inputs    An array of input arcs of this Place (PNArcOutput).
+	 * @param   array       $outputs   An array of output arcs of this Place (PNArcInput).
 	 *
 	 * @since   1.0
 	 */
@@ -55,38 +37,7 @@ class PNPlace implements PNBaseVisitable
 		// Use the given token set or create an empty one.
 		$this->tokenSet = $tokenSet ? $tokenSet : new PNTokenSet;
 
-		// Use the given color set or create an empty one.
-		$this->colorSet = $colorSet ? $colorSet : new PNColorSet;
-
-		// If no input is given.
-		if (empty($inputs))
-		{
-			$this->inputs = $inputs;
-		}
-
-		else
-		{
-			// Try to add each input arc.
-			foreach ($inputs as $input)
-			{
-				$this->addInput($input);
-			}
-		}
-
-		// If no output is given.
-		if (empty($outputs))
-		{
-			$this->outputs = $outputs;
-		}
-
-		else
-		{
-			// Try to add each output arc.
-			foreach ($outputs as $output)
-			{
-				$this->addOutput($output);
-			}
-		}
+		parent::__construct($colorSet, $inputs, $outputs);
 	}
 
 	/**
@@ -106,30 +57,6 @@ class PNPlace implements PNBaseVisitable
 	}
 
 	/**
-	 * Get the input Arcs of this Place.
-	 *
-	 * @return  array  An array of input Arc objects.
-	 *
-	 * @since   1.0
-	 */
-	public function getInputs()
-	{
-		return $this->inputs;
-	}
-
-	/**
-	 * Check if the place has at least one input arc.
-	 *
-	 * @return  boolean  True if it's the case, false otherwise.
-	 *
-	 * @since   1.0
-	 */
-	public function hasInput()
-	{
-		return !empty($this->inputs);
-	}
-
-	/**
 	 * Add an output Arc to this Place.
 	 *
 	 * @param   PNArcInput  $arc  The output Arc.
@@ -146,30 +73,6 @@ class PNPlace implements PNBaseVisitable
 	}
 
 	/**
-	 * Get the output Arc of this Place.
-	 *
-	 * @return  array  An array of output Arc objects.
-	 *
-	 * @since   1.0
-	 */
-	public function getOutputs()
-	{
-		return $this->outputs;
-	}
-
-	/**
-	 * Check if the place has at least one output arc.
-	 *
-	 * @return  boolean  True if it's the case, false otherwise.
-	 *
-	 * @since   1.0
-	 */
-	public function hasOutput()
-	{
-		return !empty($this->outputs);
-	}
-
-	/**
 	 * Check if the place is loaded.
 	 * To be loaded it must have at least one input or output.
 	 *
@@ -180,47 +83,6 @@ class PNPlace implements PNBaseVisitable
 	public function isLoaded()
 	{
 		return $this->hasInput() || $this->hasOutput();
-	}
-
-	/**
-	 * Set the color set of this Place.
-	 *
-	 * @param   PNColorSet  $set  The color set.
-	 *
-	 * @return  PNPlace  This method is chainable.
-	 *
-	 * @since   1.0
-	 */
-	public function setColorSet(PNColorSet $set)
-	{
-		$this->colorSet = $set;
-
-		return $this;
-	}
-
-	/**
-	 * Get the color set of this Place.
-	 *
-	 * @return  PNColorSet  The color set.
-	 *
-	 * @since   1.0
-	 */
-	public function getColorSet()
-	{
-		return $this->colorSet;
-	}
-
-	/**
-	 * Check if the place has a color set.
-	 * Since an empty color set is created by default, it checks if it has at least one type.
-	 *
-	 * @return  boolean  True if it's the case, false otherwise.
-	 *
-	 * @since   1.0
-	 */
-	public function hasColorSet()
-	{
-		return count($this->colorSet) > 0;
 	}
 
 	/**

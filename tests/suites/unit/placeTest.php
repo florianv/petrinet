@@ -137,22 +137,6 @@ class PNPlaceTest extends TestCase
 	}
 
 	/**
-	 * Check if the place has at least one input arc.
-	 *
-	 * @return  void
-	 *
-	 * @covers  PNPlace::hasInput
-	 * @since   1.0
-	 */
-	public function testHasInput()
-	{
-		$this->assertFalse($this->object->hasInput());
-
-		TestReflection::setValue($this->object, 'inputs', array('test'));
-		$this->assertTrue($this->object->hasInput());
-	}
-
-	/**
 	 * Add an output Arc to this Place.
 	 *
 	 * @return  void
@@ -192,47 +176,6 @@ class PNPlaceTest extends TestCase
 	}
 
 	/**
-	 * Get the output Arc of this Place.
-	 *
-	 * @return  void
-	 *
-	 * @covers  PNPlace::getOutputs
-	 * @since   1.0
-	 */
-	public function testGetOutputs()
-	{
-		// Assert the default output is empty.
-		$inputs = $this->object->getOutputs();
-		$this->assertEmpty($inputs);
-
-		// Add two elements.
-		$array1 = array(8, 3);
-
-		TestReflection::setValue($this->object, 'outputs', $array1);
-		$outputs = $this->object->getOutputs();
-
-		$this->assertCount(2, $outputs);
-		$this->assertEquals($outputs[0], 8);
-		$this->assertEquals($outputs[1], 3);
-	}
-
-	/**
-	 * Check if the place has at least one output arc.
-	 *
-	 * @return  void
-	 *
-	 * @covers  PNPlace::hasOutput
-	 * @since   1.0
-	 */
-	public function testHasOutput()
-	{
-		$this->assertFalse($this->object->hasOutput());
-
-		TestReflection::setValue($this->object, 'outputs', array('test'));
-		$this->assertTrue($this->object->hasOutput());
-	}
-
-	/**
 	 * Check if the place is loaded.
 	 * To be loaded it must have at least one input or output.
 	 *
@@ -257,56 +200,6 @@ class PNPlaceTest extends TestCase
 		TestReflection::setValue($this->object, 'outputs', array('test'));
 
 		$this->assertTrue($this->object->isLoaded());
-	}
-
-	/**
-	 * Set the color set of this Place.
-	 *
-	 * @return  void
-	 *
-	 * @covers  PNPlace::setColorSet
-	 * @since   1.0
-	 */
-	public function testSetColorSet()
-	{
-		$set = new PNColorSet(array('integer', 'double'));
-		$this->object->setColorSet($set);
-
-		$this->assertEquals(TestReflection::getValue($this->object, 'colorSet'), $set);
-	}
-
-	/**
-	 * Get the color set of this Place.
-	 *
-	 * @return  void
-	 *
-	 * @covers  PNPlace::getColorSet
-	 * @since   1.0
-	 */
-	public function testGetColorSet()
-	{
-		TestReflection::setValue($this->object, 'colorSet', true);
-		$this->assertTrue($this->object->getColorSet());
-	}
-
-	/**
-	 * Check if the place has a color set.
-	 * Since an empty color set is created by default, it checks if it has at least one type.
-	 *
-	 * @return  void
-	 *
-	 * @covers  PNPlace::hasColorSet
-	 * @since   1.0
-	 */
-	public function testHasColorSet()
-	{
-		$this->assertFalse($this->object->hasColorSet());
-
-		$colorSet = new PNColorSet(array('integer'));
-
-		TestReflection::setValue($this->object, 'colorSet', $colorSet);
-
-		$this->assertTrue($this->object->hasColorSet());
 	}
 
 	/**

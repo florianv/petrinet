@@ -14,67 +14,8 @@
  * @subpackage  Petrinet
  * @since       1.0
  */
-class PNTransition implements PNBaseVisitable
+class PNTransition extends PNNode
 {
-	/**
-	 * @var    array  The input Arcs of this Transition.
-	 * @since  1.0
-	 */
-	protected $inputs;
-
-	/**
-	 * @var    array  The ouput Arcs of this Transition.
-	 * @since  1.0
-	 */
-	protected $outputs;
-
-	/**
-	 * @var    PNColorSet  The Transition color set.
-	 * @since  1.0
-	 */
-	protected $colorSet;
-
-	/**
-	 * Constructor.
-	 *
-	 * @param   PNColorSet  $colorSet  The transition color set.
-	 * @param   array       $inputs    The input arcs of this Transition (PNArcInput).
-	 * @param   array       $outputs   The output arcs of this Transition (PNArcOutput).
-	 *
-	 * @since   1.0
-	 */
-	public function __construct(PNColorSet $colorSet = null, array $inputs = array(), array $outputs = array())
-	{
-		// Take the given color set or create an empty one.
-		$this->colorSet = $colorSet ? $colorSet : new PNColorSet;
-
-		if (empty($inputs))
-		{
-			$this->inputs = $inputs;
-		}
-
-		else
-		{
-			foreach ($inputs as $input)
-			{
-				$this->addInput($input);
-			}
-		}
-
-		if (empty($outputs))
-		{
-			$this->outputs = $outputs;
-		}
-
-		else
-		{
-			foreach ($outputs as $output)
-			{
-				$this->addOutput($output);
-			}
-		}
-	}
-
 	/**
 	 * Add an input Arc to this Transition.
 	 *
@@ -89,18 +30,6 @@ class PNTransition implements PNBaseVisitable
 		$this->inputs[] = $arc;
 
 		return $this;
-	}
-
-	/**
-	 * Get the input Arcs of this Transition.
-	 *
-	 * @return  array  An array of PNArc objects.
-	 *
-	 * @since   1.0
-	 */
-	public function getInputs()
-	{
-		return $this->inputs;
 	}
 
 	/**
@@ -120,43 +49,16 @@ class PNTransition implements PNBaseVisitable
 	}
 
 	/**
-	 * Get the output Arcs of this Transition.
+	 * Check if the Transition is loaded.
+	 * To be loaded it must have at least one input and one output.
 	 *
-	 * @return  array  An array of PNArc objects.
-	 *
-	 * @since   1.0
-	 */
-	public function getOutputs()
-	{
-		return $this->outputs;
-	}
-
-	/**
-	 * Set the color set of this Transition.
-	 *
-	 * @param   PNColorSet  $set  The color set.
-	 *
-	 * @return  PNPlace  This method is chainable.
+	 * @return  boolean  True if loaded, false otherwise.
 	 *
 	 * @since   1.0
 	 */
-	public function setColorSet(PNColorSet $set)
+	public function isLoaded()
 	{
-		$this->colorSet = $set;
-
-		return $this;
-	}
-
-	/**
-	 * Get the color set of this Transition.
-	 *
-	 * @return  PNColorSet  The color set.
-	 *
-	 * @since   1.0
-	 */
-	public function getColorSet()
-	{
-		return $this->colorSet;
+		return $this->hasInput() && $this->hasOutput();
 	}
 
 	/**
@@ -164,25 +66,18 @@ class PNTransition implements PNBaseVisitable
 	 *
 	 * @return  boolean  True is enabled, false if not.
 	 *
-	 * @todo
-	 *
 	 * @since   1.0
 	 */
 	public function isEnabled()
 	{
-		// If no input or output arcs the transition is not enabled.
-		if (empty($this->inputs) || empty($this->outputs))
-		{
-			return false;
-		}
+		// Assert the Transition is Loaded.
+		$this->assertIsLoaded();
 	}
 
 	/**
 	 * Execute (fire) the Transition (it supposes it is enabled).
 	 *
 	 * @return  boolean  False if it's the last Transition, true if not.
-	 *
-	 * @todo
 	 *
 	 * @since   1.0
 	 */

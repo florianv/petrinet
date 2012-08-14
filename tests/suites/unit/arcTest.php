@@ -155,11 +155,44 @@ class PNArcTest extends TestCase
 	}
 
 	/**
+	 * Assert the Arc is loaded.
+	 * Note : mock isLoaded didn't work...
+	 *
+	 * @return  void
+	 *
+	 * @expectedException  RuntimeException
+	 *
+	 * @covers  PNArc::assertIsLoaded
+	 * @since   1.0
+	 */
+	public function testAssertIsLoadedException()
+	{
+		$this->object->assertIsLoaded();
+	}
+
+	/**
+	 * Assert the Arc is loaded.
+	 * Note : mock isLoaded didn't work...
+	 *
+	 * @return  void
+	 *
+	 * @covers  PNArc::assertIsLoaded
+	 * @since   1.0
+	 */
+	public function testAssertIsLoaded()
+	{
+		TestReflection::setValue($this->object, 'input', true);
+		TestReflection::setValue($this->object, 'output', true);
+
+		$this->assertNull($this->object->assertIsLoaded());
+	}
+
+	/**
 	 * Check if the arc expression is valid.
 	 *
 	 * @return  void
 	 *
-	 * @covers  PNArcInput::validateExpression
+	 * @covers  PNArc::validateExpression
 	 * @since   1.0
 	 */
 	public function testValidateExpression()

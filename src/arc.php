@@ -123,6 +123,23 @@ abstract class PNArc
 	}
 
 	/**
+	 * Assert the Arc is loaded.
+	 *
+	 * @return  void
+	 *
+	 * @throws  RuntimeException
+	 *
+	 * @since   1.0
+	 */
+	public function assertIsLoaded()
+	{
+		if (!$this->isLoaded())
+		{
+			throw new RuntimeException('Arc not loaded.');
+		}
+	}
+
+	/**
 	 * Check if the arc expression is valid (it supposes it has an expression).
 	 *
 	 * @return  boolean  True if it's the case, false otherwise.
