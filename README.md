@@ -233,7 +233,7 @@ class IntegerGteFive implements PNType
 	/**
 	 * Check the given variable matches the type.
 	 *
-	 * @param   mixed  $var  A PHP variable.
+	 * @param   integer  $var  A PHP variable.
 	 *
 	 * @return  boolean  True if the variable matches, false otherwise.
 	 */
@@ -245,7 +245,7 @@ class IntegerGteFive implements PNType
     /**
      * Return a value compatible with this type.
      *
-     * @return  mixed  A variable value.
+     * @return  integer  A variable value.
      */
     public function test()
     {
