@@ -6,7 +6,7 @@ php:
   
 before_script:
 - pear install --alldeps PHP_CodeSniffer-1.3.6
-- cp -R /platform/build/phpcs/Joomla /pear/PHP/CodeSniffer/Standards
+- cp -R platform/build/phpcs/Joomla /usr/bin/pear/PHP/CodeSniffer/Standards
 - phpcs --config-set default_standard Joomla
 - phpcs src/
 
