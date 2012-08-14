@@ -19,7 +19,7 @@ A simple Colored Petri Net API written in PHP.
 
 ## TODO
 
-The Petri Net execution is not working atm, two methods needs to be implemented (enabling a transition and firing a transition).
+The Petri Net execution is not working atm, two methods need to be implemented (enabling a transition and firing a transition).
 http://ceur-ws.org/Vol-643/paper05.pdf
 
 Once the build status is passing it will be working.
