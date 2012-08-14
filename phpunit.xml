@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<phpunit bootstrap="tests/bootstrap.php" colors="false">
+<phpunit bootstrap="tests/bootstrap.php" colors="true">
 	<testsuite name="PetrinetTests">
 		<directory>tests/suites/unit</directory>
 	</testsuite>
-	<filter>
-		<whitelist>
-			<directory suffix=".php">/platform/tests</directory>
-		</whitelist>
-	</filter>
 </phpunit>
