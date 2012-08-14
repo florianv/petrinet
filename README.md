@@ -216,7 +216,7 @@ $engine->resume();
 
 At this moment the only supported types in the API are : `integer`, `double (float)`, `array`, `boolean` and `string`.
 
-### Custom types.
+## Custom types
 
 A custom type is a subset of the above mentionned types.
 
@@ -262,13 +262,28 @@ Once the class is declared you can register the type in the system.
 // Get an instance of the IntegerGteFive class.
 $myType = new IntegerGteFive;
 
-// Getting an instance of the Type Manager.
+// Get an instance of the Type Manager.
 $typeManager = new PNTypeManager();
 
 // Registering the new type in the system.
-// The first param is the name of the new type, the second param the parent type, and the third type an instance of the IntegerGteFive class.
+// The first param is the name of the new type, the second param the parent type, and the third param, an instance of the IntegerGteFive class.
 $typeManager->registerCustomType('IntegerGteFive', 'integer', $myType);
+
+// Creating a Petri Net and injecting the type manager.
+$net = new PNPetrinet('Test', $typeManager); // Or PNPetrinet::getInstance('Test')->setTypeManager($typeManager);
+
+// Now your custom type is recognized by the system.
+
+$colorSet = new PNColorSet(array('IntegerGteFive'));
+
+$token = new PNToken(new PNColor(8));
+
+$place = $net->createPlace($colorSet);
+$place->addToken($token);
 ```
+
+Note : Once you create and register a custom type, you need to pass it to the Petri Net before creating anything.
+It will inject it in the elements which needs it.
 
 ## Some Future work
 
