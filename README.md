@@ -212,6 +212,63 @@ $engine->stop();
 $engine->resume();
 ```
 
+### Experimental stuff
+
+At this moment the only supported types in the API are : `integer`, `double (float)`, `array`, `boolean` and `string`.
+
+### Custom types.
+
+A custom type is a subset of the above mentionned types.
+
+Example : I want to create the type of integers equal or greater than 5.
+It's a subset of the integers set.
+
+For this, you must declarate the type by implementing the `PNType` interface and declarating two methods.
+
+```php
+<?php
+
+class IntegerGteFive implements PNType
+{
+	/**
+	 * Check the given variable matches the type.
+	 *
+	 * @param   mixed  $var  A PHP variable.
+	 *
+	 * @return  boolean  True if the variable matches, false otherwise.
+	 */
+    public function check($var)
+    {
+    	return $var > 5;
+    }
+    
+    /**
+     * Return a value compatible with this type.
+     *
+     * @return  mixed  A variable value.
+     */
+    public function test()
+    {
+    	return 5;
+    }
+}
+```
+
+Once the class is declared you can register the type in the system.
+
+```php
+<?php
+
+// Get an instance of the IntegerGteFive class.
+$myType = new IntegerGteFive;
+
+// Getting an instance of the Type Manager.
+$typeManager = new PNTypeManager();
+
+// Registering the new type in the system.
+$typeManager->registerCustomType('IntegerGteFive', 'integer', $myType);
+```
+
 ## Some Future work
 
 - Allow arc expressions to return empty arrays (non matching output node color set) for if-else expressions.
