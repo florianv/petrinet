@@ -41,23 +41,20 @@ abstract class PNArc
 	protected $typeManager;
 
 	/**
-	 * This value specifies how many tokens can transit through this Arc.
-	 *
-	 * @var    integer  The weight of this Arc.
-	 * @since  1.0
-	 */
-	protected $weight = 1;
-
-	/**
 	 * Constructor.
 	 *
-	 * @param   PNArcExpression  $expression  The arc's expression.
-	 * @param   PNTypeManager    $manager     The type Manager.
+	 * @param   PNPlace|PNTransition  $input       The input Place.
+	 * @param   PNPlace|PNTransition  $output      The output Transition.
+	 * @param   PNArcExpression       $expression  The arc's expression.
+	 * @param   PNTypeManager         $manager     The type Manager.
 	 *
 	 * @since   1.0
 	 */
-	public function __construct(PNArcExpression $expression = null, PNTypeManager $manager = null)
+	public function __construct($input = null, $output = null, PNArcExpression $expression = null, PNTypeManager $manager = null)
 	{
+		$this->input = $input;
+		$this->output = $output;
+
 		// Use the given type manager, or create a new one.
 		$this->typeManager = $manager ? $manager : new PNTypeManager;
 
@@ -77,6 +74,18 @@ abstract class PNArc
 	}
 
 	/**
+	 * Check if the arc has an input Place or Transition.
+	 *
+	 * @return  boolean  True if it has an input, false otherwise.
+	 *
+	 * @since   1.0
+	 */
+	public function hasInput()
+	{
+		return !is_null($this->input);
+	}
+
+	/**
 	 * Get the output Place or Transition of this Arc.
 	 *
 	 * @return  object  The output Place or Transition.
@@ -89,35 +98,32 @@ abstract class PNArc
 	}
 
 	/**
-	 * Set the weight of this Arc.
+	 * Check if the arc has an output Place or Transition.
 	 *
-	 * @param   integer  $weight  The Arc's weight.
-	 *
-	 * @return  PNArc  This method is chainable.
+	 * @return  boolean  True if it has an output, false otherwise.
 	 *
 	 * @since   1.0
 	 */
-	public function setWeight($weight)
+	public function hasOuput()
 	{
-		$this->weight = $weight;
-
-		return $this;
+		return !is_null($this->output);
 	}
 
 	/**
-	 * Get the weight of this Arc.
+	 * Check if the arc is loaded.
+	 * It means it has an input and output.
 	 *
-	 * @return  integer  The Arc's weight.
+	 * @return  boolean  True if loaded, false otherwise.
 	 *
 	 * @since   1.0
 	 */
-	public function getWeight()
+	public function isLoaded()
 	{
-		return $this->weight;
+		return $this->hasInput() && $this->hasOuput();
 	}
 
 	/**
-	 * Check if the arc expression is valid (it supposes it has an expression...).
+	 * Check if the arc expression is valid (it supposes it has an expression).
 	 *
 	 * @return  boolean  True if it's the case, false otherwise.
 	 *

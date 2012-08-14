@@ -8,7 +8,7 @@
  */
 
 /**
- * Class representing a composite data type (a tuple of PHP types).
+ * Class representing a composite type (a tuple of types).
  * Associated with a place, it is used to determine the tokens that can reside in it depending
  * on their color.
  *
@@ -19,7 +19,7 @@
 class PNColorSet implements Countable, Serializable, IteratorAggregate
 {
 	/**
-	 * @var    array  A tuple of types.
+	 * @var    array  The composite type.
 	 * @since  1.0
 	 */
 	protected $type;
@@ -33,7 +33,7 @@ class PNColorSet implements Countable, Serializable, IteratorAggregate
 	/**
 	 * Constructor.
 	 *
-	 * @param   array          $type     A tuple of types.
+	 * @param   array          $type     The composite type.
 	 * @param   PNTypeManager  $manager  The type Manager.
 	 *
 	 * @throws  InvalidArgumentException
@@ -45,13 +45,14 @@ class PNColorSet implements Countable, Serializable, IteratorAggregate
 		// Use the given type manager, or create a new one.
 		$this->typeManager = $manager ? $manager : new PNTypeManager;
 
+		// Set the type.
 		empty($type) ? $this->type = array() : $this->setType($type);
 	}
 
 	/**
-	 * Set the type.
+	 * Set the composite type, only if it is composed of allowed types.
 	 *
-	 * @param   array  $types  A tuple of types.
+	 * @param   array  $types  The composite type.
 	 *
 	 * @return  void
 	 *
@@ -75,9 +76,10 @@ class PNColorSet implements Countable, Serializable, IteratorAggregate
 	}
 
 	/**
-	 * Add a type.
+	 * Add a type at the given position in the tuple.
+	 * If no position is specified, it is added at the end.
 	 *
-	 * @param   string   $type      The type to add.
+	 * @param   string   $type      The type name to add.
 	 * @param   integer  $position  The position in the tuple.
 	 *
 	 * @return  PNColorSet  This method is chainable.
@@ -106,16 +108,16 @@ class PNColorSet implements Countable, Serializable, IteratorAggregate
 
 		else
 		{
-			throw new InvalidArgumentException('The type :' . $type . 'is not allowed.');
+			throw new InvalidArgumentException('The type : ' . $type . 'is not allowed.');
 		}
 
 		return $this;
 	}
 
 	/**
-	 * Get the composite type.
+	 * Get the set type.
 	 *
-	 * @return  array  The composite type.
+	 * @return  array  The set type.
 	 *
 	 * @since   1.0
 	 */

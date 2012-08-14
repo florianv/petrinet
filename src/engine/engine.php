@@ -331,7 +331,7 @@ class PNEngine
 
 	/**
 	 * Check if the engine is stopped.
-	 * Stopped means that he can only re-start from the start node.
+	 * Stopped means that he can only re-start from the start place.
 	 *
 	 * @return  boolean  True if yes, false otherwise.
 	 *

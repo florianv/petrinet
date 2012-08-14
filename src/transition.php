@@ -164,6 +164,8 @@ class PNTransition implements PNBaseVisitable
 	 *
 	 * @return  boolean  True is enabled, false if not.
 	 *
+	 * @todo
+	 *
 	 * @since   1.0
 	 */
 	public function isEnabled()
@@ -183,9 +185,8 @@ class PNTransition implements PNBaseVisitable
 			// Get the input place of the current arc.
 			$place = $arc->getInput();
 
-			// Verify that the place is marked with at least n tokens
-			// where n is the value of its weight.
-			if ($place->getTokenCount() < $arc->getWeight())
+			// Verify there is at least one token in the place.
+			if ($place->getTokenCount() < 1)
 			{
 				return false;
 			}
@@ -198,50 +199,7 @@ class PNTransition implements PNBaseVisitable
 					return false;
 				}
 			}
-
-			// Get the place tokens.
-			$tokens = array_values($place->getTokens());
-
-			// Get the first token.
-			$token = $tokens[0][0];
-
-			// Get its color.
-			$datas = $token->getColor()->getData();
-
-			// If the arc has an expression.
-			if ($arc->hasExpression())
-			{
-				// Execute the arc expression.
-				$datas = $arc->getExpression()->execute($datas);
-			}
-
-			// Build an array containing the type of the returned values.
-			$data = array();
-
-			foreach ($datas as $value)
-			{
-				if (is_float($value))
-				{
-					$data[] = 'float';
-				}
-
-				else
-				{
-					$data[] = gettype($value);
-				}
-			}
-
-			// Remove the returned types from the transition color set.
-			$setTypes = array_diff($setTypes, $data);
-
-			// If the set is empty it means we can create a token matching the transition color set.
-			if (empty($setTypes))
-			{
-				return true;
-			}
 		}
-
-		return false;
 	}
 
 	/**
@@ -249,9 +207,23 @@ class PNTransition implements PNBaseVisitable
 	 *
 	 * @return  boolean  False if it's the last Transition, true if not.
 	 *
+	 * @todo
+	 *
 	 * @since   1.0
 	 */
 	public function execute()
+	{
+
+	}
+
+	/**
+	 * Perform custom execution.
+	 *
+	 * @return  void
+	 *
+	 * @since   1.0
+	 */
+	public function doExecute()
 	{
 
 	}

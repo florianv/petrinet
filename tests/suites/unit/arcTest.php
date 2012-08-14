@@ -46,12 +46,16 @@ class PNArcTest extends TestCase
 	 */
 	public function test__construct()
 	{
+		$this->assertNull(TestReflection::getValue($this->object, 'input'));
+		$this->assertNull(TestReflection::getValue($this->object, 'output'));
 		$this->assertNull(TestReflection::getValue($this->object, 'expression'));
 		$this->assertInstanceOf('PNTypeManager', TestReflection::getValue($this->object, 'typeManager'));
 
 		$expression = $this->getMockForAbstractClass('PNArcExpression');
-		$arc = $this->getMockForAbstractClass('PNArc', array($expression));
+		$arc = $this->getMockForAbstractClass('PNArc', array(true, true, $expression));
 
+		$this->assertTrue(TestReflection::getValue($arc, 'input'));
+		$this->assertTrue(TestReflection::getValue($arc, 'output'));
 		$this->assertEquals(TestReflection::getValue($arc, 'expression'), $expression);
 	}
 
@@ -75,6 +79,23 @@ class PNArcTest extends TestCase
 	}
 
 	/**
+	 * Check if the arc has an input Place or Transition.
+	 *
+	 * @return  void
+	 *
+	 * @covers  PNArc::hasInput
+	 * @since   1.0
+	 */
+	public function testHasInput()
+	{
+		$this->assertFalse($this->object->hasInput());
+
+		TestReflection::setValue($this->object, 'input', new PNTransition);
+
+		$this->assertTrue($this->object->hasInput());
+	}
+
+	/**
 	 * Get the output Place or Transition of this Arc.
 	 *
 	 * @return  void
@@ -94,36 +115,43 @@ class PNArcTest extends TestCase
 	}
 
 	/**
-	 * Set the weight of this Arc.
+	 * Check if the arc has an output Place or Transition.
 	 *
 	 * @return  void
 	 *
-	 * @covers  PNArc::setWeight
+	 * @covers  PNArc::hasOutput
 	 * @since   1.0
 	 */
-	public function testSetWeight()
+	public function testHasOutput()
 	{
-		$this->object->setWeight(8);
-		$weight = TestReflection::getValue($this->object, 'weight');
-		$this->assertEquals(8, $weight);
+		$this->assertFalse($this->object->hasOuput());
+
+		TestReflection::setValue($this->object, 'output', new PNTransition);
+
+		$this->assertTrue($this->object->hasOuput());
 	}
 
 	/**
-	 * Get the weight of this Arc.
+	 * Check if the arc is loaded.
 	 *
-	 * @return   void
+	 * @return  void
 	 *
-	 * @covers  PNArc::getWeight
+	 * @covers  PNArc::isLoaded
 	 * @since   1.0
 	 */
-	public function testGetWeight()
+	public function testIsLoaded()
 	{
-		// Test default weight.
-		$this->assertEquals(1, $this->object->getWeight());
+		$this->assertFalse($this->object->isLoaded());
 
-		// Change the weight.
-		TestReflection::setValue($this->object, 'weight', 8);
-		$this->assertEquals(8, $this->object->getWeight());
+		// Add an input.
+		TestReflection::setValue($this->object, 'input', new PNTransition);
+
+		$this->assertFalse($this->object->isLoaded());
+
+		// Add an output.
+		TestReflection::setValue($this->object, 'output', new PNTransition);
+
+		$this->assertTrue($this->object->isLoaded());
 	}
 
 	/**

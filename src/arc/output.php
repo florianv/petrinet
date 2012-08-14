@@ -29,10 +29,7 @@ class PNArcOutput extends PNArc implements PNBaseVisitable
 	 */
 	public function __construct(PNTransition $input = null, PNPlace $output = null, PNArcExpression $expression = null, PNTypeManager $manager = null)
 	{
-		$this->input = $input;
-		$this->output = $output;
-
-		parent::__construct($expression);
+		parent::__construct($input, $output, $expression, $manager);
 	}
 
 	/**

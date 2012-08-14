@@ -27,7 +27,7 @@ class PNEngineStateEnded extends PNEngineState
 	 */
 	public function start()
 	{
-		throw new RuntimeException('Cannot start : workflow has ended.');
+		throw new RuntimeException('Cannot start : execution has ended.');
 	}
 
 	/**
@@ -41,7 +41,7 @@ class PNEngineStateEnded extends PNEngineState
 	 */
 	public function stop()
 	{
-		throw new RuntimeException('Cannot stop : workflow has ended.');
+		throw new RuntimeException('Cannot stop : execution has ended.');
 	}
 
 	/**
@@ -55,7 +55,7 @@ class PNEngineStateEnded extends PNEngineState
 	 */
 	public function pause()
 	{
-		throw new RuntimeException('Cannot pause : workflow has ended.');
+		throw new RuntimeException('Cannot pause : execution has ended.');
 	}
 
 	/**
@@ -69,7 +69,7 @@ class PNEngineStateEnded extends PNEngineState
 	 */
 	public function resume()
 	{
-		throw new RuntimeException('Cannot resume : workflow has ended.');
+		throw new RuntimeException('Cannot resume : execution has ended.');
 	}
 
 	/**
@@ -95,6 +95,6 @@ class PNEngineStateEnded extends PNEngineState
 	 */
 	public function end()
 	{
-		throw new RuntimeException('Cannot end : workflow has ended.');
+		throw new RuntimeException('Cannot end : execution has ended.');
 	}
 }

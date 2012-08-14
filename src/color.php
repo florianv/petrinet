@@ -50,7 +50,8 @@ class PNColor implements Countable, Serializable, IteratorAggregate
 	}
 
 	/**
-	 * Add data.
+	 * Add data at the given position.
+	 * If no position is specified, the data is added at the end.
 	 *
 	 * @param   mixed    $data      The data to add.
 	 * @param   integer  $position  The data position in the list.
@@ -99,7 +100,7 @@ class PNColor implements Countable, Serializable, IteratorAggregate
 	}
 
 	/**
-	 * Get an iterator on the data values.
+	 * Get an iterator on the color.
 	 *
 	 * @return  Traversable  The Iterator.
 	 *
@@ -111,9 +112,9 @@ class PNColor implements Countable, Serializable, IteratorAggregate
 	}
 
 	/**
-	 * Serialize the object.
+	 * Serialize the color.
 	 *
-	 * @return  string  The serialized object.
+	 * @return  string  The serialized color.
 	 *
 	 * @since   1.0
 	 */
@@ -123,9 +124,9 @@ class PNColor implements Countable, Serializable, IteratorAggregate
 	}
 
 	/**
-	 * Unserialize the object.
+	 * Unserialize the color.
 	 *
-	 * @param   string  $data  The serialized object.
+	 * @param   string  $data  The serialized color.
 	 *
 	 * @return  void
 	 *

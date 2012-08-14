@@ -121,6 +121,10 @@ class PNTokenSet implements Countable, Serializable, IteratorAggregate
 	 */
 	public function setTokens(array $tokens)
 	{
+		// Clear the set.
+		$this->tokens = array();
+
+		// Set the tokens.
 		foreach ($tokens as $token)
 		{
 			$this->addToken($token);
