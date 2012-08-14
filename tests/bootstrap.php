@@ -13,6 +13,4 @@ require_once dirname(__FILE__) . '/../includes/defines.php';
 require_once JPATH_ROOT . '/includes/bootstrap.php';
 
 // Register the core Joomla test classes.
-// @codeCoverageIgnoreStart
 JLoader::registerPrefix('Test', JPATH_PLATFORM . '/../tests/core');
-// @codeCoverageIgnoreEnd

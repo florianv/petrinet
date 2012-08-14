@@ -22,6 +22,7 @@ class PNEngineStateTest extends TestCase
 	 * @return  void
 	 *
 	 * @covers  PNEngineState
+	 *
 	 * @since   1.0
 	 */
 	public function test__construct()

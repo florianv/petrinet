@@ -216,10 +216,11 @@ $engine->resume();
 
 ## Experimental stuff
 
-At this moment the only supported types in the API are : `integer`, `double (float)`, `array`, `boolean` and `string`.
-Custom types and Object types allow to declare special types in the system.
+The default supported types are : `integer`, `double (float)`, `array`, `boolean` and `string`.
 
-Once declared and registered, they can be used in Color Set, Colors and arc expression.
+Custom types and Object types allow are special types in the system.
+
+Once declared and registered, they can be used in Color Set, Colors and arc expressions.
 
 ### Custom types
 
