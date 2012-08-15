@@ -18,9 +18,9 @@ At this moment, only [Basic Petri Nets](https://github.com/florianv/Petrinet#bas
      * [Creating a simple Petri Net](https://github.com/florianv/Petrinet#creating-a-simple-petri-net-1)
      * [Executing a Petri Net](https://github.com/florianv/Petrinet#executing-a-petri-net-1)
      * [Experimental stuff](https://github.com/florianv/Petrinet#experimental-stuff)
-        * [Arc Expressions](https://github.com/florianv/Petrinet#arc-expressions)
-        * [Custom types](https://github.com/florianv/Petrinet#custom-types)
-        * [Object types](https://github.com/florianv/Petrinet#object-types)
+       1. [Arc Expressions](https://github.com/florianv/Petrinet#arc-expressions)
+       2. [Custom types](https://github.com/florianv/Petrinet#custom-types)
+       3. [Object types](https://github.com/florianv/Petrinet#object-types)
 5. [Some Future work](https://github.com/florianv/Petrinet#some-future-work)
 
 ## Requirements
