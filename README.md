@@ -8,15 +8,18 @@ A simple Petri Net API written in PHP.
 2. [Installation](https://github.com/florianv/Petrinet#installation)
 3. [Running unit tests](https://github.com/florianv/Petrinet#running-unit-tests)
 4. [Using the API](https://github.com/florianv/Petrinet#using-the-api)
-   * [Basic Petri Nets]
-   * [Colored Petri Nets]
-     * [The elements](https://github.com/florianv/Petrinet#the-elements)
+   * [Basic Petri Nets](https://github.com/florianv/Petrinet#basic-petri-nets)
+     * [Key elements](https://github.com/florianv/Petrinet#key-elements)
      * [Creating a simple Petri Net](https://github.com/florianv/Petrinet#creating-a-simple-petri-net)
      * [Executing a Petri Net](https://github.com/florianv/Petrinet#executing-a-petri-net)
-5. [Experimental stuff](https://github.com/florianv/Petrinet#experimental-stuff)
-   * [Custom types](https://github.com/florianv/Petrinet#custom-types)
-   * [Object types](https://github.com/florianv/Petrinet#object-types)
-6. [Some Future work](https://github.com/florianv/Petrinet#some-future-work)
+   * [Colored Petri Nets] (https://github.com/florianv/Petrinet#colored-petri-nets)
+     * [Key elements](https://github.com/florianv/Petrinet#key-elements-1)
+     * [Creating a simple Petri Net](https://github.com/florianv/Petrinet#creating-a-simple-petri-net-1)
+     * [Executing a Petri Net](https://github.com/florianv/Petrinet#executing-a-petri-net-1)
+     * [Experimental stuff](https://github.com/florianv/Petrinet#experimental-stuff)
+       * [Custom types](https://github.com/florianv/Petrinet#custom-types)
+       * [Object types](https://github.com/florianv/Petrinet#object-types)
+5. [Some Future work](https://github.com/florianv/Petrinet#some-future-work)
 
 ## Requirements
 
@@ -68,7 +71,7 @@ $arc = new PNArcInput($place, $transition);
 $arc = new PNArcOutput($transition, $place);
 ```
 
-#### Creating a simple Petri net
+#### Creating a simple Petri Net
 
 For this you must use the PNPetrinet` class.
 
@@ -199,9 +202,9 @@ Two methods : enabling a transition and firing a transition for CPN need to be i
 than for executing Basic Petri Net.
 http://ceur-ws.org/Vol-643/paper05.pdf
 
-## Experimental stuff
+### Experimental stuff
 
-### Arc Expressions
+#### Arc Expressions
 
 ```php
 <?php
@@ -234,7 +237,7 @@ class MyExpression extends PNArcExpression
 }
 ```
 
-### New types
+#### New types
 
 The default supported types are : `integer`, `double (float)`, `array`, `boolean` and `string`.
 
@@ -242,7 +245,7 @@ Custom types and Object types are special types in the system.
 
 Once declared and registered, they can be used in Color Set, Colors and arc expressions.
 
-### Custom types
+#### Custom types
 
 A custom type is a subset of the above mentionned types.
 
@@ -309,7 +312,7 @@ $place = $net->createPlace($colorSet);
 $place->addToken($token);
 ```
 
-### Object types
+#### Object types
 
 An object type is the name of a php class.
 You can register a given class name as an 'object type' in the system.
@@ -337,7 +340,7 @@ $place->addToken($token);
 
 ## Some Future work
 
-- Allow both colored and non-colored Petri nets creation.
+- Finish the Colored Petri Net execution.
 - Database storage and loading of a Petri Net at a given state.
 - Use the Visitor Pattern to traverse the graph and validate the Petri Net definition according some Petri Net properties.
 - Allow mapping to BPMN : [Document](https://docs.google.com/viewer?a=v&q=cache:DST7lP9yJcoJ:eng.alexu.edu.eg/~elmongui/papers/bpmnFormalization.pdf+&hl=fr&gl=fr&pid=bl&srcid=ADGEESgZJ65Z-tgQ1WXYW2CtkCv2M_pdEGRRvFl-blX8ZBxg79-N9pm8emclxiLBcms0T8oFRrmXKr2migwk9GeH0vusODYs7jOhydn-q4uSmXxzIyIicRgbX34_VtSmohp6i6ld9csW&sig=AHIEtbQhN7uhnEZxSJp7YznCohfRTS3fTQ&pli=1)
