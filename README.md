@@ -81,6 +81,18 @@ $transition = new PNTransition();
 $token = new PNToken();
 ```
 
+##### Arc
+
+```php
+<?php
+
+// Creating an Input Arc : from a Place to a Transition.
+$arc = new PNArcInput($place, $transition);
+
+// Creating an Output Arc : from a Transition to a Place.
+$arc = new PNArcOutput($transition, $place);
+```
+
 ### The elements
 
 #### Creating a Color Set
