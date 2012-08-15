@@ -72,6 +72,44 @@ class PNTransition extends PNNode
 	{
 		// Assert the Transition is Loaded.
 		$this->assertIsLoaded();
+
+		// If we are in Colored Petri Net mode.
+		if ($this->isColoredMode())
+		{
+			return $this->doIsEnabledColored();
+		}
+
+		// Basic Petri Nets.
+		else
+		{
+			return $this->doIsEnabledBasic();
+		}
+	}
+
+	/**
+	 * Check if the Transition is enabled for basic (not colored Petri Nets).
+	 *
+	 * @return  boolean  True is enabled, false if not.
+	 *
+	 * @since   1.0
+	 */
+	protected function doIsEnabledBasic()
+	{
+
+	}
+
+	/**
+	 * Check if the Transition is enabled for color Petri Nets.
+	 *
+	 * @return  boolean  True is enabled, false if not.
+	 *
+	 * @throws  RuntimeException
+	 *
+	 * @since   1.0
+	 */
+	protected function doIsEnabledColored()
+	{
+		throw new RuntimeException('Colored Petri nets not allowed atm.');
 	}
 
 	/**
@@ -83,7 +121,22 @@ class PNTransition extends PNNode
 	 */
 	public function execute()
 	{
+		// If we are in Colored Petri Net mode.
+		if ($this->isColoredMode())
+		{
+			$return = $this->doExecuteColored();
+		}
 
+		// Basic Petri Nets.
+		else
+		{
+			$return = $this->doExecuteBasic();
+		}
+
+		// Perform custom execution.
+		$this->doExecute();
+
+		return $return;
 	}
 
 	/**
@@ -93,9 +146,35 @@ class PNTransition extends PNNode
 	 *
 	 * @since   1.0
 	 */
-	public function doExecute()
+	protected function doExecute()
 	{
 
+	}
+
+	/**
+	 * Fire the Transition in normal mode.
+	 *
+	 * @return  boolean  False if it's the last Transition, true if not.
+	 *
+	 * @since   1.0
+	 */
+	protected function doExecuteBasic()
+	{
+
+	}
+
+	/**
+	 * Fire the Transition in colored mode.
+	 *
+	 * @return  boolean  False if it's the last Transition, true if not.
+	 *
+	 * @throws  RuntimeException
+	 *
+	 * @since   1.0
+	 */
+	protected function doExecuteColored()
+	{
+		throw new RuntimeException('Colored Petri nets not allowed atm.');
 	}
 
 	/**

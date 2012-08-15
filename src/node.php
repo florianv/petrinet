@@ -37,22 +37,24 @@ abstract class PNNode implements PNBaseVisitable
 	/**
 	 * Constructor.
 	 *
-	 * @param   PNColorSet  $colorSet  The Node Color Set.
-	 * @param   array       $inputs    The input arcs of this Node (PNArcInput|PNArcOutput).
-	 * @param   array       $outputs   The output arcs of this Node (PNArcInput|PNArcOutput).
+	 * @param   PNColorSet  $colorSet   The Node Color Set.
+	 * @param   array       $inputs     The input arcs of this Node (PNArcInput|PNArcOutput).
+	 * @param   array       $outputs    The output arcs of this Node (PNArcInput|PNArcOutput).
 	 *
 	 * @since   1.0
 	 */
 	public function __construct(PNColorSet $colorSet = null, array $inputs = array(), array $outputs = array())
 	{
-		// Take the given color set or create an empty one.
-		$this->colorSet = $colorSet ? $colorSet : new PNColorSet;
+		// If a color set is given use it.
+		$this->colorSet = $colorSet;
 
+		// If no inputs are given.
 		if (empty($inputs))
 		{
 			$this->inputs = array();
 		}
 
+		// Try to add them.
 		else
 		{
 			foreach ($inputs as $input)
@@ -61,11 +63,13 @@ abstract class PNNode implements PNBaseVisitable
 			}
 		}
 
+		// If no outputs are given.
 		if (empty($outputs))
 		{
 			$this->outputs = array();
 		}
 
+		// Try to add them.
 		else
 		{
 			foreach ($outputs as $output)
@@ -210,15 +214,14 @@ abstract class PNNode implements PNBaseVisitable
 	}
 
 	/**
-	 * Check if the Node has a color set.
-	 * Since an empty color set is created by default, it checks if it has at least one type.
+	 * Check if we are in colored mode.
 	 *
-	 * @return  boolean  True if it's the case, false otherwise.
+	 * @return  boolean  The color Mode.
 	 *
 	 * @since   1.0
 	 */
-	public function hasColorSet()
+	public function isColoredMode()
 	{
-		return count($this->colorSet) > 0;
+		return $this->colorSet ? true : false;
 	}
 }

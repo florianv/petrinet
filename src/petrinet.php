@@ -112,6 +112,20 @@ class PNPetrinet implements PNBaseVisitable
 	}
 
 	/**
+	 * Create a new Token.
+	 *
+	 * @param   PNColor  $color  The token color.
+	 *
+	 * @return  PNToken  The Token.
+	 *
+	 * @since   1.0
+	 */
+	public function createToken(PNColor $color = null)
+	{
+		return new PNToken($color);
+	}
+
+	/**
 	 * Create a new Color set.
 	 *
 	 * @param   array  $type  A tuple of types.
@@ -158,6 +172,12 @@ class PNPetrinet implements PNBaseVisitable
 	 */
 	public function connect($from, $to, PNArcExpression $expression = null)
 	{
+		// Check $from and $to are both colored/basic.
+		if ($from->isColoredMode() != $to->isColoredMode())
+		{
+			throw new InvalidArgumentException('From and to are not compatible, one is colored, the other no.');
+		}
+
 		// If an arc expression is given.
 		if ($expression)
 		{

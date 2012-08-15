@@ -94,6 +94,19 @@ class PNPetrinetTest extends TestCase
 	}
 
 	/**
+	 * Create a new Token.
+	 *
+	 * @return  void
+	 *
+	 * @covers  PNPetrinet::createToken
+	 * @since   1.0
+	 */
+	public function testCreateToken()
+	{
+		$this->assertInstanceOf('PNToken', $this->object->createToken());
+	}
+
+	/**
 	 * Create a new Color set.
 	 *
 	 * @return  PNPlace  The Place.
@@ -101,7 +114,7 @@ class PNPetrinetTest extends TestCase
 	 * @covers  PNPetrinet::createColorSet
 	 * @since   1.0
 	 */
-	public function createColorSet()
+	public function testCreateColorSet()
 	{
 		$colorSet = $this->object->createColorSet();
 
@@ -226,6 +239,22 @@ class PNPetrinetTest extends TestCase
 	{
 		// Try connect a transition to a transition.
 		$this->object->connect(new PNTransition, new PNTransition);
+	}
+
+	/**
+	 * Test the exception if from is colored and to not colored, or vice versa.
+	 *
+	 * @return  void
+	 *
+	 * @covers  PNPetrinet::connect
+	 *
+	 * @since   1.0
+	 *
+	 * @expectedException InvalidArgumentException
+	 */
+	public function testConnectExceptionFromTo()
+	{
+		$this->object->connect(new PNPlace(new PNColorSet), new PNTransition);
 	}
 
 	/**

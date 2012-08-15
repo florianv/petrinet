@@ -96,20 +96,11 @@ class PNPlace extends PNNode
 	 */
 	public function isAllowed(PNToken $token)
 	{
-		// If the token is colored.
-		if ($token->isColored())
+		// If we are in Colored mode.
+		if ($this->isColoredMode())
 		{
-			// It can be added only if its color matches the place color set.
+			// The token can only be added if its color matches the place color set.
 			if (!$this->colorSet->matches($token->getColor()))
-			{
-				return false;
-			}
-		}
-
-		else
-		{
-			// If the token is not colored and a color set is specified for this place.
-			if (count($this->colorSet) > 0)
 			{
 				return false;
 			}

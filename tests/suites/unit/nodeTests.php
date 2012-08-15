@@ -47,7 +47,7 @@ class PNNodeTest extends TestCase
 	public function test__construct()
 	{
 		// Test default values.
-		$this->assertInstanceOf('PNColorSet', TestReflection::getValue($this->object, 'colorSet'));
+		$this->assertNull(TestReflection::getValue($this->object, 'colorSet'));
 		$this->assertEmpty(TestReflection::getValue($this->object, 'inputs'));
 		$this->assertEmpty(TestReflection::getValue($this->object, 'outputs'));
 
@@ -227,22 +227,19 @@ class PNNodeTest extends TestCase
 	}
 
 	/**
-	 * Check if the Node has a color set.
-	 * Since an empty color set is created by default, it checks if it has at least one type.
+	 * Check if we are in colored mode.
 	 *
 	 * @return  void
 	 *
-	 * @covers  PNNode::hasColorSet
+	 * @covers  PNNode::isColoredMode
 	 * @since   1.0
 	 */
-	public function testHasColorSet()
+	public function testIsColoredMode()
 	{
-		$this->assertFalse($this->object->hasColorSet());
+		$this->assertFalse($this->object->isColoredMode());
 
-		$colorSet = new PNColorSet(array('integer'));
-
-		TestReflection::setValue($this->object, 'colorSet', $colorSet);
-
-		$this->assertTrue($this->object->hasColorSet());
+		// Set a color set.
+		TestReflection::setValue($this->object, 'colorSet', new PNColorSet);
+		$this->assertTrue($this->object->isColoredMode());
 	}
 }

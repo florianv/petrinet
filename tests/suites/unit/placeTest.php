@@ -54,7 +54,7 @@ class PNPlaceTest extends TestCase
 		$place = new PNPlace;
 
 		$this->assertInstanceOf('PNTokenSet', TestReflection::getValue($place, 'tokenSet'));
-		$this->assertInstanceOf('PNColorSet', TestReflection::getValue($place, 'colorSet'));
+		$this->assertNull(TestReflection::getValue($place, 'colorSet'));
 		$this->assertEmpty(TestReflection::getValue($place, 'inputs'));
 		$this->assertEmpty(TestReflection::getValue($place, 'outputs'));
 
@@ -212,28 +212,24 @@ class PNPlaceTest extends TestCase
 	 */
 	public function testIsAllowed()
 	{
+		// Test non colored mode.
+		$this->assertTrue($this->object->isAllowed(new PNToken));
+
+		// Test colored mode.
 		$colorSet = new PNColorSet(array('integer', 'double', 'double'));
 		TestReflection::setValue($this->object, 'colorSet', $colorSet);
 
+		// Try with an allowed token.
 		$color = new PNColor(array(1, 1.2, 2.2));
 		$token = new PNToken($color);
 
-		// Try with an allowed token.
 		$this->assertTrue($this->object->isAllowed($token));
 
+		// Try with a not allowed token.
 		$color = new PNColor(array(1, '1.2', 2.2));
 		$token = new PNToken($color);
 
-		// Try with a not allowed token.
 		$this->assertFalse($this->object->isAllowed($token));
-
-		// Try with an non coloured token.
-		$token = new PNToken;
-		$this->assertFalse($this->object->isAllowed($token));
-
-		// Try with a non specified color set and notcolored token.
-		TestReflection::setValue($this->object, 'colorSet', new PNColorSet);
-		$this->assertTrue($this->object->isAllowed($token));
 	}
 
 	/**

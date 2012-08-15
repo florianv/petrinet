@@ -146,7 +146,62 @@ class PNTransitionTest extends TestCase
 	 */
 	public function testIsEnabled()
 	{
+		// Test with a non loaded transition.
+		$this->assertFalse($this->object->isLoaded());
+
+		// Non colored mode.
+		$mockedTransition = $this->getMock('PNTransition', array('doIsEnabledBasic'));
+
+		// Add an input and output.
+		TestReflection::setValue($mockedTransition, 'inputs', array('test'));
+		TestReflection::setValue($mockedTransition, 'outputs', array('test'));
+
+		$mockedTransition->expects($this->once())
+			->method('doIsEnabledBasic');
+
+		$mockedTransition->isEnabled();
+
+		// Add a color set => colored mode.
+		$mockedTransition = $this->getMock('PNTransition', array('doIsEnabledColored'));
+
+		// Add an input and output.
+		TestReflection::setValue($mockedTransition, 'inputs', array('test'));
+		TestReflection::setValue($mockedTransition, 'outputs', array('test'));
+		TestReflection::setValue($mockedTransition, 'colorSet', new PNColorSet);
+
+		$mockedTransition->expects($this->once())
+			->method('doIsEnabledColored');
+
+		$mockedTransition->isEnabled();
+	}
+
+	/**
+	 * Check if the Transition is enabled for basic (not colored Petri Nets).
+	 *
+	 * @return  void
+	 *
+	 * @covers  PNTransition::doIsEnabledBasic
+	 * @since   1.0
+	 */
+	public function testDoIsEnabledBasic()
+	{
+		// @todo
 		$this->assertTrue(false);
+	}
+
+	/**
+	 * Check if the Transition is enabled for color Petri Nets.
+	 *
+	 * @return  void
+	 *
+	 * @covers  PNTransition::doIsEnabledColored
+	 * @expectedException  RuntimeException
+	 *
+	 * @since   1.0
+	 */
+	public function testDoIsEnabledColored()
+	{
+		TestReflection::invoke($this->object, 'doIsEnabledColored');
 	}
 
 	/**
@@ -159,7 +214,66 @@ class PNTransitionTest extends TestCase
 	 */
 	public function testExecute()
 	{
-		$this->assertTrue(false);
+		// Non colored mode.
+		$mockedTransition = $this->getMock('PNTransition', array('doExecuteBasic', 'doExecute'));
+
+		// Add an input and output.
+		TestReflection::setValue($mockedTransition, 'inputs', array('test'));
+		TestReflection::setValue($mockedTransition, 'outputs', array('test'));
+
+		$mockedTransition->expects($this->once())
+			->method('doExecuteBasic');
+
+		$mockedTransition->expects($this->once())
+			->method('doExecute');
+
+		$mockedTransition->execute();
+
+		// Add a color set => colored mode.
+		$mockedTransition = $this->getMock('PNTransition', array('doExecuteColored', 'doExecute'));
+
+		// Add an input and output.
+		TestReflection::setValue($mockedTransition, 'inputs', array('test'));
+		TestReflection::setValue($mockedTransition, 'outputs', array('test'));
+		TestReflection::setValue($mockedTransition, 'colorSet', new PNColorSet);
+
+		$mockedTransition->expects($this->once())
+			->method('doExecuteColored');
+
+		$mockedTransition->expects($this->once())
+			->method('doExecute');
+
+		$mockedTransition->execute();
+	}
+
+	/**
+	 * Fire the Transition in normal mode.
+	 *
+	 * @return  void
+	 *
+	 * @covers  PNTransition::doExecuteBasic
+	 * @since   1.0
+	 */
+	public function testDoExecuteBasic()
+	{
+		// @†odo
+		$this->assertFalse(true);
+	}
+
+	/**
+	 * Fire the Transition in colored mode.
+	 *
+	 * @return  void
+	 *
+	 * @expectedException  RuntimeException
+	 *
+	 * @covers  PNTransition::doExecuteColored
+	 *
+	 * @since   1.0
+	 */
+	public function testDoExecuteColored()
+	{
+		TestReflection::invoke($this->object, 'doIsEnabledColored');
 	}
 
 	/**
