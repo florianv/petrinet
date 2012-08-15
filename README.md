@@ -52,45 +52,61 @@ Cd to the Petrinet root folder, and type the command : `phpunit`
 
 In basic Petri Nets, tokens are represented as black dots and cannot carry data.
 
-#### The elements
-
-##### Places
+#### Introduction
 
 ```php
 <?php
 
 // Creating a Place.
 $place = new PNPlace();
-```
-
-##### Transitions
-
-```php
-<?php
 
 // Creating a Transition.
 $transition = new PNTransition();
-```
-
-##### Tokens
-
-```php
-<?php
 
 // Creating a Token.
 $token = new PNToken();
-```
 
-##### Arc
-
-```php
-<?php
+// Marking a Place.
+$place->addToken($token);
 
 // Creating an Input Arc : from a Place to a Transition.
 $arc = new PNArcInput($place, $transition);
 
 // Creating an Output Arc : from a Transition to a Place.
 $arc = new PNArcOutput($transition, $place);
+```
+
+#### Creating a simple Petri net
+
+For this you must use the PNPetrinet` class.
+
+```php
+<?php
+
+// Creating a new Petrinet named 'MyPetrinet'.
+$net = new PNPetrinet('MyPetrinet');
+
+// Creating a start Place.
+$placeStart = $net->createPlace();
+
+// Creating an end Place.
+$placeEnd = $net->createPlace();
+
+// Creating a Transition.
+$transition = $net->createTransition();
+
+// Creating a Token.
+$token = $net->createToken();
+
+// Adding the Token in the start Place.
+$placeStart->addToken($token);
+
+// Connect the start place to the transition.
+$net->connect($placeStart, $transition);
+
+// Connect the transition to the end Place.
+$net->connect($transition, $placeEnd);
+
 ```
 
 ### The elements
