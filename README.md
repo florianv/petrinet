@@ -22,10 +22,9 @@ A simple Petri Net API written in PHP.
 
 Requires PHP 5.3.1+.
 
-You must be familiar with Colored Petri Nets.
+You must be familiar with Petri Nets.
 
-1) www.cs.au.dk/~cpnbook/slides/CPN2.ppt  
-2) www.daimi.au.dk/~kjensen/papers_books/use.pdf  
+[Powerpoint](https://docs.google.com/viewer?a=v&q=cache:gs71sC2dCVcJ:ece.ut.ac.ir/Classpages/S86/ECE658/slides/Petri.ppt+&hl=fr&gl=fr&pid=bl&srcid=ADGEESgto4sjEPQ3FCX3tIW4ajqIF6tCDtE_oa3CwfSeOVvJ2HH65WnNWVmuiFrtHV_44SL8SVCpF-hCu3tQbSA70JOcu-Ux7viExjMlbe_4vjZH5CJLzS-Y23A-JovpuOuX6EVLXvST&sig=AHIEtbSYTNcj5PFZ8tjEqxbSovtnIL5yvQ)
 
 ## Installation
 
@@ -128,6 +127,11 @@ $engine->resume();
 
 In colored Petri Nets, tokens can carry data (color), place and Transition have a Color Set and arc expressions
 can manipulate the token colour when they transit through the arc.
+
+Documents : 
+
+1) www.cs.au.dk/~cpnbook/slides/CPN2.ppt  
+2) www.daimi.au.dk/~kjensen/papers_books/use.pdf  
 
 ### Key elements
 
