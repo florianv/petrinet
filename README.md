@@ -106,7 +106,29 @@ $net->connect($placeStart, $transition);
 
 // Connect the transition to the end Place.
 $net->connect($transition, $placeEnd);
+```
 
+#### Executing a Petri Net
+
+Once your Petri Net is created you can execute it using the PNEngine class.
+
+```php
+<?php
+
+// Instanciating the Engine.
+$engine = PNEngine::getInstance();
+
+// Passing the Petri Net object to the engine.
+$engine->setNet($net);
+
+// Starting the execution.
+$engine->start();
+
+// Stopping the execution.
+$engine->stop();
+
+// Resuming the execution.
+$engine->resume();
 ```
 
 ### The elements
