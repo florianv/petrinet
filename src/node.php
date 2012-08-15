@@ -37,9 +37,9 @@ abstract class PNNode implements PNBaseVisitable
 	/**
 	 * Constructor.
 	 *
-	 * @param   PNColorSet  $colorSet   The Node Color Set.
-	 * @param   array       $inputs     The input arcs of this Node (PNArcInput|PNArcOutput).
-	 * @param   array       $outputs    The output arcs of this Node (PNArcInput|PNArcOutput).
+	 * @param   PNColorSet  $colorSet  The Node Color Set.
+	 * @param   array       $inputs    The input arcs of this Node (PNArcInput|PNArcOutput).
+	 * @param   array       $outputs   The output arcs of this Node (PNArcInput|PNArcOutput).
 	 *
 	 * @since   1.0
 	 */
