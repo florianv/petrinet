@@ -52,7 +52,7 @@ Cd to the Petrinet root folder, and type the command : `phpunit`
 
 In basic Petri Nets, tokens are represented as black dots and cannot carry data.
 
-#### Introduction
+#### Key elements
 
 ```php
 <?php
@@ -101,10 +101,10 @@ $token = $net->createToken();
 // Adding the Token in the start Place.
 $placeStart->addToken($token);
 
-// Connect the start place to the transition.
+// Connecting the start Place to the Transition.
 $net->connect($placeStart, $transition);
 
-// Connect the transition to the end Place.
+// Connecting the Transition to the end Place.
 $net->connect($transition, $placeEnd);
 ```
 
