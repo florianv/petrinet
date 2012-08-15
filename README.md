@@ -71,7 +71,7 @@ $arc = new PNArcOutput($transition, $place);
 
 #### Creating a simple Petri net
 
-For this you must use the `PNPetrinet` class.
+For this you must use the PNPetrinet` class.
 
 ```php
 <?php
@@ -154,39 +154,6 @@ $place->addToken($token);
 $transition = new PNTransition($colorSet);
 ```
 
-### Arc Expressions
-
-```php
-<?php
-
-/**
- * An expression manipulating the Token Color (data)
- * when it transits through the arc.
- */
-class MyExpression extends PNArcExpression
-{
-	/**
-	 * Method to define the expression arguments.
-	 * The arc expression arguments must match the input place/transition color set (or a sub-set of it).
-	 */
-	public function __construct()
-	{
-		parent::__construct(array('integer', 'double'));
-	}
-
-	/**
-     * Execute the expression.
-     * If a token with a color (1, 2.2) transit through this arc, a new token with color (1+1, 2.2+1.5) = (2, 3.7)
-     * will be produced after executing the expression.
-     * The types of the values contained in the returned array, must match the output place/transition color set.
-     */
-	public function execute(array $arguments)
-	{
-		return array($arguments[0]+1, $arguments[1]+1.5);
-	}
-}
-```
-
 ### Creating a simple Petri Net
 
 ```php
@@ -229,6 +196,41 @@ than for executing Basic Petri Net.
 http://ceur-ws.org/Vol-643/paper05.pdf
 
 ## Experimental stuff
+
+### Arc Expressions
+
+```php
+<?php
+
+/**
+ * An expression manipulating the Token Color (data)
+ * when it transits through the arc.
+ */
+class MyExpression extends PNArcExpression
+{
+	/**
+	 * Method to define the expression arguments.
+	 * The arc expression arguments must match the input place/transition color set (or a sub-set of it).
+	 */
+	public function __construct()
+	{
+		parent::__construct(array('integer', 'double'));
+	}
+
+	/**
+     * Execute the expression.
+     * If a token with a color (1, 2.2) transit through this arc, a new token with color (1+1, 2.2+1.5) = (2, 3.7)
+     * will be produced after executing the expression.
+     * The types of the values contained in the returned array, must match the output place/transition color set.
+     */
+	public function execute(array $arguments)
+	{
+		return array($arguments[0]+1, $arguments[1]+1.5);
+	}
+}
+```
+
+### New types
 
 The default supported types are : `integer`, `double (float)`, `array`, `boolean` and `string`.
 
@@ -296,15 +298,12 @@ $typeManager->registerCustomType('IntegerGteFive', 'integer', $myType);
 // Creating a Petri Net and injecting the type manager.
 $net = new PNPetrinet('Test', $typeManager);
 
-// Now your custom type is recognized by the system.
+// Now the custom type is recognized by the system.
 $colorSet = $net->createColorSet(array('IntegerGteFive'));
 $token = new PNToken(new PNColor(array(8));
 $place = $net->createPlace($colorSet);
 $place->addToken($token);
 ```
-
-Note : Once you create and register a custom type, you need to pass it to the Petri Net before creating anything.
-It will inject it in the elements which need it.
 
 ### Object types
 
