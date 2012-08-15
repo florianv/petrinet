@@ -95,7 +95,18 @@ class PNTransition extends PNNode
 	 */
 	protected function doIsEnabledBasic()
 	{
+		// Check there is at least one token in each input Place.
+		foreach ($this->inputs as $arc)
+		{
+			$place = $arc->getInput();
 
+			if ($place->getTokenCount() < 1)
+			{
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	/**
@@ -160,7 +171,30 @@ class PNTransition extends PNNode
 	 */
 	protected function doExecuteBasic()
 	{
+		// Remove one token from each input Place.
+		foreach ($this->inputs as $arc)
+		{
+			$place = $arc->getInput();
+			$place->removeToken(new PNToken);
+		}
 
+		// Init variable.
+		$return = true;
+
+		// Add one token to each output Place.
+		foreach ($this->outputs as $arc)
+		{
+			$place = $arc->getOutput();
+			$place->addToken(new PNToken);
+
+			// If the place is the last one, finish the execution and return false later.
+			if ($place->isEnd())
+			{
+				$return = false;
+			}
+		}
+
+		return $return;
 	}
 
 	/**

@@ -185,8 +185,34 @@ class PNTransitionTest extends TestCase
 	 */
 	public function testDoIsEnabledBasic()
 	{
-		// @todo
-		$this->assertTrue(false);
+		// Create a simple Petri net.
+		$place1 = new PNPlace;
+		$place2 = new PNPlace;
+		$placeEnd = new PNPlace;
+		$transition = new PNTransition;
+
+		// Connect everything.
+		$inputArc1 = new PNArcInput($place1, $transition);
+		$place1->addOutput($inputArc1);
+		$transition->addInput($inputArc1);
+
+		$inputArc2 = new PNArcInput($place2, $transition);
+		$place2->addOutput($inputArc2);
+		$transition->addInput($inputArc2);
+
+		$outputArc = new PNArcOutput($transition, $placeEnd);
+		$placeEnd->addInput($outputArc);
+		$transition->addOutput($outputArc);
+
+		// Add one token in the place1 only.
+		$place1->addToken(new PNToken);
+
+		$this->assertFalse(TestReflection::invoke($transition, 'doIsEnabledBasic'));
+
+		// Add one token in the place2.
+		$place2->addToken(new PNToken);
+
+		$this->assertTrue(TestReflection::invoke($transition, 'doIsEnabledBasic'));
 	}
 
 	/**
@@ -256,8 +282,64 @@ class PNTransitionTest extends TestCase
 	 */
 	public function testDoExecuteBasic()
 	{
-		// @†odo
-		$this->assertFalse(true);
+		// Create a simple Petri net.
+		$place1 = new PNPlace;
+		$place2 = new PNPlace;
+		$placeEnd = new PNPlace;
+		$transition = new PNTransition;
+
+		// Connect everything.
+		$inputArc1 = new PNArcInput($place1, $transition);
+		$place1->addOutput($inputArc1);
+		$transition->addInput($inputArc1);
+
+		$inputArc2 = new PNArcInput($place2, $transition);
+		$place2->addOutput($inputArc2);
+		$transition->addInput($inputArc2);
+
+		$outputArc = new PNArcOutput($transition, $placeEnd);
+		$placeEnd->addInput($outputArc);
+		$transition->addOutput($outputArc);
+
+		$place1->addToken(new PNToken);
+		$place2->addToken(new PNToken);
+
+		$this->assertEquals(0, $placeEnd->getTokenCount());
+
+		$this->assertFalse(TestReflection::invoke($transition, 'doExecuteBasic'));
+
+		$this->assertEquals(0, $place1->getTokenCount());
+		$this->assertEquals(0, $place2->getTokenCount());
+		$this->assertEquals(1, $placeEnd->getTokenCount());
+
+		// Create a simple Petri Net where the last place is not an "end place".
+		$place1 = new PNPlace;
+		$place2 = new PNPlace;
+		$transition1 = new PNTransition;
+		$transition2 = new PNTransition;
+
+		$place1->addToken(new PNToken);
+
+		// Connect everything.
+		$inputArc1 = new PNArcInput($place1, $transition1);
+		$place1->addOutput($inputArc1);
+		$transition1->addInput($inputArc1);
+
+		$outputArc = new PNArcOutput($transition1, $place2);
+		$place2->addInput($outputArc);
+		$transition1->addOutput($outputArc);
+
+		$inputArc2 = new PNArcInput($place2, $transition2);
+		$place2->addOutput($inputArc2);
+		$transition2->addInput($inputArc2);
+
+		$this->assertEquals(0, $place2->getTokenCount());
+
+		// Fire the transition 1
+		$this->assertTrue(TestReflection::invoke($transition1, 'doExecuteBasic'));
+
+		$this->assertEquals(0, $place1->getTokenCount());
+		$this->assertEquals(1, $place2->getTokenCount());
 	}
 
 	/**
