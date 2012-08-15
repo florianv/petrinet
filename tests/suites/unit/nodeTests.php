@@ -56,26 +56,15 @@ class PNNodeTest extends TestCase
 		$inputs = array(1, 2, 3);
 		$outputs = array('foo', 'bar');
 
-		$this->object->__construct($colorSet, $inputs, $outputs);
-		$this->assertEquals($colorSet, TestReflection::getValue($this->object, 'colorSet'));
-		$this->assertEquals($inputs, TestReflection::getValue($this->object, 'inputs'));
-		$this->assertEquals($outputs, TestReflection::getValue($this->object, 'outputs'));
-	}
+		$mock = $this->getMockForAbstractClass('PNNode');
 
-	/**
-	 * Add an input Arc to this Node.
-	 *
-	 * @return  void
-	 *
-	 * @covers  PNNode::addInput
-	 * @since   1.0
-	 */
-	public function testAddInput()
-	{
-		$arc = new PNArcInput;
-		$this->object->addInput($arc);
-		$inputs = TestReflection::getValue($this->object, 'inputs');
-		$this->assertEquals($arc, $inputs[0]);
+		$mock->expects($this->exactly(3))
+			->method('addInput');
+
+		$mock->expects($this->exactly(2))
+			->method('addOutput');
+
+		$mock->__construct($colorSet, $inputs, $outputs);
 	}
 
 	/**
@@ -109,22 +98,6 @@ class PNNodeTest extends TestCase
 
 		TestReflection::setValue($this->object, 'inputs', array('test'));
 		$this->assertTrue($this->object->hasInput());
-	}
-
-	/**
-	 * Add an output Arc to this Node.
-	 *
-	 * @return  void
-	 *
-	 * @covers  PNNode::addOutput
-	 * @since   1.0
-	 */
-	public function testAddOutput()
-	{
-		$arc = new PNArcInput;
-		$this->object->addOutput($arc);
-		$inputs = TestReflection::getValue($this->object, 'outputs');
-		$this->assertEquals($arc, $inputs[0]);
 	}
 
 	/**

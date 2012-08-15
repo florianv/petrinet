@@ -80,22 +80,6 @@ abstract class PNNode implements PNBaseVisitable
 	}
 
 	/**
-	 * Add an input Arc to this Node.
-	 *
-	 * @param   PNArcInput|PNArcOutput  $arc  The input Arc.
-	 *
-	 * @return  PNNode  This method is chainable.
-	 *
-	 * @since   1.0
-	 */
-	public function addInput($arc)
-	{
-		$this->inputs[] = $arc;
-
-		return $this;
-	}
-
-	/**
 	 * Get the input Arcs of this Node.
 	 *
 	 * @return  array  An array of input Arc objects.
@@ -117,22 +101,6 @@ abstract class PNNode implements PNBaseVisitable
 	public function hasInput()
 	{
 		return empty($this->inputs) ? false : true;
-	}
-
-	/**
-	 * Add an output Arc to this Node.
-	 *
-	 * @param   PNArcInput|PNArcOutput  $arc  The output Arc.
-	 *
-	 * @return  PNNode  This method is chainable.
-	 *
-	 * @since   1.0
-	 */
-	public function addOutput($arc)
-	{
-		$this->outputs[] = $arc;
-
-		return $this;
 	}
 
 	/**
