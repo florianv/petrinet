@@ -3,6 +3,7 @@
 ![Build status](https://secure.travis-ci.org/florianv/Petrinet.png)
 
 A simple Petri Net API written in PHP.
+At this moment, only [Basic Petri Nets](https://github.com/florianv/Petrinet#basic-petri-nets) are fully supported.
 
 1. [Requirements](https://github.com/florianv/Petrinet#requirements)
 2. [Installation](https://github.com/florianv/Petrinet#installation)
@@ -17,8 +18,9 @@ A simple Petri Net API written in PHP.
      * [Creating a simple Petri Net](https://github.com/florianv/Petrinet#creating-a-simple-petri-net-1)
      * [Executing a Petri Net](https://github.com/florianv/Petrinet#executing-a-petri-net-1)
      * [Experimental stuff](https://github.com/florianv/Petrinet#experimental-stuff)
-       * [Custom types](https://github.com/florianv/Petrinet#custom-types)
-       * [Object types](https://github.com/florianv/Petrinet#object-types)
+        * [Arc Expressions](https://github.com/florianv/Petrinet#arc-expressions)
+        * [Custom types](https://github.com/florianv/Petrinet#custom-types)
+        * [Object types](https://github.com/florianv/Petrinet#object-types)
 5. [Some Future work](https://github.com/florianv/Petrinet#some-future-work)
 
 ## Requirements
