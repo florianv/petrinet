@@ -18,13 +18,6 @@ A simple Petri Net API written in PHP.
    * [Object types](https://github.com/florianv/Petrinet#object-types)
 6. [Some Future work](https://github.com/florianv/Petrinet#some-future-work)
 
-## TODO
-
-The Petri Net execution is not working atm, two methods need to be implemented (enabling a transition and firing a transition).
-http://ceur-ws.org/Vol-643/paper05.pdf
-
-Once the build status is passing it will be working.
-
 ## Requirements
 
 Requires PHP 5.3.1+.
@@ -131,94 +124,37 @@ $engine->stop();
 $engine->resume();
 ```
 
-### The elements
+### Colored Petri Nets
 
-#### Creating a Color Set
+In colored Petri Nets, tokens can carry data (color), place and Transition have a Color Set and arc expressions
+can manipulate the token colour when they transit through the arc.
+
+### Key elements
 
 ```php
 <?php
 
-// Creating a Color Set.
+// Creating a Color Set : a Color Set is a tuple of types.
+// The allowed types are integer, double, array, string, boolean.
 $colorSet = new PNColorSet(array('integer', 'double'));
-```
-
-#### Creating a Color
-
-```php
-<?php
 
 // Creating a Color compatible with the preceding set.
 $color = new PNColor(array(1, 1.2));
-```
 
-#### Creating a Token
-
-```php
-<?php
-
-// Creating a simple Token.
-$token = new PNToken();
-
-// Creating a Colored token.
-$color = new PNColor(array(1, 1.2));
+// Creating a Colored Token.
 $token = new PNToken($color);
-```
-
-#### Creating a Place
-
-```php
-<?php
-
-// Creating a simple Place.
-$place = new PNPlace();
 
 // Creating a Place with a Color Set.
-$colorSet = new PNColorSet(array('integer', 'double'));
 $place = new PNPlace($colorSet);
-```
 
-#### Marking a Place
-
-```php
-<?php
-
-// Creating a Colored Token matching the preceding place color set.
-$color = new PNColor(array(1, 1.2));
-$token = new PNToken($color);
-
-// Adding the Token to the Place.
+// Marking a Place.
 $place->addToken($token);
-```
-
-#### Creating a Transition
-
-```php
-<?php
-
-// Creating a simple Transition.
-$transition = new PNTransition();
 
 // Creating a Transition with a Color Set.
-$colorSet = new PNColorSet(array('integer', 'double'));
 $transition = new PNTransition($colorSet);
 ```
 
-#### Creating an Arc
-
-```php
-<?php
-
-$place = new PNPlace();
-$transition = new PNTransition();
-
-// Creating an input Arc.
-$inputArc = new PNArcInput($place, $transtion);
-
-// Creating an output Arc.
-$outputArc = new PNArcOutput($transition, $place);
-```
-
-#### Creating an Arc Expression
+### Arc Expressions
 
 ```php
 <?php
@@ -257,7 +193,7 @@ class MyExpression extends PNArcExpression
 <?php
 
 // Creating the Petri Net.
-$net = new PNPetrinet('MyPetrinet'); // Or $net = PNPetrinet::getInstance('MyPetrinet');
+$net = new PNPetrinet('MyPetrinet');
 
 // Creating a Color Set for the Place and Transition.
 $colorSet = $net->createColorSet(array('integer', 'double'));
@@ -277,33 +213,20 @@ $startPlace->addToken($token);
 // Creating a Transition.
 $transition = $net->createTransition($colorSet);
 
-// Linking the start Place and the Transition (order is important : from the place to the transition).
+// Connecting the start Place and the Transition.
 $arc = $net->connect($startPlace, $transition);
 
-// Linking the Transition and the end Place.
+// Connecting the Transition and the end Place.
 $arc = $net->connect($transition, $endPlace);
 ```
 
 ### Executing a Petri Net
 
-```php
-<?php
+At this moment it is not possible to execute a colored Petri Net.
 
-// Instanciating the Engine.
-$engine = PNEngine::getInstance();
-
-// Passing the Petri Net to the Engine.
-$engine->setNet($net);
-
-// Starting the execution.
-$engine->start();
-
-// Stopping the execution.
-$engine->stop();
-
-// Resuming the execution.
-$engine->resume();
-```
+Two methods : enabling a transition and firing a transition for CPN need to be implemented, and it will work the same way
+than for executing Basic Petri Net.
+http://ceur-ws.org/Vol-643/paper05.pdf
 
 ## Experimental stuff
 
