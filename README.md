@@ -2,12 +2,12 @@
 
 ![Build status](https://secure.travis-ci.org/florianv/Petrinet.png)
 
-A simple Colored Petri Net API written in PHP.
+A simple Petri Net API written in PHP.
 
-0. [TODO] (https://github.com/florianv/Petrinet#todo)
 1. [Requirements](https://github.com/florianv/Petrinet#requirements)
 2. [Installation](https://github.com/florianv/Petrinet#installation)
 3. [Running unit tests](https://github.com/florianv/Petrinet#running-unit-tests)
+4. [Basic Petri Nets]
 4. [Using the API](https://github.com/florianv/Petrinet#using-the-api)
    * [The elements](https://github.com/florianv/Petrinet#the-elements)
    * [Creating a simple Petri Net](https://github.com/florianv/Petrinet#creating-a-simple-petri-net)
@@ -44,6 +44,21 @@ Then register the API to the Joomla autoloader by adding : `JLoader::registerPre
 ## Running unit tests
 
 Cd to the Petrinet root folder, and type the command : `phpunit`
+
+## Basic Petri Nets
+
+In basic Petri Nets, tokens are represented as black dots and cannot carry data.
+
+### The elements
+
+#### Place
+
+```php
+<?php
+
+// Creating a Place
+$place = new PNPlace();
+```
 
 ## Using the API
 
