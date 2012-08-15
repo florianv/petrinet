@@ -71,7 +71,7 @@ $arc = new PNArcOutput($transition, $place);
 
 #### Creating a simple Petri net
 
-For this you must use the PNPetrinet` class.
+For this you must use the `PNPetrinet` class.
 
 ```php
 <?php
