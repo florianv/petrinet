@@ -46,22 +46,40 @@ Then register the API to the Joomla autoloader by adding : `JLoader::registerPre
 
 Cd to the Petrinet root folder, and type the command : `phpunit`
 
-## Basic Petri Nets
+## Using the API
+
+### Basic Petri Nets
 
 In basic Petri Nets, tokens are represented as black dots and cannot carry data.
 
-### The elements
+#### The elements
 
-#### Place
+##### Places
 
 ```php
 <?php
 
-// Creating a Place
+// Creating a Place.
 $place = new PNPlace();
 ```
 
-## Using the API
+##### Transitions
+
+```php
+<?php
+
+// Creating a Transition.
+$transition = new PNTransition();
+```
+
+##### Tokens
+
+```php
+<?php
+
+// Creating a Token.
+$token = new PNToken();
+```
 
 ### The elements
 
