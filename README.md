@@ -18,10 +18,9 @@ At this moment, only [Basic Petri Nets](https://github.com/florianv/Petrinet#bas
      * [Key elements](https://github.com/florianv/Petrinet#key-elements-1)
      * [Creating a simple Petri Net](https://github.com/florianv/Petrinet#creating-a-simple-petri-net-1)
      * [Executing a Petri Net](https://github.com/florianv/Petrinet#executing-a-petri-net-1)
-     * [Experimental stuff](https://github.com/florianv/Petrinet#experimental-stuff)
-       1. [Arc Expressions](https://github.com/florianv/Petrinet#arc-expressions)
-       2. [Custom types](https://github.com/florianv/Petrinet#custom-types)
-       3. [Object types](https://github.com/florianv/Petrinet#object-types)
+     * [Arc Expressions](https://github.com/florianv/Petrinet#arc-expressions)
+     * [Custom types](https://github.com/florianv/Petrinet#custom-types)
+     * [Object types](https://github.com/florianv/Petrinet#object-types)
 5. [Some Future work](https://github.com/florianv/Petrinet#some-future-work)
 
 ## Requirements
@@ -205,9 +204,7 @@ Two methods : enabling a transition and firing a transition for CPN need to be i
 than for executing Basic Petri Net.
 http://ceur-ws.org/Vol-643/paper05.pdf
 
-### Experimental stuff
-
-#### Arc Expressions
+### Arc Expressions
 
 ```php
 <?php
@@ -240,7 +237,7 @@ class MyExpression extends PNArcExpression
 }
 ```
 
-#### New types
+### New types
 
 The default supported types are : `integer`, `double (float)`, `array`, `boolean` and `string`.
 
@@ -315,7 +312,7 @@ $place = $net->createPlace($colorSet);
 $place->addToken($token);
 ```
 
-#### Object types
+### Object types
 
 An object type is the name of a php class.
 You can register a given class name as an 'object type' in the system.
