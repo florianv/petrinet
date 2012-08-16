@@ -43,7 +43,7 @@ class PNToken implements Serializable
 	 */
 	public function isColored()
 	{
-		return is_null($this->color) ? false : true;
+		return $this->color ? true : false;
 	}
 
 	/**

@@ -45,7 +45,6 @@ abstract class PNNode implements PNBaseVisitable
 	 */
 	public function __construct(PNColorSet $colorSet = null, array $inputs = array(), array $outputs = array())
 	{
-		// If a color set is given use it.
 		$this->colorSet = $colorSet;
 
 		// If no inputs are given.
