@@ -3,6 +3,7 @@
 ![Build status](https://secure.travis-ci.org/florianv/Petrinet.png)
 
 A simple Petri Net API written in PHP.
+
 At this moment, only [Basic Petri Nets](https://github.com/florianv/Petrinet#basic-petri-nets) are fully supported.
 
 1. [Requirements](https://github.com/florianv/Petrinet#requirements)
@@ -63,7 +64,7 @@ $transition = new PNTransition();
 // Creating a Token.
 $token = new PNToken();
 
-// Marking a Place.
+// Marking a Place (adding token(s) to it).
 $place->addToken($token);
 
 // Creating an Input Arc : from a Place to a Transition.
@@ -75,12 +76,12 @@ $arc = new PNArcOutput($transition, $place);
 
 #### Creating a simple Petri Net
 
-For this you must use the PNPetrinet` class.
+For this you must use the `PNPetrinet` class.
 
 ```php
 <?php
 
-// Creating a new Petrinet named 'MyPetrinet'.
+// Creating a new Petrinet called 'MyPetrinet'.
 $net = new PNPetrinet('MyPetrinet');
 
 // Creating a start Place.
@@ -107,7 +108,7 @@ $net->connect($transition, $placeEnd);
 
 #### Executing a Petri Net
 
-Once your Petri Net is created you can execute it using the PNEngine class.
+Once your Petri Net is created you can execute it using the`PNEngine` class.
 
 ```php
 <?php
@@ -228,7 +229,7 @@ class MyExpression extends PNArcExpression
 
 	/**
      * Execute the expression.
-     * If a token with a color (1, 2.2) transit through this arc, a new token with color (1+1, 2.2+1.5) = (2, 3.7)
+     * If a token with a color (1, 2.2) transits through this arc, a new token with color (1+1, 2.2+1.5) = (2, 3.7)
      * will be produced after executing the expression.
      * The types of the values contained in the returned array, must match the output place/transition color set.
      */
@@ -276,7 +277,7 @@ class IntegerGteFive implements PNType
     /**
      * Return a value compatible with this type.
      *
-     * @return  integer  A variable value.
+     * @return  integer  A value compatible with this type.
      */
     public function test()
     {
