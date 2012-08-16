@@ -57,8 +57,15 @@ class PNEngineTest extends TestCase
 		$this->assertInstanceOf('PNEngineStatePaused', TestReflection::getValue($engine, 'pausedState'));
 		$this->assertInstanceOf('PNEngineStateResumed', TestReflection::getValue($engine, 'resumedState'));
 		$this->assertInstanceOf('PNEngineStateEnded', TestReflection::getValue($engine, 'endedState'));
+		$this->assertNull(TestReflection::getValue($engine, 'net'));
 
 		$this->assertInstanceOf('PNEngineStateStopped', TestReflection::getValue($engine, 'state'));
+
+		// Test the PetriNet is set correctly.
+		$net = new PNPetrinet('test');
+		$engine2 = new PNEngine($net);
+
+		$this->assertInstanceOf('PNPetrinet', TestReflection::getValue($engine2, 'net'));
 	}
 
 	/**
@@ -73,9 +80,8 @@ class PNEngineTest extends TestCase
 	{
 		$this->assertInstanceOf('PNEngine', PNEngine::getInstance());
 
-		TestReflection::setValue('PNEngine', 'instances', array(1 => true));
-
-		$this->assertTrue(PNEngine::getInstance(1));
+		$engine = PNEngine::getInstance(1, new PNPetrinet('test'));
+		$this->assertInstanceOf('PNPetrinet', TestReflection::getValue($engine, 'net'));
 	}
 
 	/**
@@ -88,6 +94,9 @@ class PNEngineTest extends TestCase
 	 */
 	public function testStart()
 	{
+		// Set a Petri Net for execution.
+		TestReflection::setValue($this->object, 'net', new PNPetrinet('test'));
+
 		$state = TestReflection::getValue($this->object, 'state');
 
 		$state->expects($this->once())
@@ -96,6 +105,21 @@ class PNEngineTest extends TestCase
 		$state->expects($this->once())
 			->method('run');
 
+		$this->object->start();
+	}
+
+	/**
+	 * Test the start method exception.
+	 *
+	 * @return  void
+	 *
+	 * @covers  PNEngine::start
+	 * @expectedException  RuntimeException
+	 * @since   1.0
+	 */
+	public function testStartException()
+	{
+		// No Petri net set.
 		$this->object->start();
 	}
 
@@ -163,6 +187,9 @@ class PNEngineTest extends TestCase
 	 */
 	public function testResume()
 	{
+		// Set a Petri Net for execution.
+		TestReflection::setValue($this->object, 'net', new PNPetrinet('test'));
+
 		$state = TestReflection::getValue($this->object, 'state');
 
 		$state->expects($this->once())
@@ -172,6 +199,21 @@ class PNEngineTest extends TestCase
 			->method('run');
 
 		$this->object->resume();
+	}
+
+	/**
+	 * Test the resume method exception.
+	 *
+	 * @return  void
+	 *
+	 * @covers  PNEngine::start
+	 * @expectedException  RuntimeException
+	 * @since   1.0
+	 */
+	public function testResumeException()
+	{
+		// No Petri net set.
+		$this->object->start();
 	}
 
 	/**
@@ -297,6 +339,23 @@ class PNEngineTest extends TestCase
 		TestReflection::setValue($this->object, 'net', true);
 
 		$this->assertTrue($this->object->getNet());
+	}
+
+	/**
+	 * Check if the engine has a Petri Net set for execution.
+	 *
+	 * @return  boolean  True if a Petri Net is set, false otherwise.
+	 *
+	 * @covers  PNEngine::hasNet
+	 * @since   1.0
+	 */
+	public function testHasNet()
+	{
+		$this->assertFalse($this->object->hasNet());
+
+		TestReflection::setValue($this->object, 'net', new PNPetrinet('test'));
+
+		$this->assertTrue($this->object->hasNet());
 	}
 
 	/**

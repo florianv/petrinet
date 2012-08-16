@@ -73,9 +73,11 @@ class PNEngine
 	/**
 	 * Constructor.
 	 *
+	 * @param   PNPetrinet  $net  The Petri Net.
+	 *
 	 * @since   1.0
 	 */
-	public function __construct()
+	public function __construct(PNPetrinet $net = null)
 	{
 		// Get the state instances.
 		$this->startedState = new PNEngineStateStarted($this);
@@ -86,22 +88,26 @@ class PNEngine
 
 		// Set the current state to stopped.
 		$this->state = $this->stoppedState;
+
+		// Set the Petri Net.
+		$this->net = $net;
 	}
 
 	/**
 	 * Get an instance or create it.
 	 *
-	 * @param   integer  $id  The engine id.
+	 * @param   integer     $id   The Engine id.
+	 * @param   PNPetrinet  $net  The Petri Net.
 	 *
 	 * @return  PNEngine  The engine.
 	 *
 	 * @since   1.0
 	 */
-	public static function getInstance($id = 0)
+	public static function getInstance($id = 0, PNPetrinet $net = null)
 	{
 		if (empty(self::$instances[$id]))
 		{
-			self::$instances[$id] = new PNEngine;
+			self::$instances[$id] = new PNEngine($net);
 		}
 
 		return self::$instances[$id];
@@ -112,10 +118,17 @@ class PNEngine
 	 *
 	 * @return  void
 	 *
+	 * @throws  RuntimeException
+	 *
 	 * @since   1.0
 	 */
 	public function start()
 	{
+		if (!$this->hasNet())
+		{
+			throw new RuntimeException('No Petri Net has been set for execution.');
+		}
+
 		$this->state->start();
 
 		// Run the execution.
@@ -163,10 +176,17 @@ class PNEngine
 	 *
 	 * @return  void
 	 *
+	 * @throws  RuntimeException
+	 *
 	 * @since   1.0
 	 */
 	public function resume()
 	{
+		if (!$this->hasNet())
+		{
+			throw new RuntimeException('No Petri Net has been set for execution.');
+		}
+
 		$this->state->resume();
 
 		// Run the execution.
@@ -174,7 +194,7 @@ class PNEngine
 	}
 
 	/**
-	 * Main execution method.
+	 * Main execution method, do not call it.
 	 * After each execution step, the state eventually modifies the engine state
 	 * and pass back the execution to the Engine.
 	 *
@@ -251,6 +271,18 @@ class PNEngine
 	public function getNet()
 	{
 		return $this->net;
+	}
+
+	/**
+	 * Check if the engine has a Petri Net set for execution.
+	 *
+	 * @return  boolean  True if a Petri Net is set, false otherwise.
+	 *
+	 * @since   1.0
+	 */
+	public function hasNet()
+	{
+		return $this->net ? true : false;
 	}
 
 	/**
