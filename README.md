@@ -191,11 +191,20 @@ $net->connect($transition2, $place3);
 $net->setStartPlace($place1);
 ```
 
-<img src="http://voutzinos.florian.free.fr/hard.png" width="216" height="295">
-
-After firing : 
-<img src="http://voutzinos.florian.free.fr/hard3.png" width="216" height="295">
-
+<table>
+  <tr>
+    <th>Before execution</th><th>After firing the 3 transitions</th>
+  </tr>
+  <tr>
+    <td>1</td><td>Tom Preston-Werner</td>
+  </tr>
+</table>
+<table>
+  <tr>
+  <th><img src="http://voutzinos.florian.free.fr/hard.png" width="216" height="295"></th><th><img src="http://voutzinos.florian.free.fr/hard3.png" width="216" height="295"></th>
+  </tr>
+  <tr>
+</table>
 
 #### Creating Custom Transitions
 
