@@ -272,6 +272,8 @@ Representation :
 
 ### Colored Petri Nets
 
+Colored Petri Nets are not supported for execution atm, but you can get familiar with the future api (despite it will probably change a bit).
+
 In colored Petri Nets, tokens can carry data (color), place and Transition have a Color Set and arc expressions
 can manipulate the token colour when they transit through the arc.
 
