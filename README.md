@@ -162,6 +162,36 @@ $engine->stop();
 // Resuming the execution.
 $engine->resume();
 ```
+#### A more complex example
+
+```php
+$net = new PNPetrinet('MyPetrinet');
+
+$place1 = $net->createPlace();
+$place2 = $net->createPlace();
+$place3 = $net->createPlace();
+$place4 = $net->createPlace();
+
+$place1->addToken(new PNToken);
+
+$transition1 = $net->createTransition();
+$transition2 = $net->createTransition();
+$transition3 = $net->createTransition();
+
+// Connecting the graph (order not important).
+$net->connect($place1, $transition1);
+$net->connect($place1, $transition3);
+$net->connect($transition1, $place2);
+$net->connect($transition3, $place4);
+$net->connect($place2, $transition2);
+$net->connect($place4, $transition2);
+$net->connect($transition2, $place3);
+
+$net->setStartPlace($place1);
+```
+
+<img src="http://voutzinos.florian.free.fr/hard.png width="216" height="295">
+
 
 #### Creating Custom Transitions
 
@@ -231,7 +261,7 @@ $engine = PNEngine::getInstance()
 
 Representation : 
 
-<img src="http://voutzinos.florian.free.fr/example3.png" align="middle">
+<img src="http://voutzinos.florian.free.fr/example3.png">
 
 ### Colored Petri Nets
 
