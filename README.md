@@ -195,6 +195,7 @@ $net->connect($transition2, $placeEnd);
 // Passing the start place to the net.
 $net->setStartPlace($placeStart);
 
+// Executing the net.
 $engine = PNEngine::getInstance()
 	->setNet($net)
 	->start();
