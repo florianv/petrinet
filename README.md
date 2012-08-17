@@ -195,9 +195,9 @@ $net->connect($transition2, $placeEnd);
 // Passing the start place to the net.
 $net->setStartPlace($placeStart);
 
-$engine = PNEngine::getInstance();
-$engine->setNet($net);
-$engine->start();
+$engine = PNEngine::getInstance()
+	->setNet($net)
+	->start();
 ```
 
 ### Colored Petri Nets
