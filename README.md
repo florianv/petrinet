@@ -112,6 +112,31 @@ $net->connect($transition, $placeEnd);
 $net->setStartPlace($placeStart);
 ```
 
+#### Visualizing a Petri Net
+
+You can visualize your Petri Net definition using the [GraphViz](http://www.graphviz.org/Download..php) software.
+
+```php
+<?php
+
+// Create a Viewer visitor instance.
+$viewer = new PNVisitorViewer;
+
+// Call the method accept of your Petri Net object with the Viewer as param.
+$net->accept($viewer);
+
+// Displaying your Petri Net as a Graphviz formatted string.
+echo $viewer;
+
+// Creating a .dot file containing the Graphviz formatted string.
+// Here if the permissions is set correctly, it will create a `/test/example1.dot file which is ready to be opened
+// by the Graphviz software.
+$viewer->toFile('/test/example1');
+```
+Example with the last Petri Net : 
+
+![PetriNet] (http://http://voutzinos.florian.free.fr/example1.png =150x150)
+
 #### Executing a Petri Net
 
 Once your Petri Net is created you can execute it using the`PNEngine` class.

@@ -57,7 +57,11 @@ class PNVisitorViewer extends PNVisitorGrabber
 		// Declaring the nodes (places).
 		foreach ($this->places as $key => $place)
 		{
-			$graph .= 'p' . $key . ' [label="p' . $key . ': ' . $place->getTokenCount() . ' tokens"];';
+			$tokens = $place->getTokenCount();
+
+			$graph .= 'p' . $key . ' [label="p' . $key . ': ' . $tokens;
+
+			$tokens > 1 ? $graph .= ' tokens"];' : $graph .= ' token"];';
 		}
 
 		// Declaring the nodes (Transitions).
