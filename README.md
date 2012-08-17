@@ -14,7 +14,7 @@ At this moment, only [Basic Petri Nets](https://github.com/florianv/Petrinet#bas
      * [Key elements](https://github.com/florianv/Petrinet#key-elements)
      * [Creating a simple Petri Net](https://github.com/florianv/Petrinet#creating-a-simple-petri-net)
      * [Executing a Petri Net](https://github.com/florianv/Petrinet#executing-a-petri-net)
-     * [Creating Custom Transitions](https://github.com/florianv/Petrinet#executing-a-petri-net)
+     * [Creating Custom Transitions](https://github.com/florianv/Petrinet#creating-custom-transitions)
    * [Colored Petri Nets] (https://github.com/florianv/Petrinet#colored-petri-nets)
      * [Key elements](https://github.com/florianv/Petrinet#key-elements-1)
      * [Creating a simple Petri Net](https://github.com/florianv/Petrinet#creating-a-simple-petri-net-1)
