@@ -66,16 +66,21 @@ $token = new PNToken();
 // Marking a Place (adding token(s) to it).
 $place->addToken($token);
 
-// Creating an Input Arc : from a Place to a Transition.
-$arc = new PNArcInput($place, $transition);
+// Creating an Arc : from a Place to a Transition.
+$arc = new PNArc($place, $transition);
 
-// Creating an Output Arc : from a Transition to a Place.
-$arc = new PNArcOutput($transition, $place);
+// Creating an Arc : from a Transition to a Place.
+$arc = new PNArc($transition, $place);
 ```
 
 #### Creating a simple Petri Net
 
 For this you must use the `PNPetrinet` class.
+It acts as a factory to create elements, and allow to connect easily Place to Transitions and Transitions to Places.
+Unless you know what you are doing, you should ayways use the PNPetrinet::connect method to connect elements.
+
+I've constrained the system to have one start Place, and you must pass this object to the PNPetrinet class, in order to create a petri net.
+The way the elements are connected, allow to know only the start Place, in order to know the whole Petri Net.
 
 ```php
 <?php
@@ -103,6 +108,9 @@ $net->connect($placeStart, $transition);
 
 // Connecting the Transition to the end Place.
 $net->connect($transition, $placeEnd);
+
+// Passing the Start Place to the Petri Net object.
+$net->setStartPlace($placeStart);
 ```
 
 #### Executing a Petri Net
@@ -133,10 +141,10 @@ $engine->resume();
 In colored Petri Nets, tokens can carry data (color), place and Transition have a Color Set and arc expressions
 can manipulate the token colour when they transit through the arc.
 
-Documents : 
+Documents :
 
-1) www.cs.au.dk/~cpnbook/slides/CPN2.ppt  
-2) www.daimi.au.dk/~kjensen/papers_books/use.pdf  
+1) www.cs.au.dk/~cpnbook/slides/CPN2.ppt
+2) www.daimi.au.dk/~kjensen/papers_books/use.pdf
 
 ### Key elements
 
@@ -194,6 +202,9 @@ $arc = $net->connect($startPlace, $transition);
 
 // Connecting the Transition and the end Place.
 $arc = $net->connect($transition, $endPlace);
+
+// Passing the Start Place to the Petri Net object.
+$net->setStartPlace($placeStart);
 ```
 
 ### Executing a Petri Net
@@ -270,7 +281,7 @@ class IntegerGteFive implements PNType
     {
     	return $var >= 5;
     }
-    
+
     /**
      * Return a value compatible with this type.
      *
