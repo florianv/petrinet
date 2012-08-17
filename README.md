@@ -2,14 +2,14 @@
 
 ![Build status](https://secure.travis-ci.org/florianv/Petrinet.png)
 
-A simple Petri Net Framework written in PHP.
+A simple Petri Net API written in PHP.
 
-At this moment, only [Basic Petri Nets](https://github.com/florianv/Petrinet#basic-petri-nets) are fully supported.
+At this moment, only [Basic Petri Nets](https://github.com/florianv/Petrinet#basic-petri-nets) are supported.
 
 1. [Requirements](https://github.com/florianv/Petrinet#requirements)
 2. [Installation](https://github.com/florianv/Petrinet#installation)
 3. [Running unit tests](https://github.com/florianv/Petrinet#running-unit-tests)
-4. [Using the Framework](https://github.com/florianv/Petrinet#using-the-api)
+4. [Using the API](https://github.com/florianv/Petrinet#using-the-api)
    * [Basic Petri Nets](https://github.com/florianv/Petrinet#basic-petri-nets)
      * [Key elements](https://github.com/florianv/Petrinet#key-elements)
      * [Creating a simple Petri Net](https://github.com/florianv/Petrinet#creating-a-simple-petri-net)
@@ -77,8 +77,10 @@ $arc = new PNArc($transition, $place);
 #### Creating a simple Petri Net
 
 For this you must use the `PNPetrinet` class.
+
 It acts as a factory to create elements, and allow to connect easily Place to Transitions and Transitions to Places.
-Unless you know what you are doing, you should ayways use the PNPetrinet::connect method to connect elements.
+
+Unless you know what you are doing, you should ayways use the `PNPetrinet::connect` method to connect elements.
 
 I've constrained the system to have one start Place, and you must pass this object to the PNPetrinet class, in order to create a petri net.
 The way the elements are connected, allow to know only the start Place, in order to know the whole Petri Net.
