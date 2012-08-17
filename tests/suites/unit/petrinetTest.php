@@ -48,7 +48,17 @@ class PNPetrinetTest extends TestCase
 	{
 		$petri = new PNPetrinet('test');
 		$this->assertEquals('test', TestReflection::getValue($petri, 'name'));
+		$this->assertNull(TestReflection::getValue($petri, 'startPlace'));
 		$this->assertInstanceOf('PNTypeManager', TestReflection::getValue($petri, 'typeManager'));
+
+		// Test with arguments.
+		$typeManager = new PNTypeManager;
+		$startPlace = new PNPlace;
+
+		$net = new PNPetrinet('test', $startPlace, $typeManager);
+		$this->assertEquals('test', TestReflection::getValue($net, 'name'));
+		$this->assertEquals($startPlace, TestReflection::getValue($net, 'startPlace'));
+		$this->assertEquals($typeManager, TestReflection::getValue($net, 'typeManager'));
 	}
 
 	/**
@@ -78,19 +88,10 @@ class PNPetrinetTest extends TestCase
 	 */
 	public function testCreatePlace()
 	{
-		$place = $this->object->createPlace();
-		$this->assertInstanceOf('PNPlace', $place);
-
-		$places = TestReflection::getValue($this->object, 'places');
-
-		$this->assertEquals($place, $places[0]);
+		$this->assertInstanceOf('PNPlace', $this->object->createPlace());
 
 		// Create a new place.
-		$place1  = $this->object->createPlace(new PNColorSet(array('integer', 'double')));
-
-		$places = TestReflection::getValue($this->object, 'places');
-
-		$this->assertEquals($place1, $places[1]);
+		$this->assertInstanceOf('PNPlace', $this->object->createPlace(new PNColorSet(array('integer', 'double'))));
 	}
 
 	/**
@@ -133,19 +134,8 @@ class PNPetrinetTest extends TestCase
 	 */
 	public function testCreateTransition()
 	{
-		$transition = $this->object->createTransition();
-		$this->assertInstanceOf('PNTransition', $transition);
-
-		$transitions = TestReflection::getValue($this->object, 'transitions');
-
-		$this->assertEquals($transition, $transitions[0]);
-
-		// Create a new place.
-		$transition1  = $this->object->createTransition(new PNColorSet(array('integer', 'double')));
-
-		$transitions = TestReflection::getValue($this->object, 'transitions');
-
-		$this->assertEquals($transition1, $transitions[1]);
+		$this->assertInstanceOf('PNTransition', $this->object->createTransition());
+		$this->assertInstanceOf('PNTransition', $this->object->createTransition(new PNColorSet(array('integer', 'double'))));
 	}
 
 	/**
@@ -179,15 +169,6 @@ class PNPetrinetTest extends TestCase
 		$manager = TestReflection::getValue($expression, 'typeManager');
 		$this->assertInstanceOf('PNTypeManager', $manager);
 
-		$placeOutputs = TestReflection::getValue($place, 'outputs');
-		$this->assertEquals($placeOutputs[0], $arc);
-
-		$transitionInputs = TestReflection::getValue($transition, 'inputs');
-		$this->assertEquals($transitionInputs[0], $arc);
-
-		$inputArcs = TestReflection::getValue($this->object, 'inputArcs');
-		$this->assertEquals($inputArcs[0], $arc);
-
 		// Try connect a transition to a place without arc expression.
 		$place = new PNPlace;
 		$transition = new PNTransition;
@@ -198,15 +179,6 @@ class PNPetrinetTest extends TestCase
 		$this->assertEquals(TestReflection::getValue($arc, 'input'), $transition);
 		$this->assertEquals(TestReflection::getValue($arc, 'output'), $place);
 		$this->assertNull(TestReflection::getValue($arc, 'expression'));
-
-		$placeInputs = TestReflection::getValue($place, 'inputs');
-		$this->assertEquals($placeInputs[0], $arc);
-
-		$transitionOutputs = TestReflection::getValue($transition, 'outputs');
-		$this->assertEquals($transitionOutputs[0], $arc);
-
-		$outputArcs = TestReflection::getValue($this->object, 'outputArcs');
-		$this->assertEquals($outputArcs[0], $arc);
 	}
 
 	/**
@@ -258,7 +230,82 @@ class PNPetrinetTest extends TestCase
 	}
 
 	/**
-	 * Ge the Petri Net name.
+	 * Set the Petri Net start Place.
+	 *
+	 * @return  void
+	 *
+	 * @covers  PNPetrinet::setStartPlace
+	 * @since   1.0
+	 */
+	public function testSetStartPlace()
+	{
+		$place = new PNPlace;
+		$this->object->setStartPlace($place);
+		$this->assertEquals(TestReflection::getValue($this->object, 'startPlace'), $place);
+	}
+
+	/**
+	 * Set the Petri Net start Place.
+	 *
+	 * @return  void
+	 *
+	 * @covers  PNPetrinet::getStartPlace
+	 * @since   1.0
+	 */
+	public function testGetStartPlace()
+	{
+		TestReflection::setValue($this->object, 'startPlace', true);
+		$this->assertTrue($this->object->getStartPlace());
+	}
+
+	/**
+	 * Check if the Petri Net has a start Place.
+	 *
+	 * @return  boolean  True if it has a start Place, false otherwise.
+	 *
+	 * @covers  PNPetrinet::hasStartPlace
+	 * @since   1.0
+	 */
+	public function testHasStartPlace()
+	{
+		$this->assertFalse($this->object->hasStartPlace());
+
+		TestReflection::setValue($this->object, 'startPlace', new PNPlace);
+
+		$this->assertTrue($this->object->hasStartPlace());
+	}
+
+	/**
+	 * Assert the Petri Net has a start Place.
+	 *
+	 * @return  void
+	 *
+	 * @covers  PNPetrinet::assertHasStartPlace
+	 * @since   1.0
+	 */
+	public function testAssertHasStartPlace()
+	{
+		TestReflection::setValue($this->object, 'startPlace', new PNPlace);
+		$this->object->assertHasStartPlace();
+	}
+
+	/**
+	 * Assert the Petri Net has a start Place.
+	 *
+	 * @return  void
+	 *
+	 * @expectedException  RuntimeException
+	 *
+	 * @covers  PNPetrinet::assertHasStartPlace
+	 * @since   1.0
+	 */
+	public function testAssertHasStartPlaceException()
+	{
+		$this->object->assertHasStartPlace();
+	}
+
+	/**
+	 * Get the Petri Net name.
 	 *
 	 * @return  void
 	 *
@@ -271,7 +318,78 @@ class PNPetrinetTest extends TestCase
 	}
 
 	/**
-	 * Ge the Petri Net Places.
+	 * Check if a grabber is set (the grabber has grabbed the elements).
+	 *
+	 * @return  void
+	 *
+	 * @covers  PNPetrinet::hasGrabber
+	 * @since   1.0
+	 */
+	public function testHasGrabber()
+	{
+		$this->assertFalse($this->object->hasGrabber());
+
+		TestReflection::setValue($this->object, 'grabber', true);
+		$this->assertTrue($this->object->hasGrabber());
+	}
+
+	/**
+	 * Grab the Petri net elements.
+	 *
+	 * @return  void
+	 *
+	 * @expectedException  RuntimeException
+	 * @covers  PNPetrinet::doGrab
+	 * @since   1.0
+	 */
+	public function testDoGrabException1()
+	{
+		// No start Place.
+		TestReflection::invoke($this->object, 'doGrab', true);
+	}
+
+	/**
+	 * Grab the Petri net elements.
+	 *
+	 * @return  void
+	 *
+	 * @expectedException  RuntimeException
+	 * @covers  PNPetrinet::doGrab
+	 * @since   1.0
+	 */
+	public function testDoGrabException2()
+	{
+		// No start Place.
+		TestReflection::invoke($this->object, 'doGrab', false);
+	}
+
+	/**
+	 * Grab the Petri net elements.
+	 *
+	 * @return  void
+	 *
+	 * @covers  PNPetrinet::doGrab
+	 * @since   1.0
+	 */
+	public function testDoGrab()
+	{
+		// Set a Start Place.
+		TestReflection::setValue($this->object, 'startPlace', new PNPlace);
+
+		// Grab with reloading.
+		TestReflection::invoke($this->object, 'doGrab', true);
+		$this->assertInstanceOf('PNVisitorGrabber', TestReflection::getValue($this->object, 'grabber'));
+
+		// Reset the grabber.
+		TestReflection::setValue($this->object, 'grabber', null);
+
+		// Test it has been grabbed even with reload = false.
+		TestReflection::invoke($this->object, 'doGrab', false);
+		$this->assertInstanceOf('PNVisitorGrabber', TestReflection::getValue($this->object, 'grabber'));
+	}
+
+	/**
+	 * Get the Petri net Places.
 	 *
 	 * @return  void
 	 *
@@ -280,18 +398,24 @@ class PNPetrinetTest extends TestCase
 	 */
 	public function testGetPlaces()
 	{
-		$this->assertEmpty($this->object->getPlaces());
+		$mockedPn = $this->getMock('PNPetrinet', array('doGrab'), array('test'));
 
-		// Add a place.
-		TestReflection::setValue($this->object, 'places', array(true));
+		$mockedPn->expects($this->once())
+			->method('doGrab');
 
-		$places = $this->object->getPlaces();
+		$mockedGrabber = $this->getMock('PNVisitorGrabber');
+		$mockedGrabber->expects($this->once())
+			->method('getPlaces')
+			->will($this->returnValue(true));
 
-		$this->assertTrue($places[0]);
+		// Inject the mocked grabber.
+		TestReflection::setValue($mockedPn, 'grabber', $mockedGrabber);
+
+		$this->assertTrue($mockedPn->getPlaces());
 	}
 
 	/**
-	 * Ge the Petri Net Transitions.
+	 * Get the Petri net Transitions.
 	 *
 	 * @return  void
 	 *
@@ -300,38 +424,24 @@ class PNPetrinetTest extends TestCase
 	 */
 	public function testGetTransitions()
 	{
-		$this->assertEmpty($this->object->getTransitions());
+		$mockedPn = $this->getMock('PNPetrinet', array('doGrab'), array('test'));
 
-		// Add a transition.
-		TestReflection::setValue($this->object, 'transitions', array(true));
+		$mockedPn->expects($this->once())
+			->method('doGrab');
 
-		$transitions = $this->object->getTransitions();
+		$mockedGrabber = $this->getMock('PNVisitorGrabber');
+		$mockedGrabber->expects($this->once())
+			->method('getTransitions')
+			->will($this->returnValue(true));
 
-		$this->assertTrue($transitions[0]);
+		// Inject the mocked grabber.
+		TestReflection::setValue($mockedPn, 'grabber', $mockedGrabber);
+
+		$this->assertTrue($mockedPn->getTransitions());
 	}
 
 	/**
-	 * Ge the Output Arcs.
-	 *
-	 * @return  void
-	 *
-	 * @covers  PNPetrinet::getOuputArcs
-	 * @since   1.0
-	 */
-	public function testGetOuputArcs()
-	{
-		$this->assertEmpty($this->object->getOuputArcs());
-
-		// Add an output arc.
-		TestReflection::setValue($this->object, 'outputArcs', array(true));
-
-		$outputArcs = $this->object->getOuputArcs();
-
-		$this->assertTrue($outputArcs[0]);
-	}
-
-	/**
-	 * Ge the Input Arcs.
+	 * Get the Petri net Input Arcs.
 	 *
 	 * @return  void
 	 *
@@ -340,14 +450,46 @@ class PNPetrinetTest extends TestCase
 	 */
 	public function testGetInputArcs()
 	{
-		$this->assertEmpty($this->object->getInputArcs());
+		$mockedPn = $this->getMock('PNPetrinet', array('doGrab'), array('test'));
 
-		// Add an output arc.
-		TestReflection::setValue($this->object, 'inputArcs', array(true));
+		$mockedPn->expects($this->once())
+			->method('doGrab');
 
-		$inputArcs = $this->object->getInputArcs();
+		$mockedGrabber = $this->getMock('PNVisitorGrabber');
+		$mockedGrabber->expects($this->once())
+			->method('getInputArcs')
+			->will($this->returnValue(true));
 
-		$this->assertTrue($inputArcs[0]);
+		// Inject the mocked grabber.
+		TestReflection::setValue($mockedPn, 'grabber', $mockedGrabber);
+
+		$this->assertTrue($mockedPn->getInputArcs());
+	}
+
+	/**
+	 * Get the Petri net Output Arcs.
+	 *
+	 * @return  void
+	 *
+	 * @covers  PNPetrinet::getOutputArcs
+	 * @since   1.0
+	 */
+	public function testGetOutputArcs()
+	{
+		$mockedPn = $this->getMock('PNPetrinet', array('doGrab'), array('test'));
+
+		$mockedPn->expects($this->once())
+			->method('doGrab');
+
+		$mockedGrabber = $this->getMock('PNVisitorGrabber');
+		$mockedGrabber->expects($this->once())
+			->method('getOutputArcs')
+			->will($this->returnValue(true));
+
+		// Inject the mocked grabber.
+		TestReflection::setValue($mockedPn, 'grabber', $mockedGrabber);
+
+		$this->assertTrue($mockedPn->getOutputArcs());
 	}
 
 	/**

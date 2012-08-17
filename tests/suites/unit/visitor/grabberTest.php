@@ -40,23 +40,6 @@ class PNVisitorGrabberTest extends TestCase
 	}
 
 	/**
-	 * Constructor.
-	 *
-	 * @return  void
-	 *
-	 * @covers  PNVisitorGrabber::__construct
-	 * @since   1.0
-	 */
-	public function test__construct()
-	{
-		$mockedNet = $this->getMock('PNPetrinet', array('accept'), array('test'));
-		$mockedNet->expects($this->once())
-			->method('accept');
-
-		new PNVisitorGrabber($mockedNet);
-	}
-
-	/**
 	 * Test the depth first traversal algorithm.
 	 *
 	 * @return  void
@@ -89,7 +72,8 @@ class PNVisitorGrabberTest extends TestCase
 		// Inject the start place.
 		TestReflection::setValue($net, 'startPlace', $startPlace);
 
-		$grabber = new PNVisitorGrabber($net);
+		$grabber = new PNVisitorGrabber;
+		$net->accept($grabber);
 
 		$places = TestReflection::getValue($grabber, 'places');
 		$transitions = TestReflection::getValue($grabber, 'transitions');

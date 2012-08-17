@@ -246,7 +246,10 @@ class PNEngineTest extends TestCase
 	 */
 	public function testRefresh()
 	{
-		// Create 3 mocked transitions.
+		// Mock the Petri net.
+		$mockedNet = $this->getMock('PNPetrinet', array('getTransitions'), array('test'));
+
+		// Create 3 mocked transitions. 2 of them enabled.
 		$transition1 = $this->getMock('PNTransition');
 		$transition1->expects($this->once())
 			->method('isEnabled')
@@ -262,10 +265,12 @@ class PNEngineTest extends TestCase
 			->method('isEnabled')
 			->will($this->returnValue(true));
 
-		// Create a net and inject the mocked transitions.
-		$net = new PNPetrinet('test');
-		TestReflection::setValue($net, 'transitions', array($transition1, $transition2, $transition3));
-		TestReflection::setValue($this->object, 'net', $net);
+		$mockedNet->expects($this->once())
+			->method('getTransitions')
+			->will($this->returnValue(array($transition1, $transition2, $transition3)));
+
+		// Inject the Petri net.
+		TestReflection::setValue($this->object, 'net', $mockedNet);
 
 		$this->object->refresh();
 

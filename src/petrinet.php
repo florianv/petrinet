@@ -29,34 +29,10 @@ class PNPetrinet implements PNBaseVisitable
 	protected $name;
 
 	/**
-	 * @var    array  The Petri Net Places.
+	 * @var    PNPlace  The Petri Net Start Place.
 	 * @since  1.0
 	 */
-	protected $places = array();
-
-	/**
-	 * @var    PNPlace  The Petri Net Places.
-	 * @since  1.0
-	 */
-	protected $startPlace = null;
-
-	/**
-	 * @var    array  The Petri Net Transitions.
-	 * @since  1.0
-	 */
-	protected $transitions = array();
-
-	/**
-	 * @var    array  The Input Arcs.
-	 * @since  1.0
-	 */
-	protected $inputArcs = array();
-
-	/**
-	 * @var    array  The Output Arcs.
-	 * @since  1.0
-	 */
-	protected $outputArcs = array();
+	protected $startPlace;
 
 	/**
 	 * @var    PNTypeManager  A type Manager for this petri net.
@@ -65,19 +41,30 @@ class PNPetrinet implements PNBaseVisitable
 	protected $typeManager;
 
 	/**
+	 * @var    PNVisitorGrabber  A PNVisitorGrabber instance.
+	 * @since  1.0
+	 */
+	protected $grabber;
+
+	/**
 	 * Constructor.
 	 *
-	 * @param   string         $name     The Petri Net name.
-	 * @param   PNTypeManager  $manager  The type Manager.
+	 * @param   string         $name        The Petri Net name.
+	 * @param   PNPlace        $startPlace  The Petri Net Start Place.
+	 * @param   PNTypeManager  $manager     The type Manager.
 	 *
 	 * @since   1.0
 	 */
-	public function __construct($name, PNTypeManager $manager = null)
+	public function __construct($name, PNPlace $startPlace = null, PNTypeManager $manager = null)
 	{
 		// Use the given type manager, or create a new one.
 		$this->typeManager = $manager ? $manager : new PNTypeManager;
 
+		// Set the Petri Net name.
 		$this->name = $name;
+
+		// Set the Start Place.
+		$this->startPlace = $startPlace;
 	}
 
 	/**
@@ -110,11 +97,7 @@ class PNPetrinet implements PNBaseVisitable
 	 */
 	public function createPlace(PNColorSet $colorSet = null)
 	{
-		$place = new PNPlace($colorSet);
-
-		$this->places[] = $place;
-
-		return $place;
+		return new PNPlace($colorSet);
 	}
 
 	/**
@@ -156,11 +139,7 @@ class PNPetrinet implements PNBaseVisitable
 	 */
 	public function createTransition(PNColorSet $colorSet = null)
 	{
-		$transition = new PNTransition($colorSet);
-
-		$this->transitions[] = $transition;
-
-		return $transition;
+		return new PNTransition($colorSet);
 	}
 
 	/**
@@ -170,7 +149,7 @@ class PNPetrinet implements PNBaseVisitable
 	 * @param   PNPlace|PNTransition  $to          The target Place or Transition.
 	 * @param   PNArcExpression       $expression  The arc's expression.
 	 *
-	 * @return  object  The Arc object.
+	 * @return  PNArcInput|PNArcOutput  The Arc object.
 	 *
 	 * @throws  InvalidArgumentException
 	 *
@@ -196,9 +175,6 @@ class PNPetrinet implements PNBaseVisitable
 		{
 			// Create the arc, inject the expression and type manager.
 			$arc = new PNArcInput($from, $to, $expression, $this->typeManager);
-
-			// Store it.
-			$this->inputArcs[] = $arc;
 		}
 
 		// Output Arc.
@@ -206,9 +182,6 @@ class PNPetrinet implements PNBaseVisitable
 		{
 			// Create the arc, inject the expression and type manager.
 			$arc = new PNArcOutput($from, $to, $expression, $this->typeManager);
-
-			// Store it.
-			$this->outputArcs[] = $arc;
 		}
 
 		else
@@ -224,7 +197,64 @@ class PNPetrinet implements PNBaseVisitable
 	}
 
 	/**
-	 * Ge the Petri Net name.
+	 * Set the Petri Net start Place.
+	 *
+	 * @param   PNPlace  $place  The Petri net start place.
+	 *
+	 * @return  PNPetrinet  This method is chainable.
+	 *
+	 * @since   1.0
+	 */
+	public function setStartPlace(PNPlace $place)
+	{
+		$this->startPlace = $place;
+
+		return $this;
+	}
+
+	/**
+	 * Set the Petri Net start Place.
+	 *
+	 * @return  PNPlace  The Petri net start place.
+	 *
+	 * @since   1.0
+	 */
+	public function getStartPlace()
+	{
+		return $this->startPlace;
+	}
+
+	/**
+	 * Check if the Petri Net has a start Place.
+	 *
+	 * @return  boolean  True if it has a start Place, false otherwise.
+	 *
+	 * @since   1.0
+	 */
+	public function hasStartPlace()
+	{
+		return $this->startPlace ? true : false;
+	}
+
+	/**
+	 * Assert the Petri Net has a start Place.
+	 *
+	 * @return  void
+	 *
+	 * @throws  RuntimeException
+	 *
+	 * @since   1.0
+	 */
+	public function assertHasStartPlace()
+	{
+		if (!$this->hasStartPlace())
+		{
+			throw new RuntimeException('The Petri Net has no start Place.');
+		}
+	}
+
+	/**
+	 * Get the Petri Net name.
 	 *
 	 * @return  string  The name.
 	 *
@@ -236,51 +266,112 @@ class PNPetrinet implements PNBaseVisitable
 	}
 
 	/**
-	 * Ge the Petri Net Places.
+	 * Check if a grabber is set.
 	 *
-	 * @return  array  The Places.
+	 * @return  boolean  True if a grabber is set, false otherwise.
 	 *
 	 * @since   1.0
 	 */
-	public function getPlaces()
+	public function hasGrabber()
 	{
-		return $this->places;
+		return $this->grabber ? true : false;
 	}
 
 	/**
-	 * Ge the Petri Net Transitions.
+	 * Grab the Petri net elements.
 	 *
-	 * @return  array  The Transitions.
+	 * @param   boolean  $reload  True to re-grab all the elements.
+	 *
+	 * @return  void
+	 *
+	 * @throws  RuntimeException
 	 *
 	 * @since   1.0
 	 */
-	public function getTransitions()
+	protected function doGrab($reload)
 	{
-		return $this->transitions;
+		if ($reload || !$this->hasGrabber())
+		{
+			// Assert the Petri net has a start Place.
+			$this->assertHasStartPlace();
+
+			// Grab the elements.
+			$grabber = new PNVisitorGrabber;
+			$this->accept($grabber);
+			$this->grabber = $grabber;
+		}
 	}
 
 	/**
-	 * Ge the Output Arcs.
+	 * Get the Petri net Places.
 	 *
-	 * @return  array  The Output Arcs.
+	 * @param   boolean  $reload  True to re-grab all the elements.
+	 *
+	 * @return  array  An array of Petri Net Places.
+	 *
+	 * @throws  RuntimeException
 	 *
 	 * @since   1.0
 	 */
-	public function getOuputArcs()
+	public function getPlaces($reload = true)
 	{
-		return $this->outputArcs;
+		$this->doGrab($reload);
+
+		return $this->grabber->getPlaces();
 	}
 
 	/**
-	 * Ge the Input Arcs.
+	 * Get the Petri net Transitions.
 	 *
-	 * @return  array  The Input Arcs.
+	 * @param   boolean  $reload  True to re-grab all the elements.
+	 *
+	 * @return  array  An array of Petri Net Transitions.
+	 *
+	 * @throws  RuntimeException
 	 *
 	 * @since   1.0
 	 */
-	public function getInputArcs()
+	public function getTransitions($reload = true)
 	{
-		return $this->inputArcs;
+		$this->doGrab($reload);
+
+		return $this->grabber->getTransitions();
+	}
+
+	/**
+	 * Get the Petri net Input Arcs.
+	 *
+	 * @param   boolean  $reload  True to re-grab all the elements.
+	 *
+	 * @return  array  An array of Petri Net Input Arcs.
+	 *
+	 * @throws  RuntimeException
+	 *
+	 * @since   1.0
+	 */
+	public function getInputArcs($reload = true)
+	{
+		$this->doGrab($reload);
+
+		return $this->grabber->getInputArcs();
+	}
+
+	/**
+	 * Get the Petri net Output Arcs.
+	 *
+	 * @param   boolean  $reload  True to re-grab all the elements.
+	 *
+	 * @return  array  An array of Petri Net Output Arcs.
+	 *
+	 * @throws  RuntimeException
+	 *
+	 * @since   1.0
+	 */
+	public function getOutputArcs($reload = true)
+	{
+		$this->doGrab($reload);
+
+		return $this->grabber->getOutputArcs();
 	}
 
 	/**

@@ -41,20 +41,6 @@ class PNVisitorGrabber extends PNBaseVisitor
 	protected $outputArcs = array();
 
 	/**
-	 * Constructor.
-	 *
-	 * @param   PNPetrinet  $net  The Petri Net to visit.
-	 *
-	 * @since   1.0
-	 */
-	public function __construct(PNPetrinet $net)
-	{
-		parent::__construct();
-
-		$net->accept($this);
-	}
-
-	/**
 	 * Perform the visit of a Petri Net.
 	 *
 	 * @param   PNPetrinet  $net  The Petri net.
