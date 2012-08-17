@@ -152,6 +152,16 @@ $engine->setNet($net);
 
 // Starting the execution.
 $engine->start();
+```
+
+The Transition is fired and a token is produced in the end place.
+
+<http://voutzinos.florian.free.fr/example2.png">
+
+More commands :
+
+```php
+<?php
 
 // Stopping the execution.
 $engine->stop();
