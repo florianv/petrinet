@@ -231,7 +231,7 @@ $engine = PNEngine::getInstance()
 
 Representation : 
 
-<img src="http://voutzinos.florian.free.fr/example1=3.png">
+<center><img src="http://voutzinos.florian.free.fr/example3.png"></center>
 
 ### Colored Petri Nets
 
@@ -240,8 +240,8 @@ can manipulate the token colour when they transit through the arc.
 
 Documents :
 
-1) www.cs.au.dk/~cpnbook/slides/CPN2.ppt
-2) www.daimi.au.dk/~kjensen/papers_books/use.pdf
+1) www.cs.au.dk/~cpnbook/slides/CPN2.ppt  
+2) www.daimi.au.dk/~kjensen/papers_books/use.pdf  
 
 ### Key elements
 
