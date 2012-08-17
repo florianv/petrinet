@@ -28,13 +28,9 @@ At this moment, only [Basic Petri Nets](https://github.com/florianv/Petrinet#bas
 
 Requires PHP 5.3.1+.
 
-You must be familiar with Petri Nets.
-
-[Powerpoint](https://docs.google.com/viewer?a=v&q=cache:gs71sC2dCVcJ:ece.ut.ac.ir/Classpages/S86/ECE658/slides/Petri.ppt+&hl=fr&gl=fr&pid=bl&srcid=ADGEESgto4sjEPQ3FCX3tIW4ajqIF6tCDtE_oa3CwfSeOVvJ2HH65WnNWVmuiFrtHV_44SL8SVCpF-hCu3tQbSA70JOcu-Ux7viExjMlbe_4vjZH5CJLzS-Y23A-JovpuOuX6EVLXvST&sig=AHIEtbSYTNcj5PFZ8tjEqxbSovtnIL5yvQ)
-
 ## Installation
 
-* For playing around, clone the repository and copy the `www/index.dist.php` in a `www/index.php` file.
+For playing around or reproducing the example, clone the repository and copy the `www/index.dist.php` in a `www/index.php` file.
 
 ## Running unit tests
 
@@ -44,7 +40,7 @@ Cd to the Petrinet root folder, and type the command : `phpunit`
 
 ### Basic Petri Nets
 
-In basic Petri Nets, tokens are represented as black dots and cannot carry data.
+You must be familiar with Basic Petri Nets in order to use the software : [Powerpoint](https://docs.google.com/viewer?a=v&q=cache:gs71sC2dCVcJ:ece.ut.ac.ir/Classpages/S86/ECE658/slides/Petri.ppt+&hl=fr&gl=fr&pid=bl&srcid=ADGEESgto4sjEPQ3FCX3tIW4ajqIF6tCDtE_oa3CwfSeOVvJ2HH65WnNWVmuiFrtHV_44SL8SVCpF-hCu3tQbSA70JOcu-Ux7viExjMlbe_4vjZH5CJLzS-Y23A-JovpuOuX6EVLXvST&sig=AHIEtbSYTNcj5PFZ8tjEqxbSovtnIL5yvQ)
 
 #### Key elements
 
@@ -129,7 +125,7 @@ $net->accept($viewer);
 echo $viewer;
 
 // Creating a .dot file containing the Graphviz formatted string.
-// Here if the permissions is set correctly, it will create a /test/example1.dot file which is ready to be opened
+// If the folder permission is set correctly, it will create a /test/example1.dot file which is ready to be opened
 // by the Graphviz software.
 $viewer->toFile('/test/example1');
 ```
