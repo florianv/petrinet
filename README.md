@@ -2,18 +2,19 @@
 
 ![Build status](https://secure.travis-ci.org/florianv/Petrinet.png)
 
-A simple Petri Net API written in PHP.
+A simple Petri Net Framework written in PHP.
 
 At this moment, only [Basic Petri Nets](https://github.com/florianv/Petrinet#basic-petri-nets) are fully supported.
 
 1. [Requirements](https://github.com/florianv/Petrinet#requirements)
 2. [Installation](https://github.com/florianv/Petrinet#installation)
 3. [Running unit tests](https://github.com/florianv/Petrinet#running-unit-tests)
-4. [Using the API](https://github.com/florianv/Petrinet#using-the-api)
+4. [Using the Framework](https://github.com/florianv/Petrinet#using-the-api)
    * [Basic Petri Nets](https://github.com/florianv/Petrinet#basic-petri-nets)
      * [Key elements](https://github.com/florianv/Petrinet#key-elements)
      * [Creating a simple Petri Net](https://github.com/florianv/Petrinet#creating-a-simple-petri-net)
      * [Executing a Petri Net](https://github.com/florianv/Petrinet#executing-a-petri-net)
+     * [Creating Custom Transitions](https://github.com/florianv/Petrinet#executing-a-petri-net)
    * [Colored Petri Nets] (https://github.com/florianv/Petrinet#colored-petri-nets)
      * [Key elements](https://github.com/florianv/Petrinet#key-elements-1)
      * [Creating a simple Petri Net](https://github.com/florianv/Petrinet#creating-a-simple-petri-net-1)
@@ -134,6 +135,71 @@ $engine->stop();
 
 // Resuming the execution.
 $engine->resume();
+```
+
+#### Creating Custom Transitions
+
+You can create your own transitions by extending the `PNTransition` class, in order to perform custom execution when the Transition is fired.
+
+```php
+<?php
+
+class MyTransition1 extends PNTransition
+{
+	/**
+	 * Perform custom execution.
+	 *
+	 * @return  void
+	 *
+	 * @since   1.0
+	 */
+	protected function doExecute()
+	{
+		echo 'Firing Transition 1';
+	}
+}
+
+class MyTransition2 extends PNTransition
+{
+	/**
+	 * Perform custom execution.
+	 *
+	 * @return  void
+	 *
+	 * @since   1.0
+	 */
+	protected function doExecute()
+	{
+		echo 'Firing Transition 2';
+	}
+}
+
+$net = new PNPetrinet('MyPetrinet');
+
+// Creating 3 places.
+$placeStart = $net->createPlace();
+$placeMiddle = $net->createPlace();
+$placeEnd = $net->createPlace();
+
+// Instanciating your custom Transitions.
+$transition1 = new MyTransition1;
+$transition2 = new MyTransition2;
+
+// Adding a Token in the start Place.
+$placeStart->addToken(new PNToken);
+
+// Connecting the graph.
+$net->connect($placeStart, $transition1);
+$net->connect($transition1, $placeMiddle);
+$net->connect($placeMiddle, $transition2);
+$net->connect($transition2, $placeEnd);
+
+// Passing the start place to the net.
+$net->setStartPlace($placeStart);
+
+$engine = PNEngine::getInstance();
+$engine->setNet($net);
+$engine->start();
 ```
 
 ### Colored Petri Nets
