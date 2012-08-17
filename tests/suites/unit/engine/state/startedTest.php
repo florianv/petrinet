@@ -120,13 +120,10 @@ class PNEngineStateStartedTest extends TestCase
 	public function testRun()
 	{
 		// Get a mocked engine, make him return 0 enabled transitions.
-		$engine = $this->getMock('PNEngine', array('refresh', 'getEnabledTransitions', 'pause', 'run'));
+		$engine = $this->getMock('PNEngine', array('refresh', 'pause', 'run'));
 
 		$engine->expects($this->once())
-			->method('refresh');
-
-		$engine->expects($this->once())
-			->method('getEnabledTransitions')
+			->method('refresh')
 			->will($this->returnValue(array()));
 
 		// Expects the pause method to be called.
@@ -155,14 +152,11 @@ class PNEngineStateStartedTest extends TestCase
 			->will($this->returnValue(true));
 
 		// Create the mocked engine.
-		$engine = $this->getMock('PNEngine', array('refresh', 'getEnabledTransitions', 'run'));
-
-		$engine->expects($this->once())
-			->method('refresh');
+		$engine = $this->getMock('PNEngine', array('refresh', 'run'));
 
 		// Expect him to return the two transitions.
 		$engine->expects($this->once())
-			->method('getEnabledTransitions')
+			->method('refresh')
 			->will($this->returnValue(array($transition1, $transition2)));
 
 		$engine->expects($this->once())
@@ -187,14 +181,11 @@ class PNEngineStateStartedTest extends TestCase
 			->will($this->returnValue(false));
 
 		// Create the mocked engine.
-		$engine = $this->getMock('PNEngine', array('refresh', 'getEnabledTransitions', 'end', 'run'));
+		$engine = $this->getMock('PNEngine', array('refresh', 'end', 'run'));
 
+		// Expect the method refresh to return the two transitions.
 		$engine->expects($this->once())
-			->method('refresh');
-
-		// Expect him to return the two transitions.
-		$engine->expects($this->once())
-			->method('getEnabledTransitions')
+			->method('refresh')
 			->will($this->returnValue(array($transition1, $transition2)));
 
 		// Expect the 'end' method to be called.

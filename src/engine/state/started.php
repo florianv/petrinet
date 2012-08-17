@@ -78,11 +78,8 @@ class PNEngineStateStarted extends PNEngineState
 	 */
 	public function run()
 	{
-		// Initial refresh.
-		$this->engine->refresh();
-
 		// Get the enabled transitions.
-		$transitions = $this->engine->getEnabledTransitions();
+		$transitions = $this->engine->refresh();
 
 		// If no enabled Transitions.
 		if (empty($transitions))

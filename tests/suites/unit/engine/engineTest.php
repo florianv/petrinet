@@ -239,7 +239,7 @@ class PNEngineTest extends TestCase
 	/**
 	 * Refresh the enabled Transitions.
 	 *
-	 * @return  void
+	 * @return  array  An array of enabled Transitions.
 	 *
 	 * @covers  PNEngine::refresh
 	 * @since   1.0
@@ -272,30 +272,11 @@ class PNEngineTest extends TestCase
 		// Inject the Petri net.
 		TestReflection::setValue($this->object, 'net', $mockedNet);
 
-		$this->object->refresh();
-
-		$enabledTransitions = TestReflection::getValue($this->object, 'enabledTransitions');
+		$enabledTransitions = $this->object->refresh();
 
 		// Check the $transition2 is not present because not enabled.
 		$this->assertEquals($enabledTransitions[0], $transition1);
 		$this->assertEquals($enabledTransitions[1], $transition3);
-	}
-
-	/**
-	 * Get the enabled Transitions of the current Petri net.
-	 *
-	 * @return  void
-	 *
-	 * @covers  PNEngine::getEnabledTransitions
-	 * @since   1.0
-	 */
-	public function testGetEnabledTransitions()
-	{
-		$this->assertEmpty($this->object->getEnabledTransitions());
-
-		TestReflection::setValue($this->object, 'enabledTransitions', true);
-
-		$this->assertTrue($this->object->getEnabledTransitions());
 	}
 
 	/**

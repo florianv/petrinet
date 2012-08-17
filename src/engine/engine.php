@@ -23,12 +23,6 @@ class PNEngine
 	protected $net;
 
 	/**
-	 * @var    array  The Petri Net Enabled Transitions.
-	 * @since  1.0
-	 */
-	protected $enabledTransitions = array();
-
-	/**
 	 * @var    PNEngineStateStarted  The Started State.
 	 * @since  1.0
 	 */
@@ -208,40 +202,28 @@ class PNEngine
 	}
 
 	/**
-	 * Refresh the enabled Transitions.
+	 * Refresh the Petri Net enabled Transitions.
 	 *
-	 * @return  void
+	 * @return  array  An array of enabled Transitions.
 	 *
 	 * @since   1.0
 	 */
 	public function refresh()
 	{
-		$transitions = $this->net->getTransitions();
+		$transitions = $this->net->getTransitions(false);
 
-		// Clear the enabled transition.
-		$this->enabledTransitions = array();
+		$enabledTransitions = array();
 
 		// Get the enabled Transitions.
 		foreach ($transitions as $transition)
 		{
 			if ($transition->isEnabled())
 			{
-				// Store them.
-				$this->enabledTransitions[] = $transition;
+				$enabledTransitions[] = $transition;
 			}
 		}
-	}
 
-	/**
-	 * Get the enabled Transitions of the current Petri net.
-	 *
-	 * @return  array
-	 *
-	 * @since   1.0
-	 */
-	public function getEnabledTransitions()
-	{
-		return $this->enabledTransitions;
+		return $enabledTransitions;
 	}
 
 	/**
