@@ -57,13 +57,13 @@ class PNVisitorViewer extends PNVisitorGrabber
 		// Declaring the nodes (places).
 		foreach ($this->places as $key => $place)
 		{
-			$graph .= 'place' . $key . ';';
+			$graph .= 'p' . $key . ' [label="p' . $key . ': ' . $place->getTokenCount() . ' tokens"];';
 		}
 
 		// Declaring the nodes (Transitions).
 		foreach ($this->transitions as $key => $transition)
 		{
-			$graph .= 'transition' . $key . '[shape=box];';
+			$graph .= 't' . $key . '[shape=box];';
 		}
 
 		// Declaring the edges.
@@ -74,13 +74,13 @@ class PNVisitorViewer extends PNVisitorGrabber
 			if ($input instanceof PNPlace)
 			{
 				$key = array_search($input, $this->places, true);
-				$input = 'place' . $key;
+				$input = 'p' . $key;
 			}
 
 			else
 			{
 				$key = array_search($input, $this->transitions, true);
-				$input = 'transition' . $key;
+				$input = 't' . $key;
 			}
 
 			$output = $arc->getOutput();
@@ -88,13 +88,13 @@ class PNVisitorViewer extends PNVisitorGrabber
 			if ($output instanceof PNPlace)
 			{
 				$key = array_search($output, $this->places, true);
-				$output = 'place' . $key;
+				$output = 'p' . $key;
 			}
 
 			else
 			{
 				$key = array_search($output, $this->transitions, true);
-				$output = 'transition' . $key;
+				$output = 't' . $key;
 			}
 
 			$graph .= $input . '->' . $output . ';';
