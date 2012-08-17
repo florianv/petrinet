@@ -229,6 +229,10 @@ $engine = PNEngine::getInstance()
 	->start();
 ```
 
+Representation : 
+
+<img src="http://voutzinos.florian.free.fr/example1=3.png">
+
 ### Colored Petri Nets
 
 In colored Petri Nets, tokens can carry data (color), place and Transition have a Color Set and arc expressions
