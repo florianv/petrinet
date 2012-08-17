@@ -37,7 +37,7 @@ For playing around or reproducing the examples, clone the repository and copy th
 
 ## Running unit tests
 
-Cd to the Petrinet root folder, and type the command : `phpunit`
+Cd to the Petrinet root folder, and type the command : `phpunit`.
 
 ## Using the API
 
