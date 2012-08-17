@@ -186,7 +186,7 @@ class PNPetrinet implements PNBaseVisitable
 
 		else
 		{
-			throw new InvalidArgumentException('An arc connect only a Place to a Transition or vice-versa.');
+			throw new InvalidArgumentException('An arc connects only a Place to a Transition or vice-versa.');
 		}
 
 		// Add the Arc as an ouput Arc of $from and an input Arc of $to.
