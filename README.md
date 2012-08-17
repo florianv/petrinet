@@ -268,7 +268,7 @@ $engine = PNEngine::getInstance()
 
 Representation : 
 
-<img src="http://voutzinos.florian.free.fr/example3.png">
+<img src="http://voutzinos.florian.free.fr/example3.png" width="103" height="295">
 
 ### Colored Petri Nets
 
