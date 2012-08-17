@@ -68,14 +68,11 @@ $arc = new PNArc($transition, $place);
 
 #### Creating a simple Petri Net
 
-For this you must use the `PNPetrinet` class.
+In order to create a Petri Net, you must use the `PNPetrinet` class.
 
-It acts as a factory to create elements, and allow to connect easily Place to Transitions and Transitions to Places.
+This class allows to create the elements presented above, and easily connect a Place to a Transition or vice-versa.
 
-Unless you know what you are doing, you should ayways use the `PNPetrinet::connect` method to connect elements.
-
-I've constrained the system to have one start Place, and you must pass this object to the PNPetrinet class, in order to create a petri net.
-The way the elements are connected, allow to know only the start Place, in order to know the whole Petri Net.
+I have constrained the system to have one Start Place as top level Node, and you must pass this Place to the `PNPetrinet` object, as shown in the example :
 
 ```php
 <?php
@@ -83,10 +80,10 @@ The way the elements are connected, allow to know only the start Place, in order
 // Creating a new Petrinet called 'MyPetrinet'.
 $net = new PNPetrinet('MyPetrinet');
 
-// Creating a start Place.
+// Creating a Start Place.
 $placeStart = $net->createPlace();
 
-// Creating an end Place.
+// Creating an End Place.
 $placeEnd = $net->createPlace();
 
 // Creating a Transition.
