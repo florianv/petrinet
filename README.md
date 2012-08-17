@@ -135,7 +135,7 @@ $viewer->toFile('/test/example1');
 ```
 Example with the last Petri Net : 
 
-![PetriNet] (http://http://voutzinos.florian.free.fr/example1.png =150x150)
+![PetriNet] (http://voutzinos.florian.free.fr/example1.png =150x150)
 
 #### Executing a Petri Net
 
