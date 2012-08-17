@@ -29,7 +29,7 @@ At this moment, only [Basic Petri Nets](https://github.com/florianv/Petrinet#bas
 
 ## Requirements
 
-Requires PHP 5.3.1+.
+The API requires PHP 5.3.1+.
 
 ## Installation
 
