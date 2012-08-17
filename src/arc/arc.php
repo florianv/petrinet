@@ -1,7 +1,7 @@
 <?php
 /**
  * @package     Petrinet
- * @subpackage  Petrinet
+ * @subpackage  Arc
  *
  * @copyright   Copyright (C) 2012 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
@@ -11,7 +11,7 @@
  * Base Class for Petri Net Arcs.
  *
  * @package     Petrinet
- * @subpackage  Petrinet
+ * @subpackage  Arc
  * @since       1.0
  */
 abstract class PNArc

@@ -1,7 +1,7 @@
 <?php
 /**
  * @package     Tests.Unit
- * @subpackage  Element
+ * @subpackage  Arc
  *
  * @copyright   Copyright (C) 2012 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
@@ -11,7 +11,7 @@
  * Test Class for PNArc.
  *
  * @package     Tests.Unit
- * @subpackage  Element
+ * @subpackage  Arc
  * @since       1.0
  */
 class PNArcTest extends TestCase

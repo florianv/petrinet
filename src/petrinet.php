@@ -322,6 +322,8 @@ class PNPetrinet implements PNBaseVisitable
 	 */
 	public function accept(PNBaseVisitor $visitor)
 	{
+		$visitor->visitPetrinet($this);
+
 		$this->startPlace->accept($visitor);
 	}
 }

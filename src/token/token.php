@@ -1,7 +1,7 @@
 <?php
 /**
  * @package     Petrinet
- * @subpackage  Petrinet
+ * @subpackage  Token
  *
  * @copyright   Copyright (C) 2012 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
@@ -11,7 +11,7 @@
  * Base Class for Petri Net (Colored) Tokens.
  *
  * @package     Petrinet
- * @subpackage  Petrinet
+ * @subpackage  Token
  * @since       1.0
  */
 class PNToken implements Serializable

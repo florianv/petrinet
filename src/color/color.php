@@ -1,7 +1,7 @@
 <?php
 /**
  * @package     Petrinet
- * @subpackage  Petrinet
+ * @subpackage  Color
  *
  * @copyright   Copyright (C) 2012 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
@@ -12,7 +12,7 @@
  * associated with a Token.
  *
  * @package     Petrinet
- * @subpackage  Petrinet
+ * @subpackage  Color
  * @since       1.0
  */
 class PNColor implements Countable, Serializable, IteratorAggregate

@@ -8,7 +8,7 @@
  */
 
 /**
- * Interface for Visitors traversing Petri Nets using depth first search algorithm.
+ * Base class for Visitors traversing Petri Nets using depth first search algorithm.
  *
  * @package     Petrinet
  * @subpackage  Base
@@ -53,6 +53,17 @@ abstract class PNBaseVisitor
 		$this->visitedInputArcs = new SplObjectStorage;
 		$this->visitedOutputArcs = new SplObjectStorage;
 	}
+
+	/**
+	 * Perform the visit of a Petri Net.
+	 *
+	 * @param   PNPetrinet  $net  The Petri net.
+	 *
+	 * @return  void
+	 *
+	 * @since   1.0
+	 */
+	abstract public function visitPetrinet(PNPetrinet $net);
 
 	/**
 	 * Visit a Place.
