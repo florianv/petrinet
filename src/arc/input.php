@@ -76,5 +76,7 @@ class PNArcInput extends PNArc implements PNBaseVisitable
 	public function accept(PNBaseVisitor $visitor)
 	{
 		$visitor->visitInputArc($this);
+
+		$this->output->accept($visitor);
 	}
 }

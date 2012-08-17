@@ -453,7 +453,21 @@ class PNPlaceTest extends TestCase
 	 */
 	public function testAccept()
 	{
-		$visitor = $this->getMock('PNBaseVisitor');
+		$visitor = $this->getMockForAbstractClass('PNBaseVisitor', array(), '', true, true, true, array('visitPlace'));
+
+		// Create two mocked input arcs.
+		$arc1 = $this->getMock('PNArcInput');
+		$arc1->expects($this->once())
+			->method('accept')
+			->with($visitor);
+
+		$arc2 = $this->getMock('PNArcInput');
+		$arc2->expects($this->once())
+			->method('accept')
+			->with($visitor);
+
+		// Inject them.
+		TestReflection::setValue($this->object, 'outputs', array($arc1, $arc2));
 
 		$visitor->expects($this->once())
 			->method('visitPlace')

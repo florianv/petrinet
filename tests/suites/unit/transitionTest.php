@@ -368,7 +368,21 @@ class PNTransitionTest extends TestCase
 	 */
 	public function testAccept()
 	{
-		$visitor = $this->getMock('PNBaseVisitor');
+		$visitor = $this->getMockForAbstractClass('PNBaseVisitor', array(), '', true, true, true, array('visitTransition'));
+
+		// Create two mocked input arcs.
+		$arc1 = $this->getMock('PNArcOutput');
+		$arc1->expects($this->once())
+			->method('accept')
+			->with($visitor);
+
+		$arc2 = $this->getMock('PNArcOutput');
+		$arc2->expects($this->once())
+			->method('accept')
+			->with($visitor);
+
+		// Inject them.
+		TestReflection::setValue($this->object, 'outputs', array($arc1, $arc2));
 
 		$visitor->expects($this->once())
 			->method('visitTransition')

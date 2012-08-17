@@ -257,5 +257,10 @@ class PNPlace extends PNNode
 	public function accept(PNBaseVisitor $visitor)
 	{
 		$visitor->visitPlace($this);
+
+		foreach ($this->outputs as $arc)
+		{
+			$arc->accept($visitor);
+		}
 	}
 }

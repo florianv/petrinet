@@ -395,11 +395,16 @@ class PNPetrinetTest extends TestCase
 	 */
 	public function testAccept()
 	{
-		$visitor = $this->getMock('PNBaseVisitor');
+		$visitor = $this->getMockForAbstractClass('PNBaseVisitor');
 
-		$visitor->expects($this->once())
-			->method('visitNet')
-			->with($this->object);
+		$startPlace = $this->getMock('PNPlace');
+
+		$startPlace->expects($this->once())
+			->method('accept')
+			->with($visitor);
+
+		// Inject the Start Place.
+		TestReflection::setValue($this->object, 'startPlace', $startPlace);
 
 		$this->object->accept($visitor);
 	}

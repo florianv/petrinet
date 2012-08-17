@@ -35,6 +35,12 @@ class PNPetrinet implements PNBaseVisitable
 	protected $places = array();
 
 	/**
+	 * @var    PNPlace  The Petri Net Places.
+	 * @since  1.0
+	 */
+	protected $startPlace = null;
+
+	/**
 	 * @var    array  The Petri Net Transitions.
 	 * @since  1.0
 	 */
@@ -316,6 +322,6 @@ class PNPetrinet implements PNBaseVisitable
 	 */
 	public function accept(PNBaseVisitor $visitor)
 	{
-		$visitor->visitNet($this);
+		$this->startPlace->accept($visitor);
 	}
 }

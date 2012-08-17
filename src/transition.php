@@ -223,5 +223,10 @@ class PNTransition extends PNNode
 	public function accept(PNBaseVisitor $visitor)
 	{
 		$visitor->visitTransition($this);
+
+		foreach ($this->outputs as $arc)
+		{
+			$arc->accept($visitor);
+		}
 	}
 }
