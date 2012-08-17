@@ -14,7 +14,7 @@
  * @subpackage  Arc
  * @since       1.0
  */
-abstract class PNArc
+abstract class PNArc implements PNBaseVisitable
 {
 	/**
 	 * @var    PNPlace|PNTransition  The input Place or Transition of this Arc.
@@ -52,12 +52,16 @@ abstract class PNArc
 	 */
 	public function __construct($input = null, $output = null, PNArcExpression $expression = null, PNTypeManager $manager = null)
 	{
+		// Set the input.
 		$this->input = $input;
+
+		// Set the output.
 		$this->output = $output;
 
 		// Use the given type manager, or create a new one.
 		$this->typeManager = $manager ? $manager : new PNTypeManager;
 
+		// Set the arc expression.
 		$this->expression = $expression;
 	}
 
@@ -143,8 +147,6 @@ abstract class PNArc
 	 * Check if the arc expression is valid (it supposes it has an expression).
 	 *
 	 * @return  boolean  True if it's the case, false otherwise.
-	 *
-	 * @throws  UnexpectedValueException
 	 *
 	 * @since   1.0
 	 */

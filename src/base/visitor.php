@@ -8,7 +8,7 @@
  */
 
 /**
- * Base class for Visitors traversing Petri Nets using depth first search algorithm.
+ * Base class for Visitors traversing Petri Nets using depth first algorithm.
  *
  * @package     Petrinet
  * @subpackage  Base

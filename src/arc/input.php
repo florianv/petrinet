@@ -15,7 +15,7 @@
  * @subpackage  Arc
  * @since       1.0
  */
-class PNArcInput extends PNArc implements PNBaseVisitable
+class PNArcInput extends PNArc
 {
 	/**
 	 * Constructor.
