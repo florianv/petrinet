@@ -36,10 +36,6 @@ You must be familiar with Petri Nets.
 
 * For playing around, clone the repository and copy the `www/index.dist.php` in a `www/index.php` file.
 
-* For using it in Joomla, despite it's not recommanded yet, copy the content of the `src` dir in `libraries/joomla/petrinet`.
-Then register the API to the Joomla autoloader by adding : `JLoader::registerPrefix('PN', '/path/to/libraries/joomla/petrinet');` in
-`libraries/import.php`.
-
 ## Running unit tests
 
 Cd to the Petrinet root folder, and type the command : `phpunit`
