@@ -129,13 +129,13 @@ $net->accept($viewer);
 echo $viewer;
 
 // Creating a .dot file containing the Graphviz formatted string.
-// Here if the permissions is set correctly, it will create a `/test/example1.dot file which is ready to be opened
+// Here if the permissions is set correctly, it will create a /test/example1.dot file which is ready to be opened
 // by the Graphviz software.
 $viewer->toFile('/test/example1');
 ```
 Example with the last Petri Net : 
 
-![PetriNet] (http://voutzinos.florian.free.fr/example1.png =150x150)
+<img src="http://voutzinos.florian.free.fr/example1.png">
 
 #### Executing a Petri Net
 
