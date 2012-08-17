@@ -165,6 +165,7 @@ $engine->resume();
 #### A more complex example
 
 ```php
+<?php
 $net = new PNPetrinet('MyPetrinet');
 
 $place1 = $net->createPlace();
@@ -190,7 +191,10 @@ $net->connect($transition2, $place3);
 $net->setStartPlace($place1);
 ```
 
-<img src="http://voutzinos.florian.free.fr/hard.png width="216" height="295">
+<img src="http://voutzinos.florian.free.fr/hard.png" width="216" height="295">
+
+After firing : 
+<img src="http://voutzinos.florian.free.fr/hard3.png" width="216" height="295">
 
 
 #### Creating Custom Transitions
