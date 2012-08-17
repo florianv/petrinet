@@ -50,129 +50,13 @@ class PNPlaceTest extends TestCase
 	 */
 	public function test__construct()
 	{
-		// Test without param.
 		$place = new PNPlace;
-
 		$this->assertInstanceOf('PNTokenSet', TestReflection::getValue($place, 'tokenSet'));
-		$this->assertNull(TestReflection::getValue($place, 'colorSet'));
-		$this->assertEmpty(TestReflection::getValue($place, 'inputs'));
-		$this->assertEmpty(TestReflection::getValue($place, 'outputs'));
 
-		// Test with params.
+		// Just need to check the token set.
 		$tokenSet = new PNTokenSet;
-		$colorSet = new PNColorSet;
-		$inputs = array(new PNArcOutput, new PNArcOutput);
-		$outputs = array(new PNArcInput, new PNArcInput);
-
-		$place = new PNPlace($colorSet, $tokenSet, $inputs, $outputs);
-
+		$place = new PNPlace(null, $tokenSet);
 		$this->assertEquals($tokenSet, TestReflection::getValue($place, 'tokenSet'));
-		$this->assertEquals($colorSet, TestReflection::getValue($place, 'colorSet'));
-		$this->assertEquals($inputs, TestReflection::getValue($place, 'inputs'));
-		$this->assertEquals($outputs, TestReflection::getValue($place, 'outputs'));
-	}
-
-	/**
-	 * Add an input Arc to this Place.
-	 *
-	 * @return  void
-	 *
-	 * @covers  PNPlace::addInput
-	 * @since   1.0
-	 */
-	public function testAddInput()
-	{
-		// Add an input (output) arc to this place.
-		$arc = new PNArcOutput;
-		$this->object->addInput($arc);
-		$input = TestReflection::getValue($this->object, 'inputs');
-
-		$this->assertEquals($input[0], $arc);
-
-		// Add a new one
-		$this->object->addInput($arc);
-		$input = TestReflection::getValue($this->object, 'inputs');
-
-		$this->assertCount(2, $input);
-		$this->assertEquals($input[1], $arc);
-	}
-
-	/**
-	 * Tests the error thrown by the PNPlace::addInput method.
-	 *
-	 * @return  void
-	 *
-	 * @covers  PNPlace::addInput
-	 * @since   1.0
-	 * @expectedException PHPUnit_Framework_Error
-	 */
-	public function testAddInputError()
-	{
-		$this->object->addInput(new stdClass);
-	}
-
-	/**
-	 * Get the input Arcs of this Place.
-	 *
-	 * @return  void
-	 *
-	 * @covers  PNPlace::getInputs
-	 * @since   1.0
-	 */
-	public function testGetInputs()
-	{
-		// Assert the default input is empty.
-		$inputs = $this->object->getInputs();
-		$this->assertEmpty($inputs);
-
-		// Add two elements.
-		$array1 = array(8, 3);
-
-		TestReflection::setValue($this->object, 'inputs', $array1);
-		$inputs = $this->object->getInputs();
-
-		$this->assertCount(2, $inputs);
-		$this->assertEquals($inputs[0], 8);
-		$this->assertEquals($inputs[1], 3);
-	}
-
-	/**
-	 * Add an output Arc to this Place.
-	 *
-	 * @return  void
-	 *
-	 * @covers  PNPlace::addOutput
-	 * @since   1.0
-	 */
-	public function testAddOutput()
-	{
-		// Add an output (input) arc to this place.
-		$arc = new PNArcInput;
-		$this->object->addOutput($arc);
-		$output = TestReflection::getValue($this->object, 'outputs');
-
-		$this->assertEquals($output[0], $arc);
-
-		// Add a new one
-		$this->object->addOutput($arc);
-		$output = TestReflection::getValue($this->object, 'outputs');
-
-		$this->assertCount(2, $output);
-		$this->assertEquals($output[1], $arc);
-	}
-
-	/**
-	 * Tests the exception thrown by the PNPlace::addOutput method.
-	 *
-	 * @return  void
-	 *
-	 * @covers  PNPlace::addOutput
-	 * @since   1.0
-	 * @expectedException PHPUnit_Framework_Error
-	 */
-	public function testAddOutputError()
-	{
-		$this->object->addOutput(new stdClass);
 	}
 
 	/**
@@ -456,12 +340,12 @@ class PNPlaceTest extends TestCase
 		$visitor = $this->getMockForAbstractClass('PNBaseVisitor', array(), '', true, true, true, array('visitPlace'));
 
 		// Create two mocked input arcs.
-		$arc1 = $this->getMock('PNArcInput');
+		$arc1 = $this->getMock('PNArc');
 		$arc1->expects($this->once())
 			->method('accept')
 			->with($visitor);
 
-		$arc2 = $this->getMock('PNArcInput');
+		$arc2 = $this->getMock('PNArc');
 		$arc2->expects($this->once())
 			->method('accept')
 			->with($visitor);

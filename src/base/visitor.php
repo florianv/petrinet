@@ -30,16 +30,10 @@ abstract class PNBaseVisitor
 	protected $visitedTransitions;
 
 	/**
-	 * @var    SplObjectStorage  The visited input Arcs.
+	 * @var    SplObjectStorage  The visited Arcs.
 	 * @since  1.0
 	 */
-	protected $visitedInputArcs;
-
-	/**
-	 * @var    SplObjectStorage  The visited output Arcs.
-	 * @since  1.0
-	 */
-	protected $visitedOutputArcs;
+	protected $visitedArcs;
 
 	/**
 	 * Constructor.
@@ -50,8 +44,7 @@ abstract class PNBaseVisitor
 	{
 		$this->visitedPlaces = new SplObjectStorage;
 		$this->visitedTransitions = new SplObjectStorage;
-		$this->visitedInputArcs = new SplObjectStorage;
-		$this->visitedOutputArcs = new SplObjectStorage;
+		$this->visitedArcs = new SplObjectStorage;
 	}
 
 	/**
@@ -140,76 +133,39 @@ abstract class PNBaseVisitor
 	abstract protected function doVisitTransition(PNTransition $transition);
 
 	/**
-	 * Visit an Input Arc.
+	 * Visit an Arc.
 	 *
-	 * @param   PNArcInput  $inputArc  The Input Arc.
+	 * @param   PNArc  $arc  The Arc.
 	 *
-	 * @return  boolean  False if the input Arc has been already visited.
+	 * @return  boolean  False if the Arc has been already visited.
 	 *
 	 * @since   1.0
 	 */
-	public function visitInputArc(PNArcInput $inputArc)
+	public function visitArc(PNArc $arc)
 	{
-		// Ensure the Input Arc hasn't been already visited.
-		if ($this->visitedInputArcs->contains($inputArc))
+		// Ensure the arc hasn't been already visited.
+		if ($this->visitedArcs->contains($arc))
 		{
 			return false;
 		}
 
-		// Add the visited Input Arc to the visited stack.
-		$this->visitedInputArcs->attach($inputArc);
+		// Add the visited arc to the visited stack.
+		$this->visitedArcs->attach($arc);
 
 		// Perfom the visit.
-		$this->doVisitInputArc($inputArc);
+		$this->doVisitArc($arc);
 
 		return true;
 	}
 
 	/**
-	 * Perform the visit of an Input Arc.
+	 * Perform the visit of an Arc.
 	 *
-	 * @param   PNArcInput  $inputArc  The Input Arc.
-	 *
-	 * @return  void
-	 *
-	 * @since   1.0
-	 */
-	abstract protected function doVisitInputArc(PNArcInput $inputArc);
-
-	/**
-	 * Visit an Output Arc.
-	 *
-	 * @param   PNArcOutput  $outputArc  The Output Arc.
-	 *
-	 * @return  boolean  False if the output Arc has been already visited.
-	 *
-	 * @since   1.0
-	 */
-	public function visitOutputArc(PNArcOutput $outputArc)
-	{
-		// Ensure the output Arc hasn't been already visited.
-		if ($this->visitedOutputArcs->contains($outputArc))
-		{
-			return false;
-		}
-
-		// Add the visited output Arc to the visited stack.
-		$this->visitedOutputArcs->attach($outputArc);
-
-		// Perfom the visit.
-		$this->doVisitOutputArc($outputArc);
-
-		return true;
-	}
-
-	/**
-	 * Perform the visit of an Output Arc.
-	 *
-	 * @param   PNArcOutput  $outputArc  The Output Arc.
+	 * @param   PNArc  $arc  The Arc.
 	 *
 	 * @return  void
 	 *
 	 * @since   1.0
 	 */
-	abstract protected function doVisitOutputArc(PNArcOutput $outputArc);
+	abstract protected function doVisitArc(PNArc $arc);
 }

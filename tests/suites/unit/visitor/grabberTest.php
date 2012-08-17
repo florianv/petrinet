@@ -77,13 +77,11 @@ class PNVisitorGrabberTest extends TestCase
 
 		$places = TestReflection::getValue($grabber, 'places');
 		$transitions = TestReflection::getValue($grabber, 'transitions');
-		$inputArcs = TestReflection::getValue($grabber, 'inputArcs');
-		$outputArcs = TestReflection::getValue($grabber, 'outputArcs');
+		$arcs = TestReflection::getValue($grabber, 'arcs');
 
 		$this->assertCount(4, $places);
 		$this->assertCount(3, $transitions);
-		$this->assertCount(4, $inputArcs);
-		$this->assertCount(3, $outputArcs);
+		$this->assertCount(7, $arcs);
 
 		$this->assertEquals($places[0], $startPlace);
 		$this->assertEquals($places[1], $place1);
@@ -142,34 +140,18 @@ class PNVisitorGrabberTest extends TestCase
 	}
 
 	/**
-	 * Perform the visit of an Input Arc.
+	 * Perform the visit of an Arc.
 	 *
 	 * @return  void
 	 *
-	 * @covers  PNVisitorGrabber::doVisitInputArc
+	 * @covers  PNVisitorGrabber::doVisitArc
 	 * @since   1.0
 	 */
-	public function testDoVisitInputArc()
+	public function testdoVisitArc()
 	{
-		$arc = new PNArcInput;
-		$this->object->visitInputArc($arc);
-		$arcs = TestReflection::getValue($this->object, 'inputArcs');
-		$this->assertEquals($arc, $arcs[0]);
-	}
-
-	/**
-	 * Perform the visit of an Output Arc.
-	 *
-	 * @return  void
-	 *
-	 * @covers  PNVisitorGrabber::doVisitOutputArc
-	 * @since   1.0
-	 */
-	public function doVisitOutputArc()
-	{
-		$arc = new PNArcOutput;
-		$this->object->visitOutputArc($arc);
-		$arcs = TestReflection::getValue($this->object, 'outputArcs');
+		$arc = new PNArc;
+		$this->object->visitArc($arc);
+		$arcs = TestReflection::getValue($this->object, 'arcs');
 		$this->assertEquals($arc, $arcs[0]);
 	}
 
@@ -202,30 +184,16 @@ class PNVisitorGrabberTest extends TestCase
 	}
 
 	/**
-	 * Get the input Arcs.
+	 * Get the Arcs.
 	 *
 	 * @return  void
 	 *
-	 * @covers  PNVisitorGrabber::getInputArcs
+	 * @covers  PNVisitorGrabber::getArcs
 	 * @since   1.0
 	 */
-	public function testGetInputArcs()
+	public function testGetArcs()
 	{
-		TestReflection::setValue($this->object, 'inputArcs', true);
-		$this->assertTrue($this->object->getInputArcs());
-	}
-
-	/**
-	 * Get the output Arcs.
-	 *
-	 * @return  void
-	 *
-	 * @covers  PNVisitorGrabber::getInputArcs
-	 * @since   1.0
-	 */
-	public function testGetOutputArcs()
-	{
-		TestReflection::setValue($this->object, 'outputArcs', true);
-		$this->assertTrue($this->object->getOutputArcs());
+		TestReflection::setValue($this->object, 'arcs', true);
+		$this->assertTrue($this->object->getArcs());
 	}
 }

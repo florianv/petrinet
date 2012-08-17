@@ -41,38 +41,6 @@ class PNPlace extends PNNode
 	}
 
 	/**
-	 * Add an input Arc to this Place.
-	 *
-	 * @param   PNArcOutput  $arc  The input Arc.
-	 *
-	 * @return  PNPlace  This method is chainable.
-	 *
-	 * @since   1.0
-	 */
-	public function addInput(PNArcOutput $arc)
-	{
-		$this->inputs[] = $arc;
-
-		return $this;
-	}
-
-	/**
-	 * Add an output Arc to this Place.
-	 *
-	 * @param   PNArcInput  $arc  The output Arc.
-	 *
-	 * @return  PNPlace  This method is chainable.
-	 *
-	 * @since   1.0
-	 */
-	public function addOutput(PNArcInput $arc)
-	{
-		$this->outputs[] = $arc;
-
-		return $this;
-	}
-
-	/**
 	 * Check if the place is loaded.
 	 * To be loaded it must have at least one input or output.
 	 *

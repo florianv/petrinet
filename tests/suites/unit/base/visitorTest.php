@@ -30,8 +30,7 @@ class PNBaseVisitorTest extends TestCase
 
 		$this->assertInstanceOf('SplObjectStorage', TestReflection::getValue($visitor, 'visitedPlaces'));
 		$this->assertInstanceOf('SplObjectStorage', TestReflection::getValue($visitor, 'visitedTransitions'));
-		$this->assertInstanceOf('SplObjectStorage', TestReflection::getValue($visitor, 'visitedInputArcs'));
-		$this->assertInstanceOf('SplObjectStorage', TestReflection::getValue($visitor, 'visitedOutputArcs'));
+		$this->assertInstanceOf('SplObjectStorage', TestReflection::getValue($visitor, 'visitedArcs'));
 	}
 
 	/**
@@ -159,12 +158,12 @@ class PNBaseVisitorTest extends TestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers  PNBaseVisitor::visitInputArc
+	 * @covers  PNBaseVisitor::visitArc
 	 * @since   1.0
 	 */
-	public function testVisitInputArc()
+	public function testVisitArc()
 	{
-		$arc = new PNArcInput;
+		$arc = new PNArc;
 
 		// Create a Mock for SplObjectStorage.
 		$storage = $this->getMock('SplObjectStorage');
@@ -179,17 +178,17 @@ class PNBaseVisitorTest extends TestCase
 			->method('attach')
 			->with($arc);
 
-		// Expects the method doVisitInputArc to be called.
+		// Expects the method doVisitArc to be called.
 		$visitorMock = $this->getMockForAbstractClass('PNBaseVisitor');
 		$visitorMock->expects($this->once())
-			->method('doVisitInputArc')
+			->method('doVisitArc')
 			->with($arc);
 
 		// Inject the mocked storage.
-		TestReflection::setValue($visitorMock, 'visitedInputArcs', $storage);
+		TestReflection::setValue($visitorMock, 'visitedArcs', $storage);
 
-		// Assert the input arc has been visited.
-		$this->assertTrue($visitorMock->visitInputArc($arc));
+		// Assert the arc has been visited.
+		$this->assertTrue($visitorMock->visitArc($arc));
 
 		// Try to visit it one more time.
 		// For this make the method contains of SplObjectStorage returning true.
@@ -202,75 +201,15 @@ class PNBaseVisitorTest extends TestCase
 		$storage->expects($this->never())
 			->method('attach');
 
-		// Expects the method doVisitInputArc to never be called.
+		// Expects the method doVisitArc to never be called.
 		$visitorMock = $this->getMockForAbstractClass('PNBaseVisitor');
 		$visitorMock->expects($this->never())
-			->method('doVisitInputArc');
+			->method('doVisitArc');
 
 		// Inject the mocked storage.
-		TestReflection::setValue($visitorMock, 'visitedInputArcs', $storage);
+		TestReflection::setValue($visitorMock, 'visitedArcs', $storage);
 
-		// Assert the input arc has not been visited.
-		$this->assertFalse($visitorMock->visitInputArc($arc));
-	}
-
-	/**
-	 * Visit an Output Arc.
-	 *
-	 * @return  void
-	 *
-	 * @covers  PNBaseVisitor::visitInputArc
-	 * @since   1.0
-	 */
-	public function testVisitOutputArc()
-	{
-		$arc = new PNArcOutput;
-
-		// Create a Mock for SplObjectStorage.
-		$storage = $this->getMock('SplObjectStorage');
-
-		// Make the contains method returning false.
-		$storage->expects($this->once())
-			->method('contains')
-			->will($this->returnValue(false));
-
-		// Expects the method attach to be called.
-		$storage->expects($this->once())
-			->method('attach')
-			->with($arc);
-
-		// Expects the method doVisitOutputArc to be called.
-		$visitorMock = $this->getMockForAbstractClass('PNBaseVisitor');
-		$visitorMock->expects($this->once())
-			->method('doVisitOutputArc')
-			->with($arc);
-
-		// Inject the mocked storage.
-		TestReflection::setValue($visitorMock, 'visitedOutputArcs', $storage);
-
-		// Assert the output arc has been visited.
-		$this->assertTrue($visitorMock->visitOutputArc($arc));
-
-		// Try to visit it one more time.
-		// For this make the method contains of SplObjectStorage returning true.
-		$storage = $this->getMock('SplObjectStorage');
-		$storage->expects($this->once())
-			->method('contains')
-			->will($this->returnValue(true));
-
-		// Expects the method attach to never be called.
-		$storage->expects($this->never())
-			->method('attach');
-
-		// Expects the method doVisitOutputArc to never be called.
-		$visitorMock = $this->getMockForAbstractClass('PNBaseVisitor');
-		$visitorMock->expects($this->never())
-			->method('doVisitOutputArc');
-
-		// Inject the mocked storage.
-		TestReflection::setValue($visitorMock, 'visitedOutputArcs', $storage);
-
-		// Assert the output arc has not been visited.
-		$this->assertFalse($visitorMock->visitOutputArc($arc));
+		// Assert the arc has not been visited.
+		$this->assertFalse($visitorMock->visitArc($arc));
 	}
 }

@@ -17,38 +17,6 @@
 class PNTransition extends PNNode
 {
 	/**
-	 * Add an input Arc to this Transition.
-	 *
-	 * @param   PNArcInput  $arc  The input Arc.
-	 *
-	 * @return  PNTransition This method is chainable.
-	 *
-	 * @since   1.0
-	 */
-	public function addInput(PNArcInput $arc)
-	{
-		$this->inputs[] = $arc;
-
-		return $this;
-	}
-
-	/**
-	 * Add an ouput Arc to this Transition.
-	 *
-	 * @param   PNArcOutput  $arc  The input Arc.
-	 *
-	 * @return  PNTransition This method is chainable.
-	 *
-	 * @since   1.0
-	 */
-	public function addOutput(PNArcOutput $arc)
-	{
-		$this->outputs[] = $arc;
-
-		return $this;
-	}
-
-	/**
 	 * Check if the Transition is loaded.
 	 * To be loaded it must have at least one input and one output.
 	 *

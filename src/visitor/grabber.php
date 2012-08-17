@@ -29,16 +29,10 @@ class PNVisitorGrabber extends PNBaseVisitor
 	protected $transitions = array();
 
 	/**
-	 * @var    array  The Petri Net input Arcs.
+	 * @var    array  The Petri Net Arcs.
 	 * @since  1.0
 	 */
-	protected $inputArcs = array();
-
-	/**
-	 * @var    array  The Petri Net output Arcs.
-	 * @since  1.0
-	 */
-	protected $outputArcs = array();
+	protected $arcs = array();
 
 	/**
 	 * Perform the visit of a Petri Net.
@@ -83,31 +77,17 @@ class PNVisitorGrabber extends PNBaseVisitor
 	}
 
 	/**
-	 * Perform the visit of an Input Arc.
+	 * Perform the visit of an Arc.
 	 *
-	 * @param   PNArcInput  $inputArc  The Input Arc.
-	 *
-	 * @return  void
-	 *
-	 * @since   1.0
-	 */
-	protected function doVisitInputArc(PNArcInput $inputArc)
-	{
-		$this->inputArcs[] = $inputArc;
-	}
-
-	/**
-	 * Perform the visit of an Output Arc.
-	 *
-	 * @param   PNArcOutput  $outputArc  The Output Arc.
+	 * @param   PNArc  $arc  The Arc.
 	 *
 	 * @return  void
 	 *
 	 * @since   1.0
 	 */
-	protected function doVisitOutputArc(PNArcOutput $outputArc)
+	protected function doVisitArc(PNArc $arc)
 	{
-		$this->outputArcs[] = $outputArc;
+		$this->arcs[] = $arc;
 	}
 
 	/**
@@ -135,26 +115,14 @@ class PNVisitorGrabber extends PNBaseVisitor
 	}
 
 	/**
-	 * Get the input Arcs.
+	 * Get the Arcs.
 	 *
-	 * @return  array  The input Arcs.
-	 *
-	 * @since   1.0
-	 */
-	public function getInputArcs()
-	{
-		return $this->inputArcs;
-	}
-
-	/**
-	 * Get the output Arcs.
-	 *
-	 * @return  array  The output Arcs.
+	 * @return  array  The Arcs.
 	 *
 	 * @since   1.0
 	 */
-	public function getOutputArcs()
+	public function getArcs()
 	{
-		return $this->outputArcs;
+		return $this->arcs;
 	}
 }

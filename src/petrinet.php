@@ -145,17 +145,17 @@ class PNPetrinet implements PNBaseVisitable
 	/**
 	 * Connect a place to a Transition or vice-versa.
 	 *
-	 * @param   PNPlace|PNTransition  $from        The source Place or Transition.
-	 * @param   PNPlace|PNTransition  $to          The target Place or Transition.
-	 * @param   PNArcExpression       $expression  The arc's expression.
+	 * @param   PNNode           $from        The source Place or Transition.
+	 * @param   PNNode           $to          The target Place or Transition.
+	 * @param   PNArcExpression  $expression  The arc's expression.
 	 *
-	 * @return  PNArcInput|PNArcOutput  The Arc object.
+	 * @return  PNArc  The Arc object.
 	 *
 	 * @throws  InvalidArgumentException
 	 *
 	 * @since   1.0
 	 */
-	public function connect($from, $to, PNArcExpression $expression = null)
+	public function connect(PNNode $from, PNNode $to, PNArcExpression $expression = null)
 	{
 		// Check $from and $to are both colored/basic.
 		if ($from->isColoredMode() != $to->isColoredMode())
@@ -174,14 +174,14 @@ class PNPetrinet implements PNBaseVisitable
 		if ($from instanceof PNPlace && $to instanceof PNTransition)
 		{
 			// Create the arc, inject the expression and type manager.
-			$arc = new PNArcInput($from, $to, $expression, $this->typeManager);
+			$arc = new PNArc($from, $to, $expression, $this->typeManager);
 		}
 
 		// Output Arc.
 		elseif ($from instanceof PNTransition && $to instanceof PNPlace)
 		{
 			// Create the arc, inject the expression and type manager.
-			$arc = new PNArcOutput($from, $to, $expression, $this->typeManager);
+			$arc = new PNArc($from, $to, $expression, $this->typeManager);
 		}
 
 		else
@@ -339,39 +339,21 @@ class PNPetrinet implements PNBaseVisitable
 	}
 
 	/**
-	 * Get the Petri net Input Arcs.
+	 * Get the Petri net Arcs.
 	 *
 	 * @param   boolean  $reload  True to re-grab all the elements.
 	 *
-	 * @return  array  An array of Petri Net Input Arcs.
+	 * @return  array  An array of Petri Net Arcs.
 	 *
 	 * @throws  RuntimeException
 	 *
 	 * @since   1.0
 	 */
-	public function getInputArcs($reload = true)
+	public function getArcs($reload = true)
 	{
 		$this->doGrab($reload);
 
-		return $this->grabber->getInputArcs();
-	}
-
-	/**
-	 * Get the Petri net Output Arcs.
-	 *
-	 * @param   boolean  $reload  True to re-grab all the elements.
-	 *
-	 * @return  array  An array of Petri Net Output Arcs.
-	 *
-	 * @throws  RuntimeException
-	 *
-	 * @since   1.0
-	 */
-	public function getOutputArcs($reload = true)
-	{
-		$this->doGrab($reload);
-
-		return $this->grabber->getOutputArcs();
+		return $this->grabber->getArcs();
 	}
 
 	/**

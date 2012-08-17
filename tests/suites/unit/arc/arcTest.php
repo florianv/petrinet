@@ -17,7 +17,7 @@
 class PNArcTest extends TestCase
 {
 	/**
-	 * @var    PNArc  A PNArc mock.
+	 * @var    PNArc  A PNArc instance.
 	 * @since  1.0
 	 */
 	protected $object;
@@ -33,7 +33,7 @@ class PNArcTest extends TestCase
 	{
 		parent::setUp();
 
-		$this->object = $this->getMockForAbstractClass('PNArc');
+		$this->object = new PNArc;
 	}
 
 	/**
@@ -52,11 +52,29 @@ class PNArcTest extends TestCase
 		$this->assertInstanceOf('PNTypeManager', TestReflection::getValue($this->object, 'typeManager'));
 
 		$expression = $this->getMockForAbstractClass('PNArcExpression');
-		$arc = $this->getMockForAbstractClass('PNArc', array(true, true, $expression));
+		$arc = new PNArc(new PNPlace, new PNTransition, $expression);
 
-		$this->assertTrue(TestReflection::getValue($arc, 'input'));
-		$this->assertTrue(TestReflection::getValue($arc, 'output'));
+		$this->assertInstanceOf('PNPlace', TestReflection::getValue($arc, 'input'));
+		$this->assertInstanceOf('PNTransition', TestReflection::getValue($arc, 'output'));
 		$this->assertEquals(TestReflection::getValue($arc, 'expression'), $expression);
+	}
+
+	/**
+	 * Set the input Node of this Arc.
+	 *
+	 * @return  void
+	 *
+	 * @covers  PNArc::setInput
+	 * @since   1.0
+	 */
+	public function testSetInput()
+	{
+		// Set an input place.
+		$input = new PNPlace;
+		$this->object->setInput($input);
+		$in = TestReflection::getValue($this->object, 'input');
+
+		$this->assertEquals($in, $input);
 	}
 
 	/**
@@ -93,6 +111,24 @@ class PNArcTest extends TestCase
 		TestReflection::setValue($this->object, 'input', new PNTransition);
 
 		$this->assertTrue($this->object->hasInput());
+	}
+
+	/**
+	 * Set the output Node of this Arc.
+	 *
+	 * @return  void
+	 *
+	 * @covers  PNArc::setOutput
+	 * @since   1.0
+	 */
+	public function testSetOutput()
+	{
+		// Set an output transition.
+		$output = new PNTransition;
+		$this->object->setOutput($output);
+		$out = TestReflection::getValue($this->object, 'output');
+
+		$this->assertEquals($out, $output);
 	}
 
 	/**
@@ -311,5 +347,33 @@ class PNArcTest extends TestCase
 	{
 		TestReflection::setValue($this->object, 'expression', true);
 		$this->assertTrue($this->object->getExpression());
+	}
+
+	/**
+	 * Accept the Visitor.
+	 *
+	 * @return  void
+	 *
+	 * @covers  PNArc::accept
+	 * @since   1.0
+	 */
+	public function testAccept()
+	{
+		$visitor = $this->getMockForAbstractClass('PNBaseVisitor', array(), '', true, true, true, array('visitArc'));
+
+		// Create one mocked transition.
+		$transition = $this->getMock('PNTransition');
+		$transition->expects($this->once())
+			->method('accept')
+			->with($visitor);
+
+		// Inject it.
+		TestReflection::setValue($this->object, 'output', $transition);
+
+		$visitor->expects($this->once())
+			->method('visitArc')
+			->with($this->object);
+
+		$this->object->accept($visitor);
 	}
 }

@@ -14,7 +14,7 @@
  * @subpackage  Petrinet
  * @since       1.0
  */
-abstract class PNNode implements PNBaseVisitable
+abstract class PNNode implements PNNodeBase
 {
 	/**
 	 * @var    array  The input Arcs of this Node.
@@ -56,10 +56,7 @@ abstract class PNNode implements PNBaseVisitable
 		// Try to add them.
 		else
 		{
-			foreach ($inputs as $input)
-			{
-				$this->addInput($input);
-			}
+			$this->setInputs($inputs);
 		}
 
 		// If no outputs are given.
@@ -71,23 +68,53 @@ abstract class PNNode implements PNBaseVisitable
 		// Try to add them.
 		else
 		{
-			foreach ($outputs as $output)
-			{
-				$this->addOutput($output);
-			}
+			$this->setOutputs($outputs);
 		}
+	}
+
+	/**
+	 * Add an input Arc to this Node.
+	 *
+	 * @param   PNArc  $arc  The Arc.
+	 *
+	 * @return  PNNode  This method is chainable.
+	 *
+	 * @since   1.0
+	 */
+	public function addInput(PNArc $arc)
+	{
+		$this->inputs[] = $arc;
+
+		return $this;
 	}
 
 	/**
 	 * Get the input Arcs of this Node.
 	 *
-	 * @return  array  An array of input Arc objects.
+	 * @return  array  An array of Arcs.
 	 *
 	 * @since   1.0
 	 */
 	public function getInputs()
 	{
 		return $this->inputs;
+	}
+
+	/**
+	 * Set the input Arcs of this Node.
+	 *
+	 * @param   array  $arcs  An array of Arcs.
+	 *
+	 * @return  void
+	 *
+	 * @since   1.0
+	 */
+	public function setInputs(array $arcs)
+	{
+		foreach ($arcs as $arc)
+		{
+			$this->addInput($arc);
+		}
 	}
 
 	/**
@@ -103,15 +130,48 @@ abstract class PNNode implements PNBaseVisitable
 	}
 
 	/**
-	 * Get the output Arc of this Node.
+	 * Add an output Arc to this Node.
 	 *
-	 * @return  array  An array of output Arc objects.
+	 * @param   PNArc  $arc  Arc.
+	 *
+	 * @return  PNNode  This method is chainable.
+	 *
+	 * @since   1.0
+	 */
+	public function addOutput(PNArc $arc)
+	{
+		$this->outputs[] = $arc;
+
+		return $this;
+	}
+
+	/**
+	 * Get the output Arcs of this Node.
+	 *
+	 * @return  array  An array of Arcs.
 	 *
 	 * @since   1.0
 	 */
 	public function getOutputs()
 	{
 		return $this->outputs;
+	}
+
+	/**
+	 * Set the output Arcs of this Node.
+	 *
+	 * @param   array  $arcs  An array of Arcs.
+	 *
+	 * @return  void
+	 *
+	 * @since   1.0
+	 */
+	public function setOutputs(array $arcs)
+	{
+		foreach ($arcs as $arc)
+		{
+			$this->addOutput($arc);
+		}
 	}
 
 	/**

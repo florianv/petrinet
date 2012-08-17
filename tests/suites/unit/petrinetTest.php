@@ -159,7 +159,7 @@ class PNPetrinetTest extends TestCase
 
 		$arc = $this->object->connect($place, $transition, $expression);
 
-		$this->assertInstanceOf('PNArcInput', $arc);
+		$this->assertInstanceOf('PNArc', $arc);
 		$this->assertEquals(TestReflection::getValue($arc, 'input'), $place);
 		$this->assertEquals(TestReflection::getValue($arc, 'output'), $transition);
 		$this->assertEquals(TestReflection::getValue($arc, 'expression'), $expression);
@@ -175,7 +175,7 @@ class PNPetrinetTest extends TestCase
 
 		$arc = $this->object->connect($transition, $place);
 
-		$this->assertInstanceOf('PNArcOutput', $arc);
+		$this->assertInstanceOf('PNArc', $arc);
 		$this->assertEquals(TestReflection::getValue($arc, 'input'), $transition);
 		$this->assertEquals(TestReflection::getValue($arc, 'output'), $place);
 		$this->assertNull(TestReflection::getValue($arc, 'expression'));
@@ -445,10 +445,10 @@ class PNPetrinetTest extends TestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers  PNPetrinet::getInputArcs
+	 * @covers  PNPetrinet::getArcs
 	 * @since   1.0
 	 */
-	public function testGetInputArcs()
+	public function testGetArcs()
 	{
 		$mockedPn = $this->getMock('PNPetrinet', array('doGrab'), array('test'));
 
@@ -457,39 +457,13 @@ class PNPetrinetTest extends TestCase
 
 		$mockedGrabber = $this->getMock('PNVisitorGrabber');
 		$mockedGrabber->expects($this->once())
-			->method('getInputArcs')
+			->method('getArcs')
 			->will($this->returnValue(true));
 
 		// Inject the mocked grabber.
 		TestReflection::setValue($mockedPn, 'grabber', $mockedGrabber);
 
-		$this->assertTrue($mockedPn->getInputArcs());
-	}
-
-	/**
-	 * Get the Petri net Output Arcs.
-	 *
-	 * @return  void
-	 *
-	 * @covers  PNPetrinet::getOutputArcs
-	 * @since   1.0
-	 */
-	public function testGetOutputArcs()
-	{
-		$mockedPn = $this->getMock('PNPetrinet', array('doGrab'), array('test'));
-
-		$mockedPn->expects($this->once())
-			->method('doGrab');
-
-		$mockedGrabber = $this->getMock('PNVisitorGrabber');
-		$mockedGrabber->expects($this->once())
-			->method('getOutputArcs')
-			->will($this->returnValue(true));
-
-		// Inject the mocked grabber.
-		TestReflection::setValue($mockedPn, 'grabber', $mockedGrabber);
-
-		$this->assertTrue($mockedPn->getOutputArcs());
+		$this->assertTrue($mockedPn->getArcs());
 	}
 
 	/**

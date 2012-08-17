@@ -14,16 +14,16 @@
  * @subpackage  Arc
  * @since       1.0
  */
-abstract class PNArc implements PNBaseVisitable
+class PNArc implements PNArcBase
 {
 	/**
-	 * @var    PNPlace|PNTransition  The input Place or Transition of this Arc.
+	 * @var    PNNode  The input Node of this Arc.
 	 * @since  1.0
 	 */
 	protected $input;
 
 	/**
-	 * @var    PNPlace|PNTransition  The output Place or Transition of this Arc.
+	 * @var    PNNode  The output Node of this Arc.
 	 * @since  1.0
 	 */
 	protected $output;
@@ -43,19 +43,19 @@ abstract class PNArc implements PNBaseVisitable
 	/**
 	 * Constructor.
 	 *
-	 * @param   PNPlace|PNTransition  $input       The input Place.
-	 * @param   PNPlace|PNTransition  $output      The output Transition.
-	 * @param   PNArcExpression       $expression  The arc's expression.
-	 * @param   PNTypeManager         $manager     The type Manager.
+	 * @param   PNNode           $input       The input Place.
+	 * @param   PNNode           $output      The output Transition.
+	 * @param   PNArcExpression  $expression  The arc's expression.
+	 * @param   PNTypeManager    $manager     The type Manager.
 	 *
 	 * @since   1.0
 	 */
-	public function __construct($input = null, $output = null, PNArcExpression $expression = null, PNTypeManager $manager = null)
+	public function __construct(PNNode $input = null, PNNode $output = null, PNArcExpression $expression = null, PNTypeManager $manager = null)
 	{
-		// Set the input.
+		// Set the input node.
 		$this->input = $input;
 
-		// Set the output.
+		// Set the output node.
 		$this->output = $output;
 
 		// Use the given type manager, or create a new one.
@@ -66,9 +66,25 @@ abstract class PNArc implements PNBaseVisitable
 	}
 
 	/**
-	 * Get the input Place or Transition of this Arc.
+	 * Set the input Node of this Arc.
 	 *
-	 * @return  object  The input Place or Transition.
+	 * @param   PNNode  $input  The input Node.
+	 *
+	 * @return  PNArc  This method is chainable.
+	 *
+	 * @since   1.0
+	 */
+	public function setInput(PNNode $input)
+	{
+		$this->input = $input;
+
+		return $this;
+	}
+
+	/**
+	 * Get the input Node of this Arc.
+	 *
+	 * @return  PNNode  The input Node.
 	 *
 	 * @since   1.0
 	 */
@@ -78,7 +94,7 @@ abstract class PNArc implements PNBaseVisitable
 	}
 
 	/**
-	 * Check if the arc has an input Place or Transition.
+	 * Check if the arc has an input Node
 	 *
 	 * @return  boolean  True if it has an input, false otherwise.
 	 *
@@ -90,9 +106,25 @@ abstract class PNArc implements PNBaseVisitable
 	}
 
 	/**
-	 * Get the output Place or Transition of this Arc.
+	 * Set the output Node of this Arc.
 	 *
-	 * @return  object  The output Place or Transition.
+	 * @param   PNNode  $output  The output Node.
+	 *
+	 * @return  PNArcBase  This method is chainable.
+	 *
+	 * @since   1.0
+	 */
+	public function setOutput(PNNode $output)
+	{
+		$this->output = $output;
+
+		return $this;
+	}
+
+	/**
+	 * Get the output Node of this Arc.
+	 *
+	 * @return  PNNode  The output Node.
 	 *
 	 * @since   1.0
 	 */
@@ -102,7 +134,7 @@ abstract class PNArc implements PNBaseVisitable
 	}
 
 	/**
-	 * Check if the arc has an output Place or Transition.
+	 * Check if the arc has an output Node
 	 *
 	 * @return  boolean  True if it has an output, false otherwise.
 	 *
@@ -269,5 +301,21 @@ abstract class PNArc implements PNBaseVisitable
 	public function getExpression()
 	{
 		return $this->expression;
+	}
+
+	/**
+	 * Accept the Visitor.
+	 *
+	 * @param   PNBaseVisitor  $visitor  The Visitor.
+	 *
+	 * @return  void
+	 *
+	 * @since   1.0
+	 */
+	public function accept(PNBaseVisitor $visitor)
+	{
+		$visitor->visitArc($this);
+
+		$this->output->accept($visitor);
 	}
 }

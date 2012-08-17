@@ -37,83 +37,6 @@ class PNTransitionTest extends TestCase
 	}
 
 	/**
-	 * Add an input Arc to this Transition.
-	 *
-	 * @return  void
-	 *
-	 * @covers  PNTransition::addInput
-	 * @since   1.0
-	 */
-	public function testAddInput()
-	{
-		$input = new PNArcInput;
-		$this->object->addInput($input);
-		$inputs = TestReflection::getValue($this->object, 'inputs');
-
-		$this->assertEquals($inputs[0], $input);
-
-		$input = new PNArcInput;
-		$this->object->addInput($input);
-		$inputs = TestReflection::getValue($this->object, 'inputs');
-		$this->assertEquals($inputs[1], $input);
-	}
-
-	/**
-	 * Tests the error thrown by the PNTransition::addInput method.
-	 *
-	 * @return  void
-	 *
-	 * @covers  PNTransition::addInput
-	 *
-	 * @since   1.0
-	 *
-	 * @expectedException PHPUnit_Framework_Error
-	 */
-	public function testAddInputError()
-	{
-		$this->object->addInput(new stdClass);
-	}
-
-	/**
-	 * Add an ouput Arc to this Transition.
-	 *
-	 * @return  void
-	 *
-	 * @covers  PNTransition::addOutput
-	 * @since   1.0
-	 */
-	public function testAddOutput()
-	{
-		$output = new PNArcOutput;
-		$this->object->addOutput($output);
-		$outputs = TestReflection::getValue($this->object, 'outputs');
-
-		$this->assertEquals($outputs[0], $output);
-
-		$output = new PNArcOutput;
-		$this->object->addOutput($output);
-		$outputs = TestReflection::getValue($this->object, 'outputs');
-
-		$this->assertEquals($outputs[1], $output);
-	}
-
-	/**
-	 * Tests the error thrown by the PNTransition::addOutput method.
-	 *
-	 * @return  void
-	 *
-	 * @covers  PNTransition::addOutput
-	 *
-	 * @since   1.0
-	 *
-	 * @expectedException PHPUnit_Framework_Error
-	 */
-	public function testAddOutputError()
-	{
-		$this->object->addOutput(new stdClass);
-	}
-
-	/**
 	 * Check if the Transition is loaded.
 	 *
 	 * @return  void
@@ -192,15 +115,15 @@ class PNTransitionTest extends TestCase
 		$transition = new PNTransition;
 
 		// Connect everything.
-		$inputArc1 = new PNArcInput($place1, $transition);
+		$inputArc1 = new PNArc($place1, $transition);
 		$place1->addOutput($inputArc1);
 		$transition->addInput($inputArc1);
 
-		$inputArc2 = new PNArcInput($place2, $transition);
+		$inputArc2 = new PNArc($place2, $transition);
 		$place2->addOutput($inputArc2);
 		$transition->addInput($inputArc2);
 
-		$outputArc = new PNArcOutput($transition, $placeEnd);
+		$outputArc = new PNArc($transition, $placeEnd);
 		$placeEnd->addInput($outputArc);
 		$transition->addOutput($outputArc);
 
@@ -289,15 +212,15 @@ class PNTransitionTest extends TestCase
 		$transition = new PNTransition;
 
 		// Connect everything.
-		$inputArc1 = new PNArcInput($place1, $transition);
+		$inputArc1 = new PNArc($place1, $transition);
 		$place1->addOutput($inputArc1);
 		$transition->addInput($inputArc1);
 
-		$inputArc2 = new PNArcInput($place2, $transition);
+		$inputArc2 = new PNArc($place2, $transition);
 		$place2->addOutput($inputArc2);
 		$transition->addInput($inputArc2);
 
-		$outputArc = new PNArcOutput($transition, $placeEnd);
+		$outputArc = new PNArc($transition, $placeEnd);
 		$placeEnd->addInput($outputArc);
 		$transition->addOutput($outputArc);
 
@@ -321,15 +244,15 @@ class PNTransitionTest extends TestCase
 		$place1->addToken(new PNToken);
 
 		// Connect everything.
-		$inputArc1 = new PNArcInput($place1, $transition1);
+		$inputArc1 = new PNArc($place1, $transition1);
 		$place1->addOutput($inputArc1);
 		$transition1->addInput($inputArc1);
 
-		$outputArc = new PNArcOutput($transition1, $place2);
+		$outputArc = new PNArc($transition1, $place2);
 		$place2->addInput($outputArc);
 		$transition1->addOutput($outputArc);
 
-		$inputArc2 = new PNArcInput($place2, $transition2);
+		$inputArc2 = new PNArc($place2, $transition2);
 		$place2->addOutput($inputArc2);
 		$transition2->addInput($inputArc2);
 
@@ -371,12 +294,12 @@ class PNTransitionTest extends TestCase
 		$visitor = $this->getMockForAbstractClass('PNBaseVisitor', array(), '', true, true, true, array('visitTransition'));
 
 		// Create two mocked input arcs.
-		$arc1 = $this->getMock('PNArcOutput');
+		$arc1 = $this->getMock('PNArc');
 		$arc1->expects($this->once())
 			->method('accept')
 			->with($visitor);
 
-		$arc2 = $this->getMock('PNArcOutput');
+		$arc2 = $this->getMock('PNArc');
 		$arc2->expects($this->once())
 			->method('accept')
 			->with($visitor);
