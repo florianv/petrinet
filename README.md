@@ -39,6 +39,10 @@ For playing around or reproducing the examples, clone the repository and copy th
 
 Cd to the Petrinet root folder, and type the command : `phpunit`.
 
+## Classes diagram
+
+[Diagram](http://voutzinos.florian.free.fr/diagram.png)
+
 ## Using the API
 
 ### Basic Petri Nets
