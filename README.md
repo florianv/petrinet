@@ -9,7 +9,8 @@ At this moment, only [Basic Petri Nets](https://github.com/florianv/Petrinet#bas
 1. [Requirements](https://github.com/florianv/Petrinet#requirements)
 2. [Installation](https://github.com/florianv/Petrinet#installation)
 3. [Running unit tests](https://github.com/florianv/Petrinet#running-unit-tests)
-4. [Using the API](https://github.com/florianv/Petrinet#using-the-api)
+4. [Classes diagram](https://github.com/florianv/Petrinet#classes-diagram)
+5. [Using the API](https://github.com/florianv/Petrinet#using-the-api)
    * [Basic Petri Nets](https://github.com/florianv/Petrinet#basic-petri-nets)
      * [Key elements](https://github.com/florianv/Petrinet#key-elements)
      * [Creating a simple Petri Net](https://github.com/florianv/Petrinet#creating-a-simple-petri-net)
@@ -25,7 +26,7 @@ At this moment, only [Basic Petri Nets](https://github.com/florianv/Petrinet#bas
      * [New types](https://github.com/florianv/Petrinet#new-types)
      * [Custom types](https://github.com/florianv/Petrinet#custom-types)
      * [Object types](https://github.com/florianv/Petrinet#object-types)
-5. [Some Future work](https://github.com/florianv/Petrinet#some-future-work)
+6. [Some Future work](https://github.com/florianv/Petrinet#some-future-work)
 
 ## Requirements
 
