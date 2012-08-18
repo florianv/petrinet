@@ -403,7 +403,7 @@ class PNPetrinetTest extends TestCase
 		$mockedPn->expects($this->once())
 			->method('doGrab');
 
-		$mockedGrabber = $this->getMock('PNVisitorGrabber');
+		$mockedGrabber = $this->getMock('PNVisitorGrabber', array('getPlaces'), array(), '', false);
 		$mockedGrabber->expects($this->once())
 			->method('getPlaces')
 			->will($this->returnValue(true));
@@ -429,7 +429,7 @@ class PNPetrinetTest extends TestCase
 		$mockedPn->expects($this->once())
 			->method('doGrab');
 
-		$mockedGrabber = $this->getMock('PNVisitorGrabber');
+		$mockedGrabber = $this->getMock('PNVisitorGrabber', array('getTransitions'), array(), '', false);
 		$mockedGrabber->expects($this->once())
 			->method('getTransitions')
 			->will($this->returnValue(true));
@@ -455,7 +455,7 @@ class PNPetrinetTest extends TestCase
 		$mockedPn->expects($this->once())
 			->method('doGrab');
 
-		$mockedGrabber = $this->getMock('PNVisitorGrabber');
+		$mockedGrabber = $this->getMock('PNVisitorGrabber', array('getArcs'), array(), '', false);
 		$mockedGrabber->expects($this->once())
 			->method('getArcs')
 			->will($this->returnValue(true));

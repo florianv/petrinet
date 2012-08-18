@@ -120,11 +120,8 @@ You can visualize your Petri Net definition using the [GraphViz](http://www.grap
 ```php
 <?php
 
-// Create a Viewer visitor instance.
-$viewer = new PNVisitorViewer;
-
-// Call the method accept of your Petri Net object with the Viewer as param.
-$net->accept($viewer);
+// Create a Viewer visitor instance and pass the Petri Net object in the constructor.
+$viewer = new PNVisitorViewer($net);
 
 // Displaying your Petri Net as a Graphviz formatted string.
 echo $viewer;

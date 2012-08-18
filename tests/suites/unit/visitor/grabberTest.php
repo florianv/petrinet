@@ -72,8 +72,7 @@ class PNVisitorGrabberTest extends TestCase
 		// Inject the start place.
 		TestReflection::setValue($net, 'startPlace', $startPlace);
 
-		$grabber = new PNVisitorGrabber;
-		$net->accept($grabber);
+		$grabber = new PNVisitorGrabber($net);
 
 		$places = TestReflection::getValue($grabber, 'places');
 		$transitions = TestReflection::getValue($grabber, 'transitions');

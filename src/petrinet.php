@@ -296,8 +296,7 @@ class PNPetrinet implements PNBaseVisitable
 			$this->assertHasStartPlace();
 
 			// Grab the elements.
-			$grabber = new PNVisitorGrabber;
-			$this->accept($grabber);
+			$grabber = new PNVisitorGrabber($this);
 			$this->grabber = $grabber;
 		}
 	}
