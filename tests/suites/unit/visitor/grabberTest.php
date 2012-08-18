@@ -40,6 +40,25 @@ class PNVisitorGrabberTest extends TestCase
 	}
 
 	/**
+	 * Constructor.
+	 *
+	 * @return  void
+	 *
+	 * @covers  PNVisitorGrabber::__construct
+	 * @since   1.0
+	 */
+	public function test__construct()
+	{
+		// Create a mocked Petri Net.
+		$mockedNet = $this->getMock('PNPetrinet', array('accept'), array('test'));
+
+		$mockedNet->expects($this->once())
+			->method('accept');
+
+		new PNVisitorGrabber($mockedNet);
+	}
+
+	/**
 	 * Test the depth first traversal algorithm.
 	 *
 	 * @return  void
