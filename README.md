@@ -464,7 +464,6 @@ $place->addToken($token);
 
 ### Object types
 
-An object type is the name of a php class.
 You can register a given class name as an 'object type' in the system.
 
 It allows tokens to transport instances of a given class.
