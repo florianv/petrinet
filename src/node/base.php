@@ -95,4 +95,13 @@ interface PNNodeBase extends PNBaseVisitable
 	 * @since   1.0
 	 */
 	public function hasOutput();
+
+	/**
+	 * Check if the Node is loaded.
+	 *
+	 * @return  boolean  True if loaded, false otherwise.
+	 *
+	 * @since   1.0
+	 */
+	public function isLoaded();
 }

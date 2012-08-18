@@ -187,15 +187,6 @@ abstract class PNNode implements PNNodeBase
 	}
 
 	/**
-	 * Check if the Node is loaded.
-	 *
-	 * @return  boolean  True if loaded, false otherwise.
-	 *
-	 * @since   1.0
-	 */
-	abstract public function isLoaded();
-
-	/**
 	 * Assert the Node is loaded.
 	 *
 	 * @return  void
