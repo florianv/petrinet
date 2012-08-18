@@ -45,68 +45,74 @@ class PNVisitorViewer extends PNVisitorGrabber
 
 	/**
 	 * Generate the content of a GraphViz file.
+	 * 
+	 * @param   boolean  $reload  True to regenerate the graph, false otherwise.
 	 *
 	 * @return  void
 	 *
 	 * @since   1.0
 	 */
-	protected function generateGraph()
+	protected function generateGraphViz($reload)
 	{
-		$graph = 'digraph ' . $this->name . ' {';
-
-		// Declaring the nodes (places).
-		foreach ($this->places as $key => $place)
+		if ($reload || !$this->hasGraph())
 		{
-			$tokens = $place->getTokenCount();
+			$graph = 'digraph ' . $this->name . ' {';
 
-			$graph .= 'p' . $key . ' [label="p' . $key . ': ' . $tokens;
+			// Declaring the nodes (places).
+			foreach ($this->places as $key => $place)
+			{
+				$tokens = $place->getTokenCount();
 
-			$tokens > 1 ? $graph .= ' tokens"];' : $graph .= ' token"];';
+				$graph .= 'p' . $key . ' [label="p' . $key . ': ' . $tokens;
+
+				$tokens > 1 ? $graph .= ' tokens"];' : $graph .= ' token"];';
+			}
+
+			// Declaring the nodes (Transitions).
+			foreach ($this->transitions as $key => $transition)
+			{
+				$graph .= 't' . $key . '[shape=box];';
+			}
+
+			// Declaring the edges.
+			foreach ($this->arcs as $arc)
+			{
+				$input = $arc->getInput();
+
+				if ($input instanceof PNPlace)
+				{
+					$key = array_search($input, $this->places, true);
+					$input = 'p' . $key;
+				}
+
+				else
+				{
+					$key = array_search($input, $this->transitions, true);
+					$input = 't' . $key;
+				}
+
+				$output = $arc->getOutput();
+
+				if ($output instanceof PNPlace)
+				{
+					$key = array_search($output, $this->places, true);
+					$output = 'p' . $key;
+				}
+
+				else
+				{
+					$key = array_search($output, $this->transitions, true);
+					$output = 't' . $key;
+				}
+
+				$graph .= $input . '->' . $output . ';';
+			}
+
+			$graph .= '}';
+
+			$this->graph = $graph;
 		}
 
-		// Declaring the nodes (Transitions).
-		foreach ($this->transitions as $key => $transition)
-		{
-			$graph .= 't' . $key . '[shape=box];';
-		}
-
-		// Declaring the edges.
-		foreach ($this->arcs as $arc)
-		{
-			$input = $arc->getInput();
-
-			if ($input instanceof PNPlace)
-			{
-				$key = array_search($input, $this->places, true);
-				$input = 'p' . $key;
-			}
-
-			else
-			{
-				$key = array_search($input, $this->transitions, true);
-				$input = 't' . $key;
-			}
-
-			$output = $arc->getOutput();
-
-			if ($output instanceof PNPlace)
-			{
-				$key = array_search($output, $this->places, true);
-				$output = 'p' . $key;
-			}
-
-			else
-			{
-				$key = array_search($output, $this->transitions, true);
-				$output = 't' . $key;
-			}
-
-			$graph .= $input . '->' . $output . ';';
-		}
-
-		$graph .= '}';
-
-		$this->graph = $graph;
 	}
 
 	/**
@@ -130,10 +136,7 @@ class PNVisitorViewer extends PNVisitorGrabber
 	 */
 	public function __toString()
 	{
-		if (!$this->hasGraph())
-		{
-			$this->generateGraph();
-		}
+		$this->generateGraphViz(false);
 
 		return $this->graph;
 	}
@@ -141,19 +144,17 @@ class PNVisitorViewer extends PNVisitorGrabber
 	/**
 	 * Write the content into a .dot file.
 	 *
-	 * @param   string  $filename  The path including file name to create the file.
+	 * @param   string   $filename  The path including file name to create the file.
+	 * @param   boolean  $reload    True to regenerate the graph, false otherwise.
 	 *
 	 * @return  boolean  True if sucessful created, false otherwise.
 	 *
 	 * @since   1.0
 	 */
-	public function toFile($filename)
+	public function toFile($filename, $reload = false)
 	{
-		if (!$this->hasGraph())
-		{
-			$this->generateGraph();
-		}
+		$this->generateGraphViz($reload);
 
-		return is_int(file_put_contents($filename . '.dot', $this->graph)) ? true : false;
+		return is_int(file_put_contents($filename . '.dot', $this->graph));
 	}
 }
