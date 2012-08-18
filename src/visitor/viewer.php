@@ -45,16 +45,14 @@ class PNVisitorViewer extends PNVisitorGrabber
 
 	/**
 	 * Generate the content of a GraphViz file.
-	 * 
-	 * @param   boolean  $reload  True to regenerate the graph, false otherwise.
 	 *
 	 * @return  void
 	 *
 	 * @since   1.0
 	 */
-	protected function generateGraphViz($reload)
+	protected function generateGraphViz()
 	{
-		if ($reload || !$this->hasGraph())
+		if (!$this->hasGraph())
 		{
 			$graph = 'digraph ' . $this->name . ' {';
 
@@ -136,7 +134,7 @@ class PNVisitorViewer extends PNVisitorGrabber
 	 */
 	public function __toString()
 	{
-		$this->generateGraphViz(false);
+		$this->generateGraphViz();
 
 		return $this->graph;
 	}
@@ -144,16 +142,15 @@ class PNVisitorViewer extends PNVisitorGrabber
 	/**
 	 * Write the content into a .dot file.
 	 *
-	 * @param   string   $filename  The path including file name to create the file.
-	 * @param   boolean  $reload    True to regenerate the graph, false otherwise.
+	 * @param   string  $filename  The path including file name to create the file.
 	 *
 	 * @return  boolean  True if sucessful created, false otherwise.
 	 *
 	 * @since   1.0
 	 */
-	public function toFile($filename, $reload = false)
+	public function toFile($filename)
 	{
-		$this->generateGraphViz($reload);
+		$this->generateGraphViz();
 
 		return is_int(file_put_contents($filename . '.dot', $this->graph));
 	}

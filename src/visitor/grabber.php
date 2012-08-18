@@ -8,7 +8,7 @@
  */
 
 /**
- * A simple visitor traversing a Petri Net and grabbing the different elements.
+ * A visitor traversing a Petri Net and grabbing the different elements.
  *
  * @package     Petrinet
  * @subpackage  Visitor
