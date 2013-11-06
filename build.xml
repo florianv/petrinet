@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Petrinet" default="build">
+
+    <property name="code_dir" value="${project.basedir}/src/Petrinet"/>
+    <property name="tests_dir" value="${project.basedir}/src/Petrinet/Tests"/>
+    <property name="tests_fixtures_dir" value="${project.basedir}/src/Petrinet/Tests/Fixtures"/>
+    <property name="build_dir" value="${project.basedir}/build"/>
+
+    <target name="travis-phpcs" description="Displays code style report for Travis CI">
+        <exec executable="phpcs" passthru="true">
+            <arg line="-p"/>
+            <arg line="-w"/>
+            <arg line="--report=full"/>
+            <arg line="--extensions=php"/>
+            <arg line="--standard=PSR2"/>
+            <arg line="--ignore=${tests_fixtures_dir}"/>
+            <arg value="${code_dir}"/>
+        </exec>
+    </target>
+
+    <target name="clean" description="Cleans the build folder">
+        <delete>
+            <fileset dir="${build_dir}">
+                <exclude name=".gitignore"/>
+            </fileset>
+        </delete>
+    </target>
+
+    <target name="phpunit" description="Runs the tests suite">
+        <exec executable="phpunit"/>
+    </target>
+
+    <target name="phpcs" description="Generates PHP Code Sniffer report">
+        <exec executable="phpcs">
+            <arg line="--report=checkstyle"/>
+            <arg line="--extensions=php"/>
+            <arg line="--report-file=${build_dir}/phpcs.report.xml"/>
+            <arg line="--standard=PSR2"/>
+            <arg line="--ignore=${tests_fixtures_dir}"/>
+            <arg value="${code_dir}"/>
+        </exec>
+    </target>
+
+    <target name="phpcpd" description="Generates PHPCPD report">
+        <exec executable="phpcpd">
+            <arg value="--log-pmd"/>
+            <arg line="--exclude ${tests_dir}"/>
+            <arg value="${build_dir}/phpcpd.report.xml"/>
+            <arg path="${code_dir}"/>
+        </exec>
+    </target>
+
+    <target name="phpdepend" description="Generates PHP Depend reports">
+        <exec executable="pdepend">
+            <arg line="--summary-xml=${build_dir}/phpdepend.report.xml"/>
+            <arg line="--jdepend-chart=${build_dir}/phpdepend.chart.svg"/>
+            <arg line="--overview-pyramid=${build_dir}/phpdepend.pyramid.svg"/>
+            <arg line="--ignore=${tests_dir}"/>
+            <arg value="${code_dir}"/>
+        </exec>
+    </target>
+
+    <target name="phpmd" description="Generates PHP Mess Detector report">
+        <exec executable="phpmd">
+            <arg value="${code_dir}"/>
+            <arg value="xml"/>
+            <arg value="${project.basedir}/phpmd.ruleset.xml"/>
+            <arg line="--reportfile ${build_dir}/phpmd.report.xml"/>
+            <arg line="--exclude ${tests_dir}"/>
+            <arg value="${code_dir}"/>
+        </exec>
+    </target>
+
+    <target name="phploc" description="Generates PHPLoc report">
+        <exec executable="phploc">
+            <arg line="--log-csv ${build_dir}/phploc.report.csv"/>
+            <arg value="${code_dir}"/>
+        </exec>
+    </target>
+
+    <target name="build" description="The main build">
+        <phingcall target="clean"/>
+        <parallel threadCount="2">
+            <phingcall target="phpunit"/>
+            <phingcall target="phpcs"/>
+            <phingcall target="phpcpd"/>
+            <phingcall target="phpdepend"/>
+            <phingcall target="phpmd"/>
+            <phingcall target="phploc"/>
+        </parallel>
+    </target>
+
+    <target name="travis" depends="phpunit,travis-phpcs"/>
+</project>

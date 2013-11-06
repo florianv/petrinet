@@ -1,0 +1,10 @@
+digraph petrinet {
+p1 [label="p1: 5 tokens"];
+p2 [label="p2: 0 token"];
+t1 [shape=box];
+t2 [shape=box];
+p1->t1;
+p1->t2;
+t1->p2;
+t2->p2;
+}

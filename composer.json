@@ -1,0 +1,25 @@
+{
+    "name": "florianv/petrinet",
+    "type": "library",
+    "description": "A Petrinet PHP framework",
+    "keywords": ["petrinet"],
+    "homepage": "https://github.com/florianv/petrinet",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Florian Voutzinos",
+            "email": "florian@voutzinos.com",
+            "homepage": "http://voutzinos.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3",
+        "symfony/event-dispatcher": "~2.0"
+    },
+    "autoload": {
+        "psr-0": {
+            "Petrinet\\": "src/"
+        }
+    },
+    "minimum-stability": "dev"
+}

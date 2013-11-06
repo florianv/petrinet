@@ -1,3 +1,6 @@
 .idea/
 .DS_STORE
-/www/index.php
+phpunit.xml
+vendor/
+composer.phar
+composer.lock
