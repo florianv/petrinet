@@ -17,7 +17,7 @@ Petrinet is installable via [Composer](http://getcomposer.org/).
 ```json
 {
     "require": {
-        "florianv/petrinet": "*"
+        "florianv/petrinet": "1.0-alpha"
     }
 }
 ```

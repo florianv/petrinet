@@ -4,9 +4,9 @@
 require_once __DIR__ . '/vendor/autoload.php';
 
 // This function is equivalent to
-for ($i = 1; $i < $iterations; $i++)
+for ($i = 1; $i <= $iterations; $i++)
 {
-    call_user_func_array($callable, $i);
+    call_user_func($callable, $i);
 }
 
 function petrinet_loop($iterations, $callable)
@@ -34,7 +34,7 @@ function petrinet_loop($iterations, $callable)
             $engine->stop();
         }
 
-        call_user_func_array($callable, $i);
+        call_user_func($callable, $i);
         $i++;
     };
 
