@@ -40,7 +40,7 @@ interface PetrinetInterface extends ElementInterface
     public function getTransitions();
 
     /**
-     * Gets the enabled transitions (with random order).
+     * Gets the enabled transitions (in random order).
      *
      * @return \Petrinet\Transition\TransitionInterface[] The transitions
      */
