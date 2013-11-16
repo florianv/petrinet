@@ -22,6 +22,10 @@ Petrinet is installable via [Composer](http://getcomposer.org/).
 }
 ```
 
+## Documentation
+
+The documentation is available [here](https://github.com/florianv/petrinet/blob/master/docs/documentation.md).
+
 ## Running Unit tests
 
 - Install [PHPUnit](http://phpunit.de/manual/current/en/index.html)
