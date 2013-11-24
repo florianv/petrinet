@@ -26,17 +26,10 @@ Petrinet is installable via [Composer](http://getcomposer.org/).
 
 The documentation is available [here](https://github.com/florianv/petrinet/blob/master/docs/documentation.md).
 
-## Running Unit tests
+## Contributing
 
-- Install [PHPUnit](http://phpunit.de/manual/current/en/index.html)
-- Copy `phpunit.xml.dist` to `phpunit.xml`
-- Issue the `phpunit` command from the project root directory
-
-## Running the build
-
-- Install [Phing](http://www.phing.info/)
-- Issue the `phing` command from the project root directory
+The contribution guide is available [here](https://github.com/florianv/petrinet/blob/master/CONTRIBUTING.md).
 
 ## License
 
-MIT
+[MIT](https://github.com/florianv/petrinet/blob/master/LICENSE).

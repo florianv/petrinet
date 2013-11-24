@@ -65,7 +65,7 @@ final class PetrinetBuilder
      * Adds a place.
      *
      * @param string  $id     The place id
-     * @param integer $tokens The token number
+     * @param integer $tokens The number of tokens to add in the place
      *
      * @return PetrinetBuilder
      *
