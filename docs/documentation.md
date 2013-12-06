@@ -2,7 +2,54 @@
 
 ## Creating a Petrinet
 
-The easiest way to create a Petrinet is to use the `PetrinetBuilder` class providing a fluent API.
+### Using an XML file
+
+Example of a simple Petrinet :
+
+```xml
+<?xml version="1.0" ?>
+
+<petrinet
+        id="net"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="https://raw.github.com/florianv/petrinet/master/src/Petrinet/Loader/meta/schema.xsd">
+
+    <!-- A place with two tokens -->
+    <place id="p1" tokens="2"/>
+
+    <!-- An empty place -->
+    <place id="p2"/>
+
+    <!-- Two transitions -->
+    <transition id="t1"/>
+    <transition id="t2"/>
+
+    <!-- An arc with a specified id, from the place p1 to the transition t1 -->
+    <arc id="a1" from="p1" to="t1"/>
+
+    <arc from="p1" to="t2"/>
+
+    <!-- An arc from the transition t1 to the place p2 -->
+    <arc from="t1" to="p2"/>
+    <arc from="t2" to="p2"/>
+</petrinet>
+```
+
+Now you can load the Petrinet using the `XmlFileLoader`:
+
+```php
+<?php
+
+use Petrinet\Loader\XmlFileLoader;
+
+// Creating a loader instance
+$loader = new XmlFileLoader('/path/to/petrinet.xml');
+
+// Loading the Petrinet
+$petrinet = $loader->load();
+```
+
+### With the Petrinet Builder
 
 ```php
 <?php
