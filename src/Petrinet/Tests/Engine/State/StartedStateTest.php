@@ -126,9 +126,8 @@ class StartedStateTest extends \PHPUnit_Framework_TestCase
 
         $startedState->step();
 
-        $places = $petrinet->getPlaces();
-        $place1 = $places[0];
-        $place2 = $places[1];
+        $place1 = $petrinet->getPlace('p1');
+        $place2 = $petrinet->getPlace('p2');
 
         $this->assertTrue($place1->isEmpty());
         $this->assertEquals(1, count($place2));

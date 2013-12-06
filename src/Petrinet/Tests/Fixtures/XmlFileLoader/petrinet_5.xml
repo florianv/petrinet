@@ -1,0 +1,7 @@
+<?xml version="1.0" ?>
+
+<!-- Unexisting arc to -->
+<petrinet id="test">
+    <transition id="t1"/>
+    <arc from="t1" to="p1"/>
+</petrinet>

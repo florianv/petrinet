@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+
+<!-- Petrinet with two places and two transitions -->
+<petrinet id="test">
+    <place id="p1" tokens="2"/>
+    <place id="p2"/>
+
+    <transition id="t1"/>
+    <transition id="t2"/>
+
+    <arc id="a1" from="p1" to="t1"/>
+    <arc from="p1" to="t2"/>
+    <arc from="t1" to="p2"/>
+    <arc from="t2" to="p2"/>
+</petrinet>

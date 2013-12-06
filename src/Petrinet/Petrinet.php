@@ -83,7 +83,7 @@ class Petrinet implements PetrinetInterface
      */
     public function addPlace(PlaceInterface $place)
     {
-        $this->places[] = $place;
+        $this->places[$place->getId()] = $place;
 
         return $this;
     }
@@ -105,13 +105,23 @@ class Petrinet implements PetrinetInterface
     }
 
     /**
-     * Gets the places.
-     *
-     * @return PlaceInterface[] The places
+     * {@inheritdoc}
      */
     public function getPlaces()
     {
-        return $this->places;
+        return array_values($this->places);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getPlace($id)
+    {
+        if (isset($this->places[$id])) {
+            return $this->places[$id];
+        }
+
+        return null;
     }
 
     /**
@@ -123,7 +133,7 @@ class Petrinet implements PetrinetInterface
      */
     public function addTransition(TransitionInterface $transition)
     {
-        $this->transitions[] = $transition;
+        $this->transitions[$transition->getId()] = $transition;
 
         return $this;
     }
@@ -145,13 +155,23 @@ class Petrinet implements PetrinetInterface
     }
 
     /**
-     * Gets the transitions.
-     *
-     * @return TransitionInterface[] The transitions
+     * {@inheritdoc}
      */
     public function getTransitions()
     {
-        return $this->transitions;
+        return array_values($this->transitions);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getTransition($id)
+    {
+        if (isset($this->transitions[$id])) {
+            return $this->transitions[$id];
+        }
+
+        return null;
     }
 
     /**
@@ -163,7 +183,7 @@ class Petrinet implements PetrinetInterface
      */
     public function addArc(ArcInterface $arc)
     {
-        $this->arcs[] = $arc;
+        $this->arcs[$arc->getId()] = $arc;
 
         return $this;
     }
@@ -185,13 +205,23 @@ class Petrinet implements PetrinetInterface
     }
 
     /**
-     * Gets the arcs.
-     *
-     * @return ArcInterface[] The arcs
+     * {@inheritdoc}
      */
     public function getArcs()
     {
-        return $this->arcs;
+        return array_values($this->arcs);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getArc($id)
+    {
+        if (isset($this->arcs[$id])) {
+            return $this->arcs[$id];
+        }
+
+        return null;
     }
 
     /**

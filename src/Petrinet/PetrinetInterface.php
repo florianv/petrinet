@@ -26,6 +26,15 @@ interface PetrinetInterface extends ElementInterface
     public function getArcs();
 
     /**
+     * Gets the arc identified by the given id.
+     *
+     * @param integer $id The arc id
+     *
+     * @return \Petrinet\Arc\ArcInterface|null The arc or null if not found
+     */
+    public function getArc($id);
+
+    /**
      * Gets the places.
      *
      * @return \Petrinet\Place\PlaceInterface[] The places
@@ -33,11 +42,29 @@ interface PetrinetInterface extends ElementInterface
     public function getPlaces();
 
     /**
+     * Gets the place identified by the given id.
+     *
+     * @param integer $id The place id
+     *
+     * @return \Petrinet\Place\PlaceInterface|null The place or null if not found
+     */
+    public function getPlace($id);
+
+    /**
      * Gets the transitions.
      *
      * @return \Petrinet\Transition\TransitionInterface[] The transitions
      */
     public function getTransitions();
+
+    /**
+     * Gets the transition identified by the given id.
+     *
+     * @param integer $id The transition id
+     *
+     * @return \Petrinet\Transition\TransitionInterface|null The transition or null if not found
+     */
+    public function getTransition($id);
 
     /**
      * Gets the enabled transitions (in random order).

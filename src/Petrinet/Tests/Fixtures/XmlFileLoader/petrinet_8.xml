@@ -1,0 +1,6 @@
+<?xml version="1.0" ?>
+
+<!-- Tokens not numeric -->
+<petrinet id="test">
+    <place id="p1" tokens="foo"/>
+</petrinet>
