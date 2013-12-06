@@ -1,5 +1,17 @@
 # Documentation
 
+1. [Creating a Petrinet](https://github.com/florianv/petrinet/blob/master/docs/documentation.md#creating-a-petrinet)
+    * [Using an XML file](https://github.com/florianv/petrinet/blob/master/docs/documentation.md#using-an-xml-file)
+    * [With the Petrinet Builder](https://github.com/florianv/petrinet/blob/master/docs/documentation.md#with-the-petrinet-builder)
+2. [Visualizing a Petrinet](https://github.com/florianv/petrinet/blob/master/docs/documentation.md#visualizing-a-petrinet)
+    * [Using Graphviz](https://github.com/florianv/petrinet/blob/master/docs/documentation.md#using-graphviz)
+3. [Execution](https://github.com/florianv/petrinet/blob/master/docs/documentation.md#execution)
+    * [Using the Engine](https://github.com/florianv/petrinet/blob/master/docs/documentation.md#using-the-engine)
+    * [Execution modes](https://github.com/florianv/petrinet/blob/master/docs/documentation.md#execution-modes)
+4. [Events](https://github.com/florianv/petrinet/blob/master/docs/documentation.md#events)
+    * [Examples](https://github.com/florianv/petrinet/blob/master/docs/documentation.md#examples)
+5. [Examples](https://github.com/florianv/petrinet/blob/master/docs/documentation.md#examples-1)
+
 ## Creating a Petrinet
 
 ### Using an XML file
@@ -130,7 +142,7 @@ By default the engine is in `Continuous` mode.
 $engine->setMode(Engine::MODE_STEPPED);
 ```
 
-### Events
+## Events
 
 The Petrinet framework is using Symfony
 [EventDispatcher](http://symfony.com/doc/current/components/event_dispatcher/index.html) to dispatch its events.
@@ -139,9 +151,9 @@ Different events are available to interact with the engine or Petrinet elements 
 
 They are documented in the following [file](https://github.com/florianv/petrinet/blob/master/src/Petrinet/PetrinetEvents.php).
 
-#### Examples
+### Examples
 
-##### Listening to an EngineEvent
+#### Listening to an EngineEvent
 
 ```php
 <?php
@@ -184,7 +196,7 @@ $engine->setDispatcher($dispatcher);
 $engine->start();
 ```
 
-##### Listening to TokenAndPlaceEvent
+#### Listening to TokenAndPlaceEvent
 
 ```php
 <?php
@@ -226,9 +238,9 @@ $engine->setDispatcher($dispatcher);
 $engine->start();
 ```
 
-### More examples
+## Examples
 
-#### The Petrinet while function
+### The Petrinet while function
 
 ```php
 <?php
