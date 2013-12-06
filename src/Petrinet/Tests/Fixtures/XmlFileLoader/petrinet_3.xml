@@ -1,0 +1,7 @@
+<?xml version="1.0" ?>
+
+<!-- Arc ids are unique -->
+<petrinet id="test" >
+    <arc id="a1" />
+    <arc id="a1" />
+</petrinet>

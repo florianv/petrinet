@@ -28,9 +28,8 @@ class PetrinetBuilderTest extends \PHPUnit_Framework_TestCase
             ->addPlace('p2', 5)
             ->getPetrinet();
 
-        $places = $petrinet->getPlaces();
-        $firstPlace = $places[0];
-        $secondPlace = $places[1];
+        $firstPlace = $petrinet->getPlace('p1');
+        $secondPlace = $petrinet->getPlace('p2');
 
         $this->assertEquals('p1', $firstPlace->getId());
         $this->assertEquals(0, count($firstPlace));
@@ -69,9 +68,8 @@ class PetrinetBuilderTest extends \PHPUnit_Framework_TestCase
             ->addTransition('t2')
             ->getPetrinet();
 
-        $transitions = $petrinet->getTransitions();
-        $firstTransition = $transitions[0];
-        $secondTransition = $transitions[1];
+        $firstTransition = $petrinet->getTransition('t1');
+        $secondTransition = $petrinet->getTransition('t2');
 
         $this->assertEquals('t1', $firstTransition->getId());
         $this->assertEquals('t2', $secondTransition->getId());
@@ -183,33 +181,31 @@ class PetrinetBuilderTest extends \PHPUnit_Framework_TestCase
             ->addTransition('t1')
             ->addTransition('t2')
             ->addPlace('p2')
-            ->connectPT('p1', 't1')
-            ->connectPT('p1', 't2')
-            ->connectTP('t1', 'p2')
-            ->connectTP('t2', 'p2')
+            ->connectPT('p1', 't1', 'a1')
+            ->connectPT('p1', 't2', 'a2')
+            ->connectTP('t1', 'p2', 'a3')
+            ->connectTP('t2', 'p2', 'a4')
             ->getPetrinet();
 
-        $arcs = $petrinet->getArcs();
-
-        $arc1 = $arcs[0];
+        $arc1 = $petrinet->getArc('a1');
         $this->assertEquals('p1', $arc1->getPlace()->getId());
         $this->assertEquals('p1', $arc1->getFrom()->getId());
         $this->assertEquals('t1', $arc1->getTransition()->getId());
         $this->assertEquals('t1', $arc1->getTo()->getId());
 
-        $arc2 = $arcs[1];
+        $arc2 = $petrinet->getArc('a2');
         $this->assertEquals('p1', $arc2->getPlace()->getId());
         $this->assertEquals('p1', $arc2->getFrom()->getId());
         $this->assertEquals('t2', $arc2->getTransition()->getId());
         $this->assertEquals('t2', $arc2->getTo()->getId());
 
-        $arc3 = $arcs[2];
+        $arc3 = $petrinet->getArc('a3');
         $this->assertEquals('p2', $arc3->getPlace()->getId());
         $this->assertEquals('p2', $arc3->getTo()->getId());
         $this->assertEquals('t1', $arc3->getTransition()->getId());
         $this->assertEquals('t1', $arc3->getFrom()->getId());
 
-        $arc4 = $arcs[3];
+        $arc4 = $petrinet->getArc('a4');
         $this->assertEquals('p2', $arc4->getPlace()->getId());
         $this->assertEquals('p2', $arc4->getTo()->getId());
         $this->assertEquals('t2', $arc4->getTransition()->getId());
