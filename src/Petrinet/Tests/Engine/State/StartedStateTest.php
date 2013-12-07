@@ -11,9 +11,9 @@
 
 namespace Petrinet\Tests\Engine\State;
 
-use Petrinet\Engine\Engine;
 use Petrinet\PetrinetBuilder;
 use Petrinet\PetrinetEvents;
+use Petrinet\Engine\Engine;
 
 /**
  * Test class for StartedState.

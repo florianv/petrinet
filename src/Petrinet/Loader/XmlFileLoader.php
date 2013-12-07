@@ -123,7 +123,6 @@ class XmlFileLoader implements LoaderInterface
     {
         // Process places
         $placeElements = $element->xpath('//petrinet/place');
-        $places = array();
 
         foreach ($placeElements as $placeElement) {
             $placeAttributes = $placeElement->attributes();
@@ -147,7 +146,6 @@ class XmlFileLoader implements LoaderInterface
                 }
             }
 
-            $places[$place->getId()] = $place;
             $petrinet->addPlace($place);
         }
     }
@@ -161,14 +159,12 @@ class XmlFileLoader implements LoaderInterface
     private function doLoadTransitions(Petrinet $petrinet, \SimpleXMLElement $element)
     {
         $transitionElements = $element->xpath('//petrinet/transition');
-        $transitions = array();
 
         foreach ($transitionElements as $transitionElement) {
             $transitionAttributes = $transitionElement->attributes();
             $transitionId = (string) $transitionAttributes['id'];
-            $transition = new Transition($transitionId);
 
-            $transitions[$transition->getId()] = $transition;
+            $transition = new Transition($transitionId);
             $petrinet->addTransition($transition);
         }
     }
@@ -184,7 +180,6 @@ class XmlFileLoader implements LoaderInterface
     private function doLoadArcs(Petrinet $petrinet, \SimpleXMLElement $element)
     {
         $arcElements = $element->xpath('//petrinet/arc');
-        $arcs = array();
 
         foreach ($arcElements as $arcElement) {
             $arcAttributes = $arcElement->attributes();
@@ -263,13 +258,12 @@ class XmlFileLoader implements LoaderInterface
                 $transition->addInputArc($arc);
             }
 
-            $arcs[$arc->getId()] = $arc;
             $petrinet->addArc($arc);
         }
     }
 
     /**
-     * Vaidates the xml file against the petrinet schema.
+     * Vaidates the xml file against the Petrinet schema.
      *
      * @throws \RuntimeException
      */
@@ -278,7 +272,7 @@ class XmlFileLoader implements LoaderInterface
         if (!@$document->schemaValidate(__DIR__ . '/meta/schema.xsd')) {
             throw new \RuntimeException(
                 sprintf(
-                    'Invalid xml schema in document %s',
+                    'The document %s is invalid according to the schema',
                     $this->path
                 )
             );

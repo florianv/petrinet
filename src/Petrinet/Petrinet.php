@@ -223,24 +223,4 @@ class Petrinet implements PetrinetInterface
 
         return null;
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getEnabledTransitions()
-    {
-        $transitions = array();
-
-        foreach ($this->getTransitions() as $transition) {
-            if ($transition->isEnabled()) {
-                $transitions[] = $transition;
-            }
-        }
-
-        if (!empty($transitions)) {
-            shuffle($transitions);
-        }
-
-        return $transitions;
-    }
 }

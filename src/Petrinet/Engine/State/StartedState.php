@@ -12,6 +12,7 @@
 namespace Petrinet\Engine\State;
 
 use Petrinet\Event\EngineEvent;
+use Petrinet\PetrinetInterface;
 use Petrinet\Transition\TransitionInterface;
 use Petrinet\Event\TokenAndPlaceEvent;
 use Petrinet\Event\TransitionEvent;
@@ -59,7 +60,7 @@ class StartedState extends AbstractEngineState
      */
     public function step()
     {
-        $transitions = $this->engine->getPetrinet()->getEnabledTransitions();
+        $transitions = $this->getEnabledTransitions($this->engine->getPetrinet());
 
         if (empty($transitions)) {
             $this->engine->stop();
@@ -120,5 +121,29 @@ class StartedState extends AbstractEngineState
         }
 
         $this->dispatcher->dispatch(PetrinetEvents::AFTER_TRANSITION_FIRE, $transitionEvent);
+    }
+
+    /**
+     * Gets the enabled transitions in the given Petrinet.
+     *
+     * @param PetrinetInterface $petrinet The Petrinet
+     *
+     * @return \Petrinet\Transition\TransitionInterface[] The enabled transitions
+     */
+    private function getEnabledTransitions(PetrinetInterface $petrinet)
+    {
+        $transitions = array();
+
+        foreach ($petrinet->getTransitions() as $transition) {
+            if ($transition->isEnabled()) {
+                $transitions[] = $transition;
+            }
+        }
+
+        if (!empty($transitions)) {
+            shuffle($transitions);
+        }
+
+        return $transitions;
     }
 }
