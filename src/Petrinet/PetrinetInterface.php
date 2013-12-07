@@ -65,11 +65,4 @@ interface PetrinetInterface extends ElementInterface
      * @return \Petrinet\Transition\TransitionInterface|null The transition or null if not found
      */
     public function getTransition($id);
-
-    /**
-     * Gets the enabled transitions (in random order).
-     *
-     * @return \Petrinet\Transition\TransitionInterface[] The transitions
-     */
-    public function getEnabledTransitions();
 }

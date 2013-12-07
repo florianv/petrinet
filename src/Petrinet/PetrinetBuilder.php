@@ -24,7 +24,7 @@ use Petrinet\Arc\Arc;
 final class PetrinetBuilder
 {
     /**
-     * The petrinet id.
+     * The Petrinet id.
      *
      * @var string
      */
