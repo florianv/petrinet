@@ -21,7 +21,9 @@ interface LoaderInterface
     /**
      * Loads a Petrinet.
      *
+     * @param mixed $resource The resource to load
+     *
      * @return \Petrinet\PetrinetInterface The Petrinet
      */
-    public function load();
+    public function load($resource);
 }

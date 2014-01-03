@@ -21,19 +21,13 @@ use Petrinet\Arc\Arc;
  */
 class XmlFileLoaderTest extends \PHPUnit_Framework_TestCase
 {
-    public function testConstructor()
-    {
-        $path = $this->getFixturesPath() . '/petrinet_1.xml';
-        $loader = new XmlFileLoader($path);
-        $this->assertEquals($path, $loader->getPath());
-    }
-
     /**
      * @expectedException \InvalidArgumentException
      */
     public function testConstructorInvalidFilePathException()
     {
-        new XmlFileLoader('unexisting');
+        $loader = new XmlFileLoader();
+        $loader->load('unexisting');
     }
 
     /**
@@ -41,8 +35,8 @@ class XmlFileLoaderTest extends \PHPUnit_Framework_TestCase
      */
     public function testExceptionWithTwoIdenticalPlaceIds()
     {
-        $loader = new XmlFileLoader($this->getFixturesPath() . '/petrinet_1.xml');
-        $loader->load();
+        $loader = new XmlFileLoader();
+        $loader->load($this->getFixturesPath() . '/petrinet_1.xml');
     }
 
     /**
@@ -50,8 +44,8 @@ class XmlFileLoaderTest extends \PHPUnit_Framework_TestCase
      */
     public function testExceptionWithTwoIdenticalTransitionIds()
     {
-        $loader = new XmlFileLoader($this->getFixturesPath() . '/petrinet_2.xml');
-        $loader->load();
+        $loader = new XmlFileLoader();
+        $loader->load($this->getFixturesPath() . '/petrinet_2.xml');
     }
 
     /**
@@ -59,8 +53,8 @@ class XmlFileLoaderTest extends \PHPUnit_Framework_TestCase
      */
     public function testExceptionWithTwoIdenticalArcIds()
     {
-        $loader = new XmlFileLoader($this->getFixturesPath() . '/petrinet_3.xml');
-        $loader->load();
+        $loader = new XmlFileLoader();
+        $loader->load($this->getFixturesPath() . '/petrinet_3.xml');
     }
 
     /**
@@ -68,8 +62,8 @@ class XmlFileLoaderTest extends \PHPUnit_Framework_TestCase
      */
     public function testExceptionUnexistingArcFrom()
     {
-        $loader = new XmlFileLoader($this->getFixturesPath() . '/petrinet_4.xml');
-        $loader->load();
+        $loader = new XmlFileLoader();
+        $loader->load($this->getFixturesPath() . '/petrinet_4.xml');
     }
 
     /**
@@ -77,8 +71,8 @@ class XmlFileLoaderTest extends \PHPUnit_Framework_TestCase
      */
     public function testExceptionUnexistingArcTo()
     {
-        $loader = new XmlFileLoader($this->getFixturesPath() . '/petrinet_5.xml');
-        $loader->load();
+        $loader = new XmlFileLoader();
+        $loader->load($this->getFixturesPath() . '/petrinet_5.xml');
     }
 
     /**
@@ -86,8 +80,8 @@ class XmlFileLoaderTest extends \PHPUnit_Framework_TestCase
      */
     public function testExceptionArcFromTwoPlaces()
     {
-        $loader = new XmlFileLoader($this->getFixturesPath() . '/petrinet_6.xml');
-        $loader->load();
+        $loader = new XmlFileLoader();
+        $loader->load($this->getFixturesPath() . '/petrinet_6.xml');
     }
 
     /**
@@ -95,8 +89,8 @@ class XmlFileLoaderTest extends \PHPUnit_Framework_TestCase
      */
     public function testExceptionArcFromTwoTransitions()
     {
-        $loader = new XmlFileLoader($this->getFixturesPath() . '/petrinet_7.xml');
-        $loader->load();
+        $loader = new XmlFileLoader();
+        $loader->load($this->getFixturesPath() . '/petrinet_7.xml');
     }
 
     /**
@@ -104,14 +98,14 @@ class XmlFileLoaderTest extends \PHPUnit_Framework_TestCase
      */
     public function testExceptionPlaceTokensNotNumeric()
     {
-        $loader = new XmlFileLoader($this->getFixturesPath() . '/petrinet_8.xml');
-        $loader->load();
+        $loader = new XmlFileLoader();
+        $loader->load($this->getFixturesPath() . '/petrinet_8.xml');
     }
 
     public function testLoad()
     {
-        $loader = new XmlFileLoader($this->getFixturesPath() . '/petrinet_9.xml');
-        $petrinet = $loader->load();
+        $loader = new XmlFileLoader();
+        $petrinet = $loader->load($this->getFixturesPath() . '/petrinet_9.xml');
         $p1 = $petrinet->getPlace('p1');
         $p2 = $petrinet->getPlace('p2');
         $t1 = $petrinet->getTransition('t1');
