@@ -55,10 +55,10 @@ Now you can load the Petrinet using the `XmlFileLoader`:
 use Petrinet\Loader\XmlFileLoader;
 
 // Creating a loader instance
-$loader = new XmlFileLoader('/path/to/petrinet.xml');
+$loader = new XmlFileLoader();
 
 // Loading the Petrinet
-$petrinet = $loader->load();
+$petrinet = $loader->load('/path/to/petrinet.xml');
 ```
 
 ### With the Petrinet Builder

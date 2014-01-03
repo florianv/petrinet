@@ -22,67 +22,18 @@ use Petrinet\Arc\Arc;
  *
  * @author Florian Voutzinos <florian@voutzinos.com>
  */
-class XmlFileLoader implements LoaderInterface
+class XmlFileLoader extends AbstractFileLoader
 {
-    /**
-     * Full path to the xml file.
-     *
-     * @var string
-     */
-    protected $path;
-
-    /**
-     * Creates a new xml loader.
-     *
-     * @param string $path Full or relative path to the xml file
-     *
-     * @throws \InvalidArgumentException
-     */
-    public function __construct($path)
-    {
-        if (!is_file($path)) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    'The path %s is not a file',
-                    $path
-                )
-            );
-        }
-
-        $this->path = $path;
-    }
-
-    /**
-     * Gets the full path to the xml file.
-     *
-     * @return string The full path to the xml file.
-     */
-    public function getPath()
-    {
-        return $this->path;
-    }
-
     /**
      * {@inheritdoc}
      */
-    public function load()
+    protected function doLoad($content)
     {
-        $content = @file_get_contents($this->path);
-
-        if (!is_string($content)) {
-            throw new \RuntimeException(
-                sprintf(
-                    'Failed to read the file %s',
-                    $this->path
-                )
-            );
-        }
-
         $document = new \DOMDocument();
         $document->loadXML($content);
         $this->validateSchema($document);
 
-        return $this->doLoad(new \SimpleXMLElement($content));
+        return $this->doLoadPetrinet(new \SimpleXMLElement($content));
     }
 
     /**
@@ -94,7 +45,7 @@ class XmlFileLoader implements LoaderInterface
      *
      * @throws \RuntimeException
      */
-    private function doLoad(\SimpleXMLElement $element)
+    private function doLoadPetrinet(\SimpleXMLElement $element)
     {
         $petrinetAttributes = $element->attributes();
         $petrinet = new Petrinet((string) $petrinetAttributes['id']);
@@ -270,12 +221,7 @@ class XmlFileLoader implements LoaderInterface
     private function validateSchema(\DOMDocument $document)
     {
         if (!@$document->schemaValidate(__DIR__ . '/meta/schema.xsd')) {
-            throw new \RuntimeException(
-                sprintf(
-                    'The document %s is invalid according to the schema',
-                    $this->path
-                )
-            );
+            throw new \RuntimeException('The document is invalid according to the schema');
         }
     }
 }
