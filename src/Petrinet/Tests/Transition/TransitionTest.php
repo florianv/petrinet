@@ -11,10 +11,8 @@
 
 namespace Petrinet\Tests\Transition;
 
-use Petrinet\Transition\Transition;
-use Petrinet\Place\Place;
+use Petrinet\Tests\Fixtures\PetrinetProvider;
 use Petrinet\Token\Token;
-use Petrinet\Arc\Arc;
 
 /**
  * Test class for Transition.
@@ -23,27 +21,41 @@ use Petrinet\Arc\Arc;
  */
 class TransitionTest extends \PHPUnit_Framework_TestCase
 {
-    public function testIsEnabled()
+    public function testIsEnabledSequence()
     {
-        $transition = new Transition('t1');
-        $this->assertFalse($transition->isEnabled());
+        $petrinet = PetrinetProvider::getSequencePattern();
 
-        $inputArc1 = new Arc('a1', Arc::PLACE_TO_TRANSITION);
-        $inputPlace1 = new Place('p1');
-        $inputArc1->setPlace($inputPlace1);
-        $inputArc1->setTransition($transition);
-        $transition->addInputArc($inputArc1);
+        $this->assertTrue($petrinet->getTransition('t1')->isEnabled());
+        $this->assertFalse($petrinet->getTransition('t2')->isEnabled());
+    }
 
-        $inputArc2 = new Arc('a2', Arc::PLACE_TO_TRANSITION);
-        $inputPlace2 = new Place('p2');
-        $inputArc2->setPlace($inputPlace2);
-        $inputArc2->setTransition($transition);
-        $transition->addInputArc($inputArc2);
+    public function testIsEnabledConflict()
+    {
+        $petrinet = PetrinetProvider::getConflictPattern();
 
-        $this->assertFalse($transition->isEnabled());
-        $inputPlace1->addToken(new Token());
-        $this->assertFalse($transition->isEnabled());
-        $inputPlace2->addToken(new Token());
-        $this->assertTrue($transition->isEnabled());
+        $this->assertTrue($petrinet->getTransition('t1')->isEnabled());
+        $this->assertTrue($petrinet->getTransition('t2')->isEnabled());
+    }
+
+    public function testIsEnabledSynchronization()
+    {
+        $petrinet = PetrinetProvider::getSynchronizationPattern();
+        $t1 = $petrinet->getTransition('t1');
+        $p2 = $petrinet->getPlace('p2');
+
+        $this->assertFalse($t1->isEnabled());
+
+        $p2->addToken(new Token());
+
+        $this->assertTrue($t1->isEnabled());
+    }
+
+    public function testIsEnabledConcurrency()
+    {
+        $petrinet = PetrinetProvider::getConcurrencyPattern();
+
+        $this->assertFalse($petrinet->getTransition('t1')->isEnabled());
+        $this->assertTrue($petrinet->getTransition('t2')->isEnabled());
+        $this->assertTrue($petrinet->getTransition('t3')->isEnabled());
     }
 }

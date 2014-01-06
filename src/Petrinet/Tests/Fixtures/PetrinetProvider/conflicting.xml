@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<TPN name="/Users/flo/Documents/conflicting.xml">
+  <place id="1" label="P 1" initialMarking="1" eft="0" lft="inf"> 
+      <graphics color="0"> 
+         <position x="120.0" y="121.0"/> 
+         <deltaLabel deltax="19.0" deltay="-20.0"/> 
+      </graphics> 
+      <scheduling gamma="0" omega="0"/> 
+  </place> 
+
+  <place id="2" label="P 2" initialMarking="1" eft="0" lft="inf"> 
+      <graphics color="0"> 
+         <position x="182.0" y="121.0"/> 
+         <deltaLabel deltax="19.0" deltay="-16.0"/> 
+      </graphics> 
+      <scheduling gamma="0" omega="0"/> 
+  </place> 
+
+  <place id="3" label="P 3" initialMarking="1" eft="0" lft="inf"> 
+      <graphics color="0"> 
+         <position x="240.0" y="123.0"/> 
+         <deltaLabel deltax="23.0" deltay="-14.0"/> 
+      </graphics> 
+      <scheduling gamma="0" omega="0"/> 
+  </place> 
+
+  <place id="4" label="P 4" initialMarking="0" eft="0" lft="inf"> 
+      <graphics color="0"> 
+         <position x="151.0" y="240.0"/> 
+         <deltaLabel deltax="3.0" deltay="10.0"/> 
+      </graphics> 
+      <scheduling gamma="0" omega="0"/> 
+  </place> 
+
+  <place id="5" label="P 5" initialMarking="0" eft="0" lft="inf"> 
+      <graphics color="0"> 
+         <position x="212.0" y="242.0"/> 
+         <deltaLabel deltax="3.0" deltay="11.0"/> 
+      </graphics> 
+      <scheduling gamma="0" omega="0"/> 
+  </place> 
+
+  <transition id="1" label="T 1"  eft="0" lft="inf"  obs="1"> 
+     <graphics color="0"> 
+        <position x="150.0" y="182.0"/> 
+        <deltaLabel deltax="13.0" deltay="9.0"/> 
+     </graphics> 
+  </transition> 
+
+  <transition id="2" label="T 2"  eft="0" lft="inf"  obs="1"> 
+     <graphics color="0"> 
+        <position x="212.0" y="182.0"/> 
+        <deltaLabel deltax="15.0" deltay="9.0"/> 
+     </graphics> 
+  </transition> 
+
+  <arc place="1" transition="1" type="PlaceTransition" weight="1"> 
+    <nail xnail="0" ynail="0"/> 
+    <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+ 
+
+  <arc place="2" transition="1" type="PlaceTransition" weight="1"> 
+    <nail xnail="0" ynail="0"/> 
+    <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+ 
+
+  <arc place="4" transition="1" type="TransitionPlace" weight="1"> 
+     <nail xnail="0" ynail="0"/> 
+     <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+
+  <arc place="2" transition="2" type="PlaceTransition" weight="1"> 
+    <nail xnail="0" ynail="0"/> 
+    <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+ 
+
+  <arc place="3" transition="2" type="PlaceTransition" weight="1"> 
+    <nail xnail="0" ynail="0"/> 
+    <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+ 
+
+  <arc place="5" transition="2" type="TransitionPlace" weight="1"> 
+     <nail xnail="0" ynail="0"/> 
+     <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+
+  <preferences> 
+      <colorPlace  c0="SkyBlue2"  c1="gray"  c2="cyan"  c3="green"  c4="yellow"  c5="brown" /> 
+ 
+      <colorTransition  c0="yellow"  c1="gray"  c2="cyan"  c3="green"  c4="SkyBlue2"  c5="brown" /> 
+ 
+      <colorArc  c0="black"  c1="gray"  c2="blue"  c3="#beb760"  c4="#be5c7e"  c5="#46be90" /> 
+ 
+  </preferences> 
+ </TPN> 
+
