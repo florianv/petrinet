@@ -12,6 +12,7 @@
 namespace Petrinet\Tests\Engine;
 
 use Symfony\Component\EventDispatcher\EventDispatcher;
+use Petrinet\Tests\Fixtures\PetrinetProvider;
 use Petrinet\Engine\Engine;
 use Petrinet\Petrinet;
 
@@ -138,5 +139,36 @@ class EngineTest extends \PHPUnit_Framework_TestCase
         $engine = new Engine($petrinet);
         $engine->setState($mockedState);
         $engine->stop();
+    }
+
+    public function testExecutionWithConflictingTransitions()
+    {
+        $petrinet = PetrinetProvider::getConflictingPetrinet();
+
+        $engine = new Engine($petrinet);
+        $engine->setMode(Engine::MODE_STEPPED);
+        $engine->start();
+
+        $p1 = $petrinet->getPlace('p1');
+        $p2 = $petrinet->getPlace('p2');
+        $p3 = $petrinet->getPlace('p3');
+        $p4 = $petrinet->getPlace('p4');
+        $p5 = $petrinet->getPlace('p5');
+
+        // t1 was fired
+        if (0 === count($p1)) {
+            $this->assertCount(0, $p2);
+            $this->assertCount(1, $p3);
+            $this->assertCount(1, $p4);
+            $this->assertCount(0, $p5);
+        }
+
+        // t2 was fired
+        elseif (0 === count($p3)) {
+            $this->assertCount(1, $p1);
+            $this->assertCount(0, $p2);
+            $this->assertCount(0, $p4);
+            $this->assertCount(1, $p5);
+        }
     }
 }

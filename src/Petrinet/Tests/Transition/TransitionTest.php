@@ -11,6 +11,7 @@
 
 namespace Petrinet\Tests\Transition;
 
+use Petrinet\Tests\Fixtures\PetrinetProvider;
 use Petrinet\Transition\Transition;
 use Petrinet\Place\Place;
 use Petrinet\Token\Token;
@@ -45,5 +46,13 @@ class TransitionTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($transition->isEnabled());
         $inputPlace2->addToken(new Token());
         $this->assertTrue($transition->isEnabled());
+    }
+
+    public function testIsEnabledConflictingTransitions()
+    {
+        $petrinet = PetrinetProvider::getConflictingPetrinet();
+
+        $this->assertTrue($petrinet->getTransition('t1')->isEnabled());
+        $this->assertTrue($petrinet->getTransition('t2')->isEnabled());
     }
 }

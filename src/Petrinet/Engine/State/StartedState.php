@@ -78,6 +78,11 @@ class StartedState extends AbstractEngineState
      */
     private function fireTransition(TransitionInterface $transition)
     {
+        // Firing a previous transition might have disabled this one
+        if (!$transition->isEnabled()) {
+            return;
+        }
+
         $transitionEvent = new TransitionEvent($transition);
         $this->dispatcher->dispatch(PetrinetEvents::BEFORE_TRANSITION_FIRE, $transitionEvent);
 
