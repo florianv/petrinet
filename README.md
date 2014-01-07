@@ -1,6 +1,7 @@
 # Petrinet
 
 [![Build Status](https://secure.travis-ci.org/florianv/petrinet.png)](https://travis-ci.org/florianv/petrinet)
+[![Coverage Status](https://coveralls.io/repos/florianv/petrinet/badge.png)](https://coveralls.io/r/florianv/petrinet)
 
 ## What is Petrinet ?
 
