@@ -1,11 +1,11 @@
 # Petrinet
 
+This framework allows to create, vizualize and execute Petrinets.
+
 [![Build Status](https://secure.travis-ci.org/florianv/petrinet.png)](https://travis-ci.org/florianv/petrinet)
 [![Coverage Status](https://coveralls.io/repos/florianv/petrinet/badge.png)](https://coveralls.io/r/florianv/petrinet)
-
-## What is Petrinet ?
-
-Petrinet is a framework allowing to create, vizualize and execute Petrinets.
+[![Latest Stable Version](https://poser.pugx.org/florianv/petrinet/v/stable.png)](https://packagist.org/packages/florianv/petrinet)
+[![Latest Unstable Version](https://poser.pugx.org/florianv/petrinet/v/unstable.png)](https://packagist.org/packages/florianv/petrinet)
 
 ## Requirements
 
