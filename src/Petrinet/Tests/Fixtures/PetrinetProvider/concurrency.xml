@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<TPN name="/Users/flo/www/petrinet/src/Petrinet/Tests/Fixtures/PetrinetProvider/concurrency.xml">
+  <place id="1" label="P 1" initialMarking="0" eft="0" lft="inf"> 
+      <graphics color="0"> 
+         <position x="92.00000000000001" y="149.00000000000003"/> 
+         <deltaLabel deltax="10" deltay="10"/> 
+      </graphics> 
+      <scheduling gamma="0" omega="0"/> 
+  </place> 
+
+  <place id="2" label="P 2" initialMarking="1" eft="0" lft="inf"> 
+      <graphics color="0"> 
+         <position x="181.00000000000003" y="122.00000000000003"/> 
+         <deltaLabel deltax="10" deltay="10"/> 
+      </graphics> 
+      <scheduling gamma="0" omega="0"/> 
+  </place> 
+
+  <place id="3" label="P 3" initialMarking="1" eft="0" lft="inf"> 
+      <graphics color="0"> 
+         <position x="181.00000000000003" y="182.00000000000003"/> 
+         <deltaLabel deltax="10" deltay="10"/> 
+      </graphics> 
+      <scheduling gamma="0" omega="0"/> 
+  </place> 
+
+  <place id="4" label="P 4" initialMarking="0" eft="0" lft="inf"> 
+      <graphics color="0"> 
+         <position x="300.00000000000006" y="123.00000000000003"/> 
+         <deltaLabel deltax="10" deltay="10"/> 
+      </graphics> 
+      <scheduling gamma="0" omega="0"/> 
+  </place> 
+
+  <place id="5" label="P 5" initialMarking="0" eft="0" lft="inf"> 
+      <graphics color="0"> 
+         <position x="301.00000000000006" y="182.00000000000003"/> 
+         <deltaLabel deltax="10" deltay="10"/> 
+      </graphics> 
+      <scheduling gamma="0" omega="0"/> 
+  </place> 
+
+  <transition id="1" label="T 1"  eft="0" lft="inf"  obs="1"> 
+     <graphics color="0"> 
+        <position x="144.00000000000003" y="151.00000000000003"/> 
+        <deltaLabel deltax="10" deltay="10"/> 
+     </graphics> 
+  </transition> 
+
+  <transition id="2" label="T 2"  eft="0" lft="inf"  obs="1"> 
+     <graphics color="0"> 
+        <position x="241.00000000000003" y="121.00000000000003"/> 
+        <deltaLabel deltax="10" deltay="10"/> 
+     </graphics> 
+  </transition> 
+
+  <transition id="3" label="T 3"  eft="0" lft="inf"  obs="1"> 
+     <graphics color="0"> 
+        <position x="240.00000000000003" y="183.00000000000003"/> 
+        <deltaLabel deltax="10" deltay="10"/> 
+     </graphics> 
+  </transition> 
+
+  <arc place="1" transition="1" type="PlaceTransition" weight="1"> 
+    <nail xnail="0" ynail="0"/> 
+    <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+ 
+
+  <arc place="2" transition="1" type="TransitionPlace" weight="1"> 
+     <nail xnail="0" ynail="0"/> 
+     <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+
+  <arc place="3" transition="1" type="TransitionPlace" weight="1"> 
+     <nail xnail="0" ynail="0"/> 
+     <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+
+  <arc place="2" transition="2" type="PlaceTransition" weight="1"> 
+    <nail xnail="0" ynail="0"/> 
+    <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+ 
+
+  <arc place="4" transition="2" type="TransitionPlace" weight="1"> 
+     <nail xnail="0" ynail="0"/> 
+     <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+
+  <arc place="3" transition="3" type="PlaceTransition" weight="1"> 
+    <nail xnail="0" ynail="0"/> 
+    <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+ 
+
+  <arc place="5" transition="3" type="TransitionPlace" weight="1"> 
+     <nail xnail="0" ynail="0"/> 
+     <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+
+  <preferences> 
+      <colorPlace  c0="SkyBlue2"  c1="gray"  c2="cyan"  c3="green"  c4="yellow"  c5="brown" /> 
+ 
+      <colorTransition  c0="yellow"  c1="gray"  c2="cyan"  c3="green"  c4="SkyBlue2"  c5="brown" /> 
+ 
+      <colorArc  c0="black"  c1="gray"  c2="blue"  c3="#beb760"  c4="#be5c7e"  c5="#46be90" /> 
+ 
+  </preferences> 
+ </TPN> 
+
