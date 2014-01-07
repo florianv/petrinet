@@ -12,6 +12,7 @@
 namespace Petrinet\Engine\State;
 
 use Petrinet\Event\EngineEvent;
+use Petrinet\Event\PlaceEvent;
 use Petrinet\PetrinetInterface;
 use Petrinet\Transition\TransitionInterface;
 use Petrinet\Event\TokenAndPlaceEvent;
@@ -78,6 +79,11 @@ class StartedState extends AbstractEngineState
      */
     private function fireTransition(TransitionInterface $transition)
     {
+        // Firing a previous transition might have disabled this one
+        if (!$transition->isEnabled()) {
+            return;
+        }
+
         $transitionEvent = new TransitionEvent($transition);
         $this->dispatcher->dispatch(PetrinetEvents::BEFORE_TRANSITION_FIRE, $transitionEvent);
 
@@ -99,14 +105,14 @@ class StartedState extends AbstractEngineState
         // Remove one token from each input place
         foreach ($inputArcs as $arc) {
             $place = $arc->getPlace();
+
+            $placeEvent = new PlaceEvent($place);
+            $this->dispatcher->dispatch(PetrinetEvents::BEFORE_TOKEN_CONSUME, $placeEvent);
+
             $token = $place->removeOneToken();
 
-            // No token can be removed if an other transition was enabled at the same time
-            // and resulted in the consumption of the unique token from the place
-            if (null !== $token) {
-                $tokenAndPlaceEvent = new TokenAndPlaceEvent($token, $place);
-                $this->dispatcher->dispatch(PetrinetEvents::AFTER_TOKEN_CONSUME, $tokenAndPlaceEvent);
-            }
+            $tokenAndPlaceEvent = new TokenAndPlaceEvent($token, $place);
+            $this->dispatcher->dispatch(PetrinetEvents::AFTER_TOKEN_CONSUME, $tokenAndPlaceEvent);
         }
 
         // Add one token to each output place
@@ -116,7 +122,9 @@ class StartedState extends AbstractEngineState
 
             $tokenAndPlaceEvent = new TokenAndPlaceEvent($token, $place);
             $this->dispatcher->dispatch(PetrinetEvents::BEFORE_TOKEN_INSERT, $tokenAndPlaceEvent);
+
             $place->addToken($token);
+
             $this->dispatcher->dispatch(PetrinetEvents::AFTER_TOKEN_INSERT, $tokenAndPlaceEvent);
         }
 

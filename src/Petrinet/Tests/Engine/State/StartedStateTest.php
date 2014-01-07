@@ -11,6 +11,7 @@
 
 namespace Petrinet\Tests\Engine\State;
 
+use Petrinet\Tests\Fixtures\PetrinetProvider;
 use Petrinet\PetrinetBuilder;
 use Petrinet\PetrinetEvents;
 use Petrinet\Engine\Engine;
@@ -29,7 +30,6 @@ class StartedStateTest extends \PHPUnit_Framework_TestCase
     {
         $engine = new Engine($this->getMock('Petrinet\PetrinetInterface'));
         $engine->setState($engine->getStartedState());
-
         $engine->getStartedState()->start();
     }
 
@@ -55,6 +55,48 @@ class StartedStateTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($engine->getState(), $engine->getStoppedState());
     }
 
+    public function testStepEventsAreDispatched()
+    {
+        $petrinet = PetrinetProvider::getSequencePattern();
+
+        $mockedDispatcher = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+        $mockedDispatcher
+            ->expects($this->at(0))
+            ->method('dispatch')
+            ->with(PetrinetEvents::BEFORE_TRANSITION_FIRE);
+
+        $mockedDispatcher
+            ->expects($this->at(1))
+            ->method('dispatch')
+            ->with(PetrinetEvents::BEFORE_TOKEN_CONSUME);
+
+        $mockedDispatcher
+            ->expects($this->at(2))
+            ->method('dispatch')
+            ->with(PetrinetEvents::AFTER_TOKEN_CONSUME);
+
+        $mockedDispatcher
+            ->expects($this->at(3))
+            ->method('dispatch')
+            ->with(PetrinetEvents::BEFORE_TOKEN_INSERT);
+
+        $mockedDispatcher
+            ->expects($this->at(4))
+            ->method('dispatch')
+            ->with(PetrinetEvents::AFTER_TOKEN_INSERT);
+
+        $mockedDispatcher
+            ->expects($this->at(5))
+            ->method('dispatch')
+            ->with(PetrinetEvents::AFTER_TRANSITION_FIRE);
+
+        $engine = new Engine($petrinet, $mockedDispatcher);
+        $startedState = $engine->getStartedState();
+        $engine->setState($startedState);
+
+        $startedState->step();
+    }
+
     public function testStepWithNoEnabledTransitions()
     {
         $builder = new PetrinetBuilder('p');
@@ -72,64 +114,104 @@ class StartedStateTest extends \PHPUnit_Framework_TestCase
         $engine = new Engine($petrinet);
         $startedState = $engine->getStartedState();
         $engine->setState($startedState);
-
         $startedState->step();
 
         foreach ($petrinet->getPlaces() as $place) {
-            $this->assertTrue($place->isEmpty());
+            $this->assertCount(0, $place);
         }
     }
 
-    public function testStepWithEnabledTransitions()
+    public function testStepWithSequentialTransitions()
     {
-        $builder = new PetrinetBuilder('p');
-        $petrinet = $builder
-            ->addPlace('p1', 1)
-            ->addTransition('t1')
-            ->addTransition('t2')
-            ->addPlace('p2')
-            ->connectPT('p1', 't1')
-            ->connectTP('t1', 'p2')
-            ->connectPT('p2', 't2')
-            ->connectTP('t2', 'p1')
-            ->getPetrinet();
+        $petrinet = PetrinetProvider::getSequencePattern();
+        $p1 = $petrinet->getPlace('p1');
+        $p2 = $petrinet->getPlace('p2');
+        $p3 = $petrinet->getPlace('p3');
 
-        $mockedDispatcher = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
-        $mockedDispatcher
-            ->expects($this->at(0))
-            ->method('dispatch')
-            ->with(PetrinetEvents::BEFORE_TRANSITION_FIRE);
-
-        $mockedDispatcher
-            ->expects($this->at(1))
-            ->method('dispatch')
-            ->with(PetrinetEvents::AFTER_TOKEN_CONSUME);
-
-        $mockedDispatcher
-            ->expects($this->at(2))
-            ->method('dispatch')
-            ->with(PetrinetEvents::BEFORE_TOKEN_INSERT);
-
-        $mockedDispatcher
-            ->expects($this->at(3))
-            ->method('dispatch')
-            ->with(PetrinetEvents::AFTER_TOKEN_INSERT);
-
-        $mockedDispatcher
-            ->expects($this->at(4))
-            ->method('dispatch')
-            ->with(PetrinetEvents::AFTER_TRANSITION_FIRE);
-
-        $engine = new Engine($petrinet, $mockedDispatcher);
+        $engine = new Engine($petrinet);
         $startedState = $engine->getStartedState();
         $engine->setState($startedState);
 
         $startedState->step();
 
-        $place1 = $petrinet->getPlace('p1');
-        $place2 = $petrinet->getPlace('p2');
+        $this->assertCount(0, $p1);
+        $this->assertCount(1, $p2);
+        $this->assertCount(0, $p3);
 
-        $this->assertTrue($place1->isEmpty());
-        $this->assertEquals(1, count($place2));
+        $startedState->step();
+
+        $this->assertCount(0, $p1);
+        $this->assertCount(0, $p2);
+        $this->assertCount(1, $p3);
+    }
+
+    public function testStepWithConflictingTransitions()
+    {
+        $petrinet = PetrinetProvider::getConflictPattern();
+
+        $engine = new Engine($petrinet);
+        $startedState = $engine->getStartedState();
+        $engine->setState($startedState);
+        $startedState->step();
+
+        $p1 = $petrinet->getPlace('p1');
+        $p2 = $petrinet->getPlace('p2');
+        $p3 = $petrinet->getPlace('p3');
+        $p4 = $petrinet->getPlace('p4');
+        $p5 = $petrinet->getPlace('p5');
+
+        // t1 was fired
+        if (0 === count($p1)) {
+            $this->assertCount(0, $p2);
+            $this->assertCount(1, $p3);
+            $this->assertCount(1, $p4);
+            $this->assertCount(0, $p5);
+        }
+
+        // t2 was fired
+        elseif (0 === count($p3)) {
+            $this->assertCount(1, $p1);
+            $this->assertCount(0, $p2);
+            $this->assertCount(0, $p4);
+            $this->assertCount(1, $p5);
+        }
+    }
+
+    public function testStepWithMergingTransition()
+    {
+        $petrinet = PetrinetProvider::getMergePattern();
+        $p1 = $petrinet->getPlace('p1');
+        $p2 = $petrinet->getPlace('p2');
+        $p3 = $petrinet->getPlace('p3');
+
+        $engine = new Engine($petrinet);
+        $startedState = $engine->getStartedState();
+        $engine->setState($startedState);
+        $startedState->step();
+
+        $this->assertCount(0, $p1);
+        $this->assertCount(0, $p2);
+        $this->assertCount(1, $p3);
+    }
+
+    public function testStepWithConcurrentTransitions()
+    {
+        $petrinet = PetrinetProvider::getConcurrencyPattern();
+        $p1 = $petrinet->getPlace('p1');
+        $p2 = $petrinet->getPlace('p2');
+        $p3 = $petrinet->getPlace('p3');
+        $p4 = $petrinet->getPlace('p4');
+        $p5 = $petrinet->getPlace('p5');
+
+        $engine = new Engine($petrinet);
+        $startedState = $engine->getStartedState();
+        $engine->setState($startedState);
+        $startedState->step();
+
+        $this->assertCount(0, $p1);
+        $this->assertCount(0, $p2);
+        $this->assertCount(0, $p3);
+        $this->assertCount(1, $p4);
+        $this->assertCount(1, $p5);
     }
 }
