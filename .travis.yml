@@ -3,15 +3,18 @@ language: php
 php:
   - "5.3"
   - "5.4"
+  - "5.5"
+  - hhvm
 
 before_install:
   - composer self-update
 
 before_script:
-  - composer update --dev
-  - pear install PHP_CodeSniffer
-  - pear channel-discover pear.phing.info
-  - pear install phing/phing
-  - phpenv rehash
+  - composer install --dev --no-interaction
+  - mkdir -p build/logs
 
-script: phing travis
+script:
+  - phpunit --coverage-clover build/logs/clover.xml
+
+after_script:
+  - php vendor/bin/coveralls -v
