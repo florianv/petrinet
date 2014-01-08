@@ -28,7 +28,7 @@ class GraphvizDumper implements DumperInterface
         $graph = 'digraph ' . $petrinet->getId() . " {\n";
 
         foreach ($petrinet->getPlaces() as $place) {
-            $tokens = count($place);
+            $tokens = $place->countFreeToken();
             $graph .= $place->getId() . ' [label="' . $place->getId() . ': ' . $tokens;
             $tokens > 1 ? $graph .= ' tokens"];' : $graph .= ' token"];';
             $graph .= "\n";
