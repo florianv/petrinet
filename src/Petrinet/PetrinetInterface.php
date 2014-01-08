@@ -65,4 +65,11 @@ interface PetrinetInterface extends ElementInterface
      * @return \Petrinet\Transition\TransitionInterface|null The transition or null if not found
      */
     public function getTransition($id);
+
+    /**
+     * Clear all tokens
+     *
+     * @return null
+     */
+    public function clearTokens();
 }

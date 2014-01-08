@@ -78,7 +78,7 @@ class TokenBag implements \Countable, \IteratorAggregate
     /**
      * Clears the bag.
      *
-     * @return Token[] The temoved tokens
+     * @return Token[] The removed tokens
      */
     public function clear()
     {

@@ -88,6 +88,16 @@ class Place extends AbstractNode implements PlaceInterface
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function clearTokens()
+    {
+        $this->tokenBag->clear();
+
+        return $this;
+    }
+
+    /**
      * Counts the number of tokens in the place.
      *
      * @return integer The number of tokens

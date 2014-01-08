@@ -49,6 +49,30 @@ class PetrinetBuilderTest extends \PHPUnit_Framework_TestCase
             ->addPlace('p1');
     }
 
+    public function testAddTokenOnPlace()
+    {
+        $builder = new PetrinetBuilder('test');
+        $petrinet = $builder
+            ->addPlace('p1')
+            ->addTokenOnPlace('p1')
+            ->addTokenOnPlace('p1')
+            ->addPlace('p2')
+            ->getPetrinet();
+
+        $this->assertEquals(2, $petrinet->getPlace('p1')->count());
+        $this->assertEquals(0, $petrinet->getPlace('p2')->count());
+    }
+
+    /**
+     * @expectedException \LogicException
+     */
+    public function testAddTokenOnPlaceExistingException()
+    {
+        $builder = new PetrinetBuilder('test');
+        $builder
+            ->addTokenOnPlace('p1');
+    }
+
     /**
      * @expectedException \LogicException
      */
