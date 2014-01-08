@@ -225,7 +225,7 @@ class Petrinet implements PetrinetInterface
     }
 
     /**
-     * Clears all tokens
+     * Clears all tokens.
      */
     public function clearTokens()
     {
