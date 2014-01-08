@@ -82,9 +82,17 @@ class Place extends AbstractNode implements PlaceInterface
     /**
      * {@inheritdoc}
      */
-    public function removeOneToken()
+    public function blockOneToken()
     {
-        return $this->tokenBag->removeOne();
+        return $this->tokenBag->blockOne();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function consumeOneToken()
+    {
+        return $this->tokenBag->consumeOne();
     }
 
     /**
@@ -110,10 +118,20 @@ class Place extends AbstractNode implements PlaceInterface
     }
 
     /**
+     * Counts the number of free tokens in the place.
+     *
+     * @return integer The number of tokens
+     */
+    public function countFreeToken()
+    {
+        return $this->tokenBag->countFree();
+    }
+
+    /**
      * {@inheritdoc}
      */
-    public function isEmpty()
+    public function hasFreeToken()
     {
-        return $this->tokenBag->isEmpty();
+        return $this->tokenBag->hasFree();
     }
 }

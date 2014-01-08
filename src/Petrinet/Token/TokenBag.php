@@ -58,21 +58,37 @@ class TokenBag implements \Countable, \IteratorAggregate
     }
 
     /**
-     * Randomly removes one token.
+     * Randomly blocks one free token.
      *
-     * @return Token The removed Token
+     * @return Token The blocked Token
      */
-    public function removeOne()
+    public function blockOne()
     {
-        if ($this->isEmpty()) {
-            return null;
+        $tokens = $this->getAll();
+        shuffle($tokens);
+        foreach ($tokens as $token) {
+            if ($token->isFree()) {
+                $token->setBlocked();
+                return $token;
+            }
         }
+    }
 
-        $index = array_rand($this->tokens);
-        $token = $this->tokens[$index];
-        unset($this->tokens[$index]);
-
-        return $token;
+    /**
+     * Randomly consumes one blocked token.
+     *
+     * @return Token The blocked Token
+     */
+    public function consumeOne()
+    {
+        $tokens = $this->getAll();
+        shuffle($tokens);
+        foreach ($tokens as $token) {
+            if ($token->isBlocked()) {
+                $token->setConsumed();
+                return $token;
+            }
+        }
     }
 
     /**
@@ -82,7 +98,7 @@ class TokenBag implements \Countable, \IteratorAggregate
      */
     public function clear()
     {
-        $tokens = $this->tokens;
+        $tokens = $this->getAll();
         $this->tokens = array();
 
         return $tokens;
@@ -103,17 +119,70 @@ class TokenBag implements \Countable, \IteratorAggregate
      */
     public function count()
     {
-        return count($this->tokens);
+        return count($this->getAll());
     }
 
     /**
-     * Tells if the bag is empty.
+     * Tells if the bag has at least one free token.
      *
-     * @return boolean True if empty, false otherwise
+     * @return boolean
      */
-    public function isEmpty()
+    public function hasFree()
     {
-        return 0 === count($this->tokens);
+        foreach ($this->getAll() as $token) {
+            if ($token->isFree()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Returns number of free tokens.
+     *
+     * @return integer
+     */
+    public function countFree()
+    {
+        $n = 0;
+        foreach ($this->getAll() as $token) {
+            if ($token->isFree()) {
+                $n++;
+            }
+        }
+        return $n;
+    }
+
+    /**
+     * Returns number of blocked tokens.
+     *
+     * @return integer
+     */
+    public function countBlocked()
+    {
+        $n = 0;
+        foreach ($this->getAll() as $token) {
+            if ($token->isBlocked()) {
+                $n++;
+            }
+        }
+        return $n;
+    }
+
+    /**
+     * Returns number of consumed tokens.
+     *
+     * @return integer
+     */
+    public function countConsumed()
+    {
+        $n = 0;
+        foreach ($this->getAll() as $token) {
+            if ($token->isConsumed()) {
+                $n++;
+            }
+        }
+        return $n;
     }
 
     /**

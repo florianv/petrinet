@@ -11,15 +11,41 @@
 
 namespace Petrinet\Token;
 
-use Petrinet\ElementInterface;
-
 /**
  * Represents a token.
  *
  * @author Florian Voutzinos <florian@voutzinos.com>
  */
-class Token implements ElementInterface
+class Token implements TokenInterface
 {
+    /**
+     * Status of a free token (can be used to enable a transition).
+     *
+     * @var string
+     */
+    const STATUS_FREE = 'free';
+
+    /**
+     * Status of a blocked token (has enabled a transition not yet fired).
+     *
+     * @var string
+     */
+    const STATUS_BLOCKED = 'blocked';
+
+    /**
+     * Status of a consumed token (has enabled a fired transition).
+     *
+     * @var string
+     */
+    const STATUS_CONSUMED = 'consumed';
+
+    /**
+     * The token status.
+     *
+     * @var string
+     */
+    protected $status;
+
     /**
      * The token id.
      *
@@ -35,6 +61,7 @@ class Token implements ElementInterface
     public function __construct($id = null)
     {
         $this->id = $id;
+        $this->setFree();
     }
 
     /**
@@ -43,5 +70,53 @@ class Token implements ElementInterface
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setFree()
+    {
+        $this->status=self::STATUS_FREE;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setBlocked()
+    {
+        $this->status=self::STATUS_BLOCKED;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setConsumed()
+    {
+        $this->status=self::STATUS_CONSUMED;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isFree()
+    {
+        return $this->status==self::STATUS_FREE;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isBlocked()
+    {
+        return $this->status==self::STATUS_BLOCKED;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isConsumed()
+    {
+        return $this->status==self::STATUS_CONSUMED;
     }
 }

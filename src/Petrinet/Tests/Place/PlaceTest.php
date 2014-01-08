@@ -50,15 +50,26 @@ class PlaceTest extends \PHPUnit_Framework_TestCase
         $place->addToken($token);
     }
 
-    public function testRemoveOneToken()
+    public function testBlockOneToken()
     {
         $mockedTokenBag = $this->getMock('Petrinet\Token\TokenBag');
         $mockedTokenBag
             ->expects($this->once())
-            ->method('removeOne');
+            ->method('blockOne');
 
         $place = new Place('p1', $mockedTokenBag);
-        $place->removeOneToken();
+        $place->blockOneToken();
+    }
+
+    public function testConsumeOneToken()
+    {
+        $mockedTokenBag = $this->getMock('Petrinet\Token\TokenBag');
+        $mockedTokenBag
+            ->expects($this->once())
+            ->method('consumeOne');
+
+        $place = new Place('p1', $mockedTokenBag);
+        $place->consumeOneToken();
     }
 
     public function testClearTokens()
@@ -83,14 +94,25 @@ class PlaceTest extends \PHPUnit_Framework_TestCase
         count($place);
     }
 
-    public function testIsEmpty()
+    public function testCountFreeToken()
     {
         $mockedTokenBag = $this->getMock('Petrinet\Token\TokenBag');
         $mockedTokenBag
             ->expects($this->once())
-            ->method('isEmpty');
+            ->method('countFree');
 
         $place = new Place('p1', $mockedTokenBag);
-        $place->isEmpty();
+        $place->countFreeToken();
+    }
+
+    public function testHasFreeToken()
+    {
+        $mockedTokenBag = $this->getMock('Petrinet\Token\TokenBag');
+        $mockedTokenBag
+            ->expects($this->once())
+            ->method('hasFree');
+
+        $place = new Place('p1', $mockedTokenBag);
+        $place->hasFreeToken();
     }
 }

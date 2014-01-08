@@ -31,16 +31,23 @@ interface PlaceInterface extends \Countable, NodeInterface
     public function addToken(Token $token);
 
     /**
-     * Randomly removes one token.
+     * Randomly blocks one free token.
      *
-     * @return Token The removed Token
+     * @return Token The blocked Token
      */
-    public function removeOneToken();
+    public function blockOneToken();
 
     /**
-     * Tells if the place is empty.
+     * Randomly consumes one blocked token.
      *
-     * @return boolean True if empty, false otherwise
+     * @return Token The consumed Token
      */
-    public function isEmpty();
+    public function consumeOneToken();
+
+    /**
+     * Tells if the place has at least one free token.
+     *
+     * @return boolean
+     */
+    public function hasFreeToken();
 }

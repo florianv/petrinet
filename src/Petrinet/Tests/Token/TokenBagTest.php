@@ -24,7 +24,7 @@ class TokenBagTest extends \PHPUnit_Framework_TestCase
     public function testConstructor()
     {
         $tokenBag = new TokenBag();
-        $this->assertTrue($tokenBag->isEmpty());
+        $this->assertFalse($tokenBag->hasFree());
 
         $tokens = array(new Token(), new Token());
         $tokenBag = new TokenBag($tokens);
@@ -53,15 +53,76 @@ class TokenBagTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($tokens, $tokenBag->getAll());
     }
 
-    public function testRemoveOne()
+    public function testHasFreeToken()
     {
         $tokenBag = new TokenBag();
-        $this->assertNull($tokenBag->removeOne());
+        $this->assertFalse($tokenBag->hasFree());
+        $token = new Token();
+        $tokenBag->add($token);
+        $this->assertTrue($tokenBag->hasFree());
+    }
+
+    public function testCountFree()
+    {
+        $tokenBag = new TokenBag();
+        $this->assertEquals(0, $tokenBag->countFree());
+        $token = new Token();
+        $tokenBag->add($token);
+        $this->assertEquals(1, $tokenBag->countFree());
+        $token->setBlocked();
+        $this->assertEquals(0, $tokenBag->countFree());
+        $token->setConsumed();
+        $this->assertEquals(0, $tokenBag->countFree());
+    }
+
+    public function testCountBlocked()
+    {
+        $tokenBag = new TokenBag();
+        $this->assertEquals(0, $tokenBag->countBlocked());
+        $token = new Token();
+        $tokenBag->add($token);
+        $this->assertEquals(0, $tokenBag->countBlocked());
+        $token->setBlocked();
+        $this->assertEquals(1, $tokenBag->countBlocked());
+        $token->setConsumed();
+        $this->assertEquals(0, $tokenBag->countBlocked());
+    }
+
+    public function testCountConsumed()
+    {
+        $tokenBag = new TokenBag();
+        $this->assertEquals(0, $tokenBag->countConsumed());
+        $token = new Token();
+        $tokenBag->add($token);
+        $this->assertEquals(0, $tokenBag->countConsumed());
+        $token->setBlocked();
+        $this->assertEquals(0, $tokenBag->countConsumed());
+        $token->setConsumed();
+        $this->assertEquals(1, $tokenBag->countConsumed());
+    }
+
+    public function testBlockOne()
+    {
+        $tokenBag = new TokenBag();
+        $this->assertNull($tokenBag->blockOne());
 
         $token = new Token();
         $tokenBag->add($token);
-        $this->assertSame($token, $tokenBag->removeOne());
-        $this->assertTrue($tokenBag->isEmpty());
+        $this->assertSame($token, $tokenBag->blockOne());
+        $this->assertEquals(1, $tokenBag->countBlocked());
+    }
+
+    public function testConsumeOne()
+    {
+        $tokenBag = new TokenBag();
+        $this->assertNull($tokenBag->consumeOne());
+
+        $token = new Token();
+        $tokenBag->add($token);
+        $this->assertNull($tokenBag->consumeOne());
+        $token->setBlocked();
+        $this->assertSame($token, $tokenBag->consumeOne());
+        $this->assertEquals(1, $tokenBag->countConsumed());
     }
 
     public function testClear()
@@ -76,6 +137,14 @@ class TokenBagTest extends \PHPUnit_Framework_TestCase
         $this->assertEmpty($tokenBag->getAll());
     }
 
+    public function testHasFree()
+    {
+        $tokenBag = new TokenBag();
+        $this->assertFalse($tokenBag->hasFree());
+        $tokenBag->add(new Token());
+        $this->assertTrue($tokenBag->hasFree());
+    }
+
     public function testCount()
     {
         $tokenBag = new TokenBag();
@@ -84,13 +153,5 @@ class TokenBagTest extends \PHPUnit_Framework_TestCase
         $tokens = array(new Token(), new Token());
         $tokenBag->addMultiple($tokens);
         $this->assertEquals(2, count($tokenBag));
-    }
-
-    public function testIsEmpty()
-    {
-        $tokenBag = new TokenBag();
-        $this->assertTrue($tokenBag->isEmpty());
-        $tokenBag->add(new Token());
-        $this->assertFalse($tokenBag->isEmpty());
     }
 }
