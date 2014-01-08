@@ -30,7 +30,7 @@ class Transition extends AbstractNode implements TransitionInterface
         }
 
         foreach ($this->inputArcs as $arc) {
-            if ($arc->getPlace()->isEmpty()) {
+            if (!$arc->getPlace()->hasFreeToken()) {
                 return false;
             }
         }

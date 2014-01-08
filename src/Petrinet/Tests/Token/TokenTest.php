@@ -24,8 +24,37 @@ class TokenTest extends \PHPUnit_Framework_TestCase
     {
         $token = new Token();
         $this->assertNull($token->getId());
+        $this->assertTrue($token->isFree());
 
         $token = new Token('foo');
         $this->assertEquals('foo', $token->getId());
+    }
+
+    public function testSetConsumed()
+    {
+        $token = new Token();
+        $token->setConsumed();
+        $this->assertFalse($token->isFree());
+        $this->assertFalse($token->isBlocked());
+        $this->assertTrue($token->isConsumed());
+    }
+
+    public function testSetBlocked()
+    {
+        $token = new Token();
+        $token->setBlocked();
+        $this->assertFalse($token->isFree());
+        $this->assertTrue($token->isBlocked());
+        $this->assertFalse($token->isConsumed());
+    }
+
+    public function testSetFree()
+    {
+        $token = new Token();
+        $token->setBlocked();
+        $token->setFree();
+        $this->assertTrue($token->isFree());
+        $this->assertFalse($token->isBlocked());
+        $this->assertFalse($token->isConsumed());
     }
 }

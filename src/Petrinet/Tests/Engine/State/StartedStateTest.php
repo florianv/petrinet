@@ -68,25 +68,35 @@ class StartedStateTest extends \PHPUnit_Framework_TestCase
         $mockedDispatcher
             ->expects($this->at(1))
             ->method('dispatch')
-            ->with(PetrinetEvents::BEFORE_TOKEN_CONSUME);
+            ->with(PetrinetEvents::BEFORE_TOKEN_BLOCK);
 
         $mockedDispatcher
             ->expects($this->at(2))
             ->method('dispatch')
-            ->with(PetrinetEvents::AFTER_TOKEN_CONSUME);
+            ->with(PetrinetEvents::AFTER_TOKEN_BLOCK);
 
         $mockedDispatcher
             ->expects($this->at(3))
             ->method('dispatch')
-            ->with(PetrinetEvents::BEFORE_TOKEN_INSERT);
+            ->with(PetrinetEvents::BEFORE_TOKEN_CONSUME);
 
         $mockedDispatcher
             ->expects($this->at(4))
             ->method('dispatch')
-            ->with(PetrinetEvents::AFTER_TOKEN_INSERT);
+            ->with(PetrinetEvents::AFTER_TOKEN_CONSUME);
 
         $mockedDispatcher
             ->expects($this->at(5))
+            ->method('dispatch')
+            ->with(PetrinetEvents::BEFORE_TOKEN_INSERT);
+
+        $mockedDispatcher
+            ->expects($this->at(6))
+            ->method('dispatch')
+            ->with(PetrinetEvents::AFTER_TOKEN_INSERT);
+
+        $mockedDispatcher
+            ->expects($this->at(7))
             ->method('dispatch')
             ->with(PetrinetEvents::AFTER_TRANSITION_FIRE);
 
@@ -117,7 +127,7 @@ class StartedStateTest extends \PHPUnit_Framework_TestCase
         $startedState->step();
 
         foreach ($petrinet->getPlaces() as $place) {
-            $this->assertCount(0, $place);
+            $this->assertEquals(0, $place->countFreeToken());
         }
     }
 
@@ -132,17 +142,21 @@ class StartedStateTest extends \PHPUnit_Framework_TestCase
         $startedState = $engine->getStartedState();
         $engine->setState($startedState);
 
-        $startedState->step();
-
-        $this->assertCount(0, $p1);
-        $this->assertCount(1, $p2);
-        $this->assertCount(0, $p3);
+        $this->assertEquals(1, $p1->countFreeToken());
+        $this->assertEquals(0, $p2->countFreeToken());
+        $this->assertEquals(0, $p3->countFreeToken());
 
         $startedState->step();
 
-        $this->assertCount(0, $p1);
-        $this->assertCount(0, $p2);
-        $this->assertCount(1, $p3);
+        $this->assertEquals(0, $p1->countFreeToken());
+        $this->assertEquals(1, $p2->countFreeToken());
+        $this->assertEquals(0, $p3->countFreeToken());
+
+        $startedState->step();
+
+        $this->assertEquals(0, $p1->countFreeToken());
+        $this->assertEquals(0, $p2->countFreeToken());
+        $this->assertEquals(1, $p3->countFreeToken());
     }
 
     public function testStepWithConflictingTransitions()
@@ -160,18 +174,18 @@ class StartedStateTest extends \PHPUnit_Framework_TestCase
         $p4 = $petrinet->getPlace('p4');
         $p5 = $petrinet->getPlace('p5');
 
-        if (0 === count($p1)) {
+        if (0 === $p1->countFreeToken()) {
             // t1 was fired
-            $this->assertCount(0, $p2);
-            $this->assertCount(1, $p3);
-            $this->assertCount(1, $p4);
-            $this->assertCount(0, $p5);
-        } elseif (0 === count($p3)) {
+            $this->assertEquals(0, $p2->countFreeToken());
+            $this->assertEquals(1, $p3->countFreeToken());
+            $this->assertEquals(1, $p4->countFreeToken());
+            $this->assertEquals(0, $p5->countFreeToken());
+        } elseif (0 === $p3->countFreeToken()) {
             // t2 was fired
-            $this->assertCount(1, $p1);
-            $this->assertCount(0, $p2);
-            $this->assertCount(0, $p4);
-            $this->assertCount(1, $p5);
+            $this->assertEquals(1, $p1->countFreeToken());
+            $this->assertEquals(0, $p2->countFreeToken());
+            $this->assertEquals(0, $p4->countFreeToken());
+            $this->assertEquals(1, $p5->countFreeToken());
         }
     }
 
@@ -187,9 +201,9 @@ class StartedStateTest extends \PHPUnit_Framework_TestCase
         $engine->setState($startedState);
         $startedState->step();
 
-        $this->assertCount(0, $p1);
-        $this->assertCount(0, $p2);
-        $this->assertCount(1, $p3);
+        $this->assertEquals(0, $p1->countFreeToken());
+        $this->assertEquals(0, $p2->countFreeToken());
+        $this->assertEquals(1, $p3->countFreeToken());
     }
 
     public function testStepWithConcurrentTransitions()
@@ -206,10 +220,10 @@ class StartedStateTest extends \PHPUnit_Framework_TestCase
         $engine->setState($startedState);
         $startedState->step();
 
-        $this->assertCount(0, $p1);
-        $this->assertCount(0, $p2);
-        $this->assertCount(0, $p3);
-        $this->assertCount(1, $p4);
-        $this->assertCount(1, $p5);
+        $this->assertEquals(0, $p1->countFreeToken());
+        $this->assertEquals(0, $p2->countFreeToken());
+        $this->assertEquals(0, $p3->countFreeToken());
+        $this->assertEquals(1, $p4->countFreeToken());
+        $this->assertEquals(1, $p5->countFreeToken());
     }
 }

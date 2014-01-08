@@ -67,56 +67,63 @@ class StartedState extends AbstractEngineState
             $this->engine->stop();
         } else {
             foreach ($transitions as $transition) {
-                $this->fireTransition($transition);
+                // Firing a previous transition might have disabled this one
+                if ($transition->isEnabled()) {
+                    // begin transition
+                    $this->firingTransition($transition);
+                    // end transition
+                    $this->firedTransition($transition);
+                }
             }
         }
     }
 
     /**
-     * Fires a transition. It supposes the transition is enabled.
+     * A transition is firing.
      *
      * @param TransitionInterface $transition The transition
      */
-    private function fireTransition(TransitionInterface $transition)
+    private function firingTransition(TransitionInterface $transition)
     {
-        // Firing a previous transition might have disabled this one
-        if (!$transition->isEnabled()) {
-            return;
-        }
-
         $transitionEvent = new TransitionEvent($transition);
         $this->dispatcher->dispatch(PetrinetEvents::BEFORE_TRANSITION_FIRE, $transitionEvent);
 
-        // If a place is both input and output place of a transition
-        // Then its number of tokens does not change
-        $inputArcs = $transition->getInputArcs();
-        $outputArcs = $transition->getOutputArcs();
+        // Block one token from each input place
+        foreach ($transition->getInputArcs() as $arc) {
+            $place = $arc->getPlace();
 
-        foreach ($inputArcs as $i => $inputArc) {
-            $place = $inputArc->getPlace();
-            foreach ($outputArcs as $j => $outputArc) {
-                if ($place->getId() === $outputArc->getPlace()->getId()) {
-                    unset($inputArcs[$i]);
-                    unset($outputArcs[$j]);
-                }
-            }
+            $placeEvent = new PlaceEvent($place);
+            $this->dispatcher->dispatch(PetrinetEvents::BEFORE_TOKEN_BLOCK, $placeEvent);
+
+            $token = $place->blockOneToken();
+
+            $tokenAndPlaceEvent = new TokenAndPlaceEvent($token, $place);
+            $this->dispatcher->dispatch(PetrinetEvents::AFTER_TOKEN_BLOCK, $tokenAndPlaceEvent);
         }
+    }
 
-        // Remove one token from each input place
-        foreach ($inputArcs as $arc) {
+    /**
+     * A transition has fired.
+     *
+     * @param TransitionInterface $transition The transition
+     */
+    private function firedTransition(TransitionInterface $transition)
+    {
+        // Consumed one token from each input place
+        foreach ($transition->getInputArcs() as $arc) {
             $place = $arc->getPlace();
 
             $placeEvent = new PlaceEvent($place);
             $this->dispatcher->dispatch(PetrinetEvents::BEFORE_TOKEN_CONSUME, $placeEvent);
 
-            $token = $place->removeOneToken();
+            $token = $place->consumeOneToken();
 
             $tokenAndPlaceEvent = new TokenAndPlaceEvent($token, $place);
             $this->dispatcher->dispatch(PetrinetEvents::AFTER_TOKEN_CONSUME, $tokenAndPlaceEvent);
         }
 
         // Add one token to each output place
-        foreach ($outputArcs as $arc) {
+        foreach ($transition->getOutputArcs() as $arc) {
             $place = $arc->getPlace();
             $token = new Token();
 
@@ -128,6 +135,7 @@ class StartedState extends AbstractEngineState
             $this->dispatcher->dispatch(PetrinetEvents::AFTER_TOKEN_INSERT, $tokenAndPlaceEvent);
         }
 
+        $transitionEvent = new TransitionEvent($transition);
         $this->dispatcher->dispatch(PetrinetEvents::AFTER_TRANSITION_FIRE, $transitionEvent);
     }
 

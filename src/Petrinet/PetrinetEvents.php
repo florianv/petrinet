@@ -73,6 +73,24 @@ final class PetrinetEvents
     const AFTER_TOKEN_INSERT = 'after.token.insert';
 
     /**
+     * Event triggered before a token is blocked into a place.
+     *
+     * The listeners will receive a Petrinet\Event\PlaceEvent.
+     *
+     * @var string
+     */
+    const BEFORE_TOKEN_BLOCK = 'before.token.block';
+
+    /**
+     * Event triggered after a token is blocked into a place.
+     *
+     * The listeners will receive a Petrinet\Event\TokenAndPlaceEvent.
+     *
+     * @var string
+     */
+    const AFTER_TOKEN_BLOCK = 'after.token.block';
+
+    /**
      * Event triggered before a token is removed from a place (consumed).
      *
      * The listeners will receive a Petrinet\Event\PlaceEvent.
