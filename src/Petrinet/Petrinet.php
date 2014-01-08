@@ -225,11 +225,13 @@ class Petrinet implements PetrinetInterface
     }
 
     /**
-     * {@inheritdoc}
+     * Clear all tokens
+     *
+     * @return null
      */
     public function clearTokens()
     {
-        foreach($this->places as $place){
+        foreach ($this->places as $place) {
             $place->clearTokens();
         }
     }

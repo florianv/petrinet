@@ -66,7 +66,7 @@ class PetrinetBuilderTest extends \PHPUnit_Framework_TestCase
     /**
      * @expectedException \LogicException
      */
-    public function testAddTokenOnPlaceExistingException()
+    public function testAddTokenOnPlaceUnExistingException()
     {
         $builder = new PetrinetBuilder('test');
         $builder

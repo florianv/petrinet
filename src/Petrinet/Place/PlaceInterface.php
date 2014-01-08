@@ -38,13 +38,6 @@ interface PlaceInterface extends \Countable, NodeInterface
     public function removeOneToken();
 
     /**
-     * Remove all tokens.
-     *
-     * @return PlaceInterface This method is chainable
-     */
-    public function clearTokens();
-
-    /**
      * Tells if the place is empty.
      *
      * @return boolean True if empty, false otherwise
