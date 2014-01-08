@@ -82,5 +82,4 @@ class PetrinetTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(0, $petrinet->getPlace('p2'));
         $this->assertCount(0, $petrinet->getPlace('p3'));
     }
-
 }

@@ -59,8 +59,8 @@ class PetrinetBuilderTest extends \PHPUnit_Framework_TestCase
             ->addPlace('p2')
             ->getPetrinet();
 
-        $this->assertEquals(2, $petrinet->getPlace('p1')->count());
-        $this->assertEquals(0, $petrinet->getPlace('p2')->count());
+        $this->assertCount(2, $petrinet->getPlace('p1'));
+        $this->assertCount(0, $petrinet->getPlace('p2'));
     }
 
     /**
