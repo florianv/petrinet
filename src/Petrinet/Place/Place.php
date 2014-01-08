@@ -70,7 +70,7 @@ class Place extends AbstractNode implements PlaceInterface
      *
      * @param Token $token The token
      *
-     * @return Place
+     * @return Place This method is chainable
      */
     public function addToken(Token $token)
     {
@@ -85,6 +85,18 @@ class Place extends AbstractNode implements PlaceInterface
     public function removeOneToken()
     {
         return $this->tokenBag->removeOne();
+    }
+
+    /**
+     * Removes all tokens.
+     *
+     * @return Place This method is chainable
+     */
+    public function clearTokens()
+    {
+        $this->tokenBag->clear();
+
+        return $this;
     }
 
     /**

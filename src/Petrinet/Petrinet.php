@@ -223,4 +223,14 @@ class Petrinet implements PetrinetInterface
 
         return null;
     }
+
+    /**
+     * Clears all tokens.
+     */
+    public function clearTokens()
+    {
+        foreach ($this->places as $place) {
+            $place->clearTokens();
+        }
+    }
 }

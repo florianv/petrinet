@@ -94,6 +94,31 @@ final class PetrinetBuilder
     }
 
     /**
+     * Adds a token.
+     *
+     * @param string $id The place id
+     *
+     * @return PetrinetBuilder
+     *
+     * @throws \LogicException
+     */
+    public function addTokenToPlace($id)
+    {
+        if (!isset($this->places[$id])) {
+            throw new \LogicException(
+                sprintf(
+                    'Cannot add the token, place %s does not exist',
+                    $id
+                )
+            );
+        }
+
+        $this->places[$id]->addToken(new Token());
+
+        return $this;
+    }
+
+    /**
      * Adds a transition.
      *
      * @param string $id The place id

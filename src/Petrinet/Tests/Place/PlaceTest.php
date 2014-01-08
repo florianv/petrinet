@@ -61,6 +61,17 @@ class PlaceTest extends \PHPUnit_Framework_TestCase
         $place->removeOneToken();
     }
 
+    public function testClearTokens()
+    {
+        $mockedTokenBag = $this->getMock('Petrinet\Token\TokenBag');
+        $mockedTokenBag
+            ->expects($this->once())
+            ->method('clear');
+
+        $place = new Place('p1', $mockedTokenBag);
+        $place->clearTokens();
+    }
+
     public function testCount()
     {
         $mockedTokenBag = $this->getMock('Petrinet\Token\TokenBag');

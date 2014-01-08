@@ -160,16 +160,14 @@ class StartedStateTest extends \PHPUnit_Framework_TestCase
         $p4 = $petrinet->getPlace('p4');
         $p5 = $petrinet->getPlace('p5');
 
-        // t1 was fired
         if (0 === count($p1)) {
+            // t1 was fired
             $this->assertCount(0, $p2);
             $this->assertCount(1, $p3);
             $this->assertCount(1, $p4);
             $this->assertCount(0, $p5);
-        }
-
-        // t2 was fired
-        elseif (0 === count($p3)) {
+        } elseif (0 === count($p3)) {
+            // t2 was fired
             $this->assertCount(1, $p1);
             $this->assertCount(0, $p2);
             $this->assertCount(0, $p4);
