@@ -102,7 +102,7 @@ final class PetrinetBuilder
      *
      * @throws \LogicException
      */
-    public function addTokenOnPlace($id)
+    public function addTokenToPlace($id)
     {
         if (!isset($this->places[$id])) {
             throw new \LogicException(

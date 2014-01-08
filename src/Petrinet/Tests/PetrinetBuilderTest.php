@@ -20,7 +20,7 @@ use Petrinet\PetrinetBuilder;
  */
 class PetrinetBuilderTest extends \PHPUnit_Framework_TestCase
 {
-    public function testAddplace()
+    public function testAddPlace()
     {
         $builder = new PetrinetBuilder('p1');
         $petrinet = $builder
@@ -49,13 +49,13 @@ class PetrinetBuilderTest extends \PHPUnit_Framework_TestCase
             ->addPlace('p1');
     }
 
-    public function testAddTokenOnPlace()
+    public function testAddTokenToPlace()
     {
         $builder = new PetrinetBuilder('test');
         $petrinet = $builder
             ->addPlace('p1')
-            ->addTokenOnPlace('p1')
-            ->addTokenOnPlace('p1')
+            ->addTokenToPlace('p1')
+            ->addTokenToPlace('p1')
             ->addPlace('p2')
             ->getPetrinet();
 
@@ -66,11 +66,11 @@ class PetrinetBuilderTest extends \PHPUnit_Framework_TestCase
     /**
      * @expectedException \LogicException
      */
-    public function testAddTokenOnPlaceUnExistingException()
+    public function testAddTokenToPlaceUnExistingException()
     {
         $builder = new PetrinetBuilder('test');
         $builder
-            ->addTokenOnPlace('p1');
+            ->addTokenToPlace('p1');
     }
 
     /**

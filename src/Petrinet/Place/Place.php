@@ -88,7 +88,7 @@ class Place extends AbstractNode implements PlaceInterface
     }
 
     /**
-     * Remove all tokens.
+     * Removes all tokens.
      *
      * @return PlaceInterface This method is chainable
      */
