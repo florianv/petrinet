@@ -67,30 +67,22 @@ abstract class AbstractNode implements NodeInterface
      * Adds an input arc.
      *
      * @param ArcInterface $arc The arc
-     *
-     * @return AbstractNode This method is chainable
      */
     public function addInputArc(ArcInterface $arc)
     {
         $this->inputArcs[] = $arc;
-
-        return $this;
     }
 
     /**
      * Adds multiple input arcs at once.
      *
      * @param ArcInterface[] $inputArcs The arcs
-     *
-     * @return AbstractNode This method is chainable
      */
     public function addInputArcs(array $inputArcs)
     {
         foreach ($inputArcs as $inputArc) {
             $this->addInputArc($inputArc);
         }
-
-        return $this;
     }
 
     /**
@@ -115,30 +107,22 @@ abstract class AbstractNode implements NodeInterface
      * Adds an output arc.
      *
      * @param ArcInterface $arc The arc
-     *
-     * @return AbstractNode This method is chainable
      */
     public function addOutputArc(ArcInterface $arc)
     {
         $this->outputArcs[] = $arc;
-
-        return $this;
     }
 
     /**
      * Adds multiple output arcs at once.
      *
      * @param ArcInterface[] $outputArcs The arcs
-     *
-     * @return AbstractNode This method is chainable
      */
     public function addOutputArcs(array $outputArcs)
     {
         foreach ($outputArcs as $outputArc) {
             $this->addOutputArc($outputArc);
         }
-
-        return $this;
     }
 
     /**

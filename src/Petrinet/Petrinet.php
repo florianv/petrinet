@@ -78,30 +78,22 @@ class Petrinet implements PetrinetInterface
      * Adds a place.
      *
      * @param PlaceInterface $place The place
-     *
-     * @return Petrinet This method is chainable
      */
     public function addPlace(PlaceInterface $place)
     {
         $this->places[$place->getId()] = $place;
-
-        return $this;
     }
 
     /**
      * Adds multiple places at once.
      *
      * @param PlaceInterface[] $places The places
-     *
-     * @return Petrinet This method is chainable
      */
     public function addPlaces(array $places)
     {
         foreach ($places as $place) {
             $this->addPlace($place);
         }
-
-        return $this;
     }
 
     /**
@@ -128,30 +120,22 @@ class Petrinet implements PetrinetInterface
      * Adds a transition.
      *
      * @param TransitionInterface $transition The transition
-     *
-     * @return Petrinet This method is chainable
      */
     public function addTransition(TransitionInterface $transition)
     {
         $this->transitions[$transition->getId()] = $transition;
-
-        return $this;
     }
 
     /**
      * Adds multiple transitions at once.
      *
      * @param TransitionInterface[] $transitions The transitions
-     *
-     * @return Petrinet This method is chainable
      */
     public function addTransitions(array $transitions)
     {
         foreach ($transitions as $transition) {
             $this->addTransition($transition);
         }
-
-        return $this;
     }
 
     /**
@@ -178,30 +162,22 @@ class Petrinet implements PetrinetInterface
      * Adds an arc.
      *
      * @param ArcInterface $arc The arc
-     *
-     * @return Petrinet This method is chainable
      */
     public function addArc(ArcInterface $arc)
     {
         $this->arcs[$arc->getId()] = $arc;
-
-        return $this;
     }
 
     /**
      * Adds multiple arcs at once.
      *
      * @param ArcInterface[] $arcs The arcs
-     *
-     * @return Petrinet This method is chainable
      */
     public function addArcs(array $arcs)
     {
         foreach ($arcs as $arc) {
             $this->addArc($arc);
         }
-
-        return $this;
     }
 
     /**
