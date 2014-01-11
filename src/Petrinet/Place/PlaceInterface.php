@@ -25,8 +25,6 @@ interface PlaceInterface extends \Countable, NodeInterface
      * Adds a token.
      *
      * @param Token $token The token
-     *
-     * @return PlaceInterface This method is chainable
      */
     public function addToken(Token $token);
 

@@ -298,10 +298,9 @@ final class PetrinetBuilder
     public function getPetrinet()
     {
         $petrinet = new Petrinet($this->id);
-        $petrinet
-            ->addPlaces($this->places)
-            ->addTransitions($this->transitions)
-            ->addArcs($this->arcs);
+        $petrinet->addPlaces($this->places);
+        $petrinet->addTransitions($this->transitions);
+        $petrinet->addArcs($this->arcs);
 
         return $petrinet;
     }

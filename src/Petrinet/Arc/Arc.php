@@ -81,8 +81,6 @@ class Arc implements ArcInterface
      *
      * @param integer $direction The direction
      *
-     * @return Arc This method is chainable
-     *
      * @throws \InvalidArgumentException
      */
     public function setDirection($direction)
@@ -97,8 +95,6 @@ class Arc implements ArcInterface
         }
 
         $this->direction = $direction;
-
-        return $this;
     }
 
     /**
@@ -115,14 +111,10 @@ class Arc implements ArcInterface
      * Sets the transition.
      *
      * @param TransitionInterface $transition The transition
-     *
-     * @return Arc This method is chainable
      */
     public function setTransition(TransitionInterface $transition)
     {
         $this->transition = $transition;
-
-        return $this;
     }
 
     /**
@@ -139,14 +131,10 @@ class Arc implements ArcInterface
      * Sets the place.
      *
      * @param PlaceInterface $place The place
-     *
-     * @return Arc This method is chainable
      */
     public function setPlace(PlaceInterface $place)
     {
         $this->place = $place;
-
-        return $this;
     }
 
     /**

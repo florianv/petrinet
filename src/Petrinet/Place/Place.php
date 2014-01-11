@@ -45,14 +45,10 @@ class Place extends AbstractNode implements PlaceInterface
      * Sets the token bag.
      *
      * @param TokenBag $tokenBag The token bag
-     *
-     * @return Place This method is chainable
      */
     public function setTokenBag(TokenBag $tokenBag)
     {
         $this->tokenBag = $tokenBag;
-
-        return $this;
     }
 
     /**
@@ -69,14 +65,10 @@ class Place extends AbstractNode implements PlaceInterface
      * Adds a token.
      *
      * @param Token $token The token
-     *
-     * @return Place This method is chainable
      */
     public function addToken(Token $token)
     {
         $this->tokenBag->add($token);
-
-        return $this;
     }
 
     /**
@@ -89,14 +81,10 @@ class Place extends AbstractNode implements PlaceInterface
 
     /**
      * Removes all tokens.
-     *
-     * @return Place This method is chainable
      */
     public function clearTokens()
     {
         $this->tokenBag->clear();
-
-        return $this;
     }
 
     /**

@@ -107,8 +107,6 @@ class Engine implements EngineInterface
     public function setPetrinet(PetrinetInterface $petrinet)
     {
         $this->petrinet = $petrinet;
-
-        return $this;
     }
 
     /**
@@ -125,8 +123,6 @@ class Engine implements EngineInterface
     public function setState(EngineStateInterface $state)
     {
         $this->state = $state;
-
-        return $this;
     }
 
     /**
@@ -178,8 +174,6 @@ class Engine implements EngineInterface
      * @param integer $mode The execution mode
      *
      * @throws \InvalidArgumentException
-     *
-     * @return Engine
      */
     public function setMode($mode)
     {
@@ -193,8 +187,6 @@ class Engine implements EngineInterface
         }
 
         $this->mode = $mode;
-
-        return $this;
     }
 
     /**
