@@ -41,4 +41,9 @@ interface PlaceInterface extends \Countable, NodeInterface
      * @return boolean True if empty, false otherwise
      */
     public function isEmpty();
+
+    /**
+     * Removes all tokens from the place.
+     */
+    public function clearTokens();
 }

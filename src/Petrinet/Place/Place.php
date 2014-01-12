@@ -80,7 +80,7 @@ class Place extends AbstractNode implements PlaceInterface
     }
 
     /**
-     * Removes all tokens.
+     * {@inheritdoc}
      */
     public function clearTokens()
     {
