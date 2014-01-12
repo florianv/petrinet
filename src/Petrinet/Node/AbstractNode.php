@@ -39,7 +39,7 @@ abstract class AbstractNode implements NodeInterface
      *
      * @var ArcInterface[]
      */
-    protected $outputArcs;
+    protected $outputArcs = array();
 
     /**
      * Creates a new abstract node.

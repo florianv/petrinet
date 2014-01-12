@@ -12,7 +12,6 @@
 namespace Petrinet\Tests\Loader;
 
 use Petrinet\Loader\XmlFileLoader;
-use Petrinet\Arc\Arc;
 
 /**
  * Test class for XmlFileLoader.
