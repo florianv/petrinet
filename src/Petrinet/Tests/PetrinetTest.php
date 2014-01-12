@@ -77,7 +77,8 @@ class PetrinetTest extends \PHPUnit_Framework_TestCase
         $petrinet = new Petrinet('net');
         $petrinet->addPlaces(array($place1, $place2, $place3));
 
-        $places = $petrinet->clearTokens();
+        $petrinet->clearTokens();
+
         $this->assertCount(0, $petrinet->getPlace('p1'));
         $this->assertCount(0, $petrinet->getPlace('p2'));
         $this->assertCount(0, $petrinet->getPlace('p3'));
