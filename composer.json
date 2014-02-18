@@ -2,7 +2,7 @@
     "name": "florianv/petrinet",
     "type": "library",
     "description": "A Petrinet PHP framework",
-    "keywords": ["petrinet"],
+    "keywords": ["petrinet", "workflow"],
     "homepage": "https://github.com/florianv/petrinet",
     "license": "MIT",
     "authors": [
@@ -24,5 +24,9 @@
             "Petrinet\\": "src/"
         }
     },
-    "minimum-stability": "dev"
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    }
 }
