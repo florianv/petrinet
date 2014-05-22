@@ -1,39 +1,40 @@
 # Petrinet
 
-This framework allows to create, vizualize and execute Petrinets.
+[![Build Status](https://travis-ci.org/florianv/swap.svg?branch=master)](https://travis-ci.org/florianv/petrinet)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/4a15ed6f-09d8-4678-bd49-629b4c1c1251/mini.png)](https://insight.sensiolabs.com/projects/4a15ed6f-09d8-4678-bd49-629b4c1c1251)
+[![Total Downloads](http://img.shields.io/packagist/dt/florianv/petrinet.svg)](https://packagist.org/packages/florianv/petrinet)
+[![License](http://img.shields.io/packagist/l/florianv/petrinet.svg)](https://packagist.org/packages/florianv/petrinet)
 
-[![Build Status](https://secure.travis-ci.org/florianv/petrinet.png)](https://travis-ci.org/florianv/petrinet)
-[![Coverage Status](https://coveralls.io/repos/florianv/petrinet/badge.png)](https://coveralls.io/r/florianv/petrinet)
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/16f7c4d1-7448-463d-b68a-61429a8202c3/mini.png)](https://insight.sensiolabs.com/projects/16f7c4d1-7448-463d-b68a-61429a8202c3)
-[![Latest Stable Version](https://poser.pugx.org/florianv/petrinet/v/stable.png)](https://packagist.org/packages/florianv/petrinet)
-[![Latest Unstable Version](https://poser.pugx.org/florianv/petrinet/v/unstable.png)](https://packagist.org/packages/florianv/petrinet)
-[![Total Downloads](https://poser.pugx.org/florianv/petrinet/downloads.png)](https://packagist.org/packages/florianv/petrinet)
-[![License](https://poser.pugx.org/florianv/petrinet/license.png)](https://packagist.org/packages/florianv/petrinet)
-
-## Requirements
-
-Petrinet requires PHP 5.3.3+.
+This framework allows to build, vizualize and execute [Petrinets](http://en.wikipedia.org/wiki/Petri_net)
+which can be used to build workflow engines. It provides the core domain model of basic Petrinets that can be persisted
+using your favorite ORM as well as services to manage its execution.
 
 ## Installation
 
-Petrinet is installable via [Composer](http://getcomposer.org/).
+The recommended way to install Petrinet is via [Composer](https://getcomposer.org).
+
+Add this line to your `composer.json` file:
 
 ```json
 {
     "require": {
-        "florianv/petrinet": "~1.0"
+        "florianv/petrinet": "~2.0"
     }
 }
 ```
 
+Tell Composer to update the dependency by running:
+
+```bash
+$ php composer.phar update florianv/petrinet
+```
+
 ## Documentation
 
-The documentation is available [here](https://github.com/florianv/petrinet/blob/master/docs/documentation.md).
+[Read the documentation for master](https://github.com/florianv/petrinet/blob/master/docs/documentation.md)
 
-## Contributing
-
-The contribution guide is available [here](https://github.com/florianv/petrinet/blob/master/CONTRIBUTING.md).
+[Read the documentation for the 1.0 version](https://github.com/florianv/petrinet/blob/1.0/docs/documentation.md)
 
 ## License
 
-[MIT](https://github.com/florianv/petrinet/blob/master/LICENSE).
+[MIT](https://github.com/florianv/petrinet/blob/master/LICENSE)

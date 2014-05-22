@@ -1,7 +1,0 @@
-<?xml version="1.0" ?>
-
-<!-- Arc linking two transitions -->
-<petrinet id="test">
-    <transition id="t1"/>
-    <arc from="t1" to="t1"/>
-</petrinet>

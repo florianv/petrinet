@@ -1,7 +1,0 @@
-<?xml version="1.0" ?>
-
-<!-- Arc ids are unique -->
-<petrinet id="test">
-    <place id="p1"/>
-    <place id="p1"/>
-</petrinet>

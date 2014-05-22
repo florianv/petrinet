@@ -1,7 +1,0 @@
-<?xml version="1.0" ?>
-
-<!-- Transition ids are unique -->
-<petrinet id="test">
-    <transition id="t1"/>
-    <transition id="t1"/>
-</petrinet>

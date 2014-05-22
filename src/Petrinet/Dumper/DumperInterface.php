@@ -11,7 +11,8 @@
 
 namespace Petrinet\Dumper;
 
-use Petrinet\PetrinetInterface;
+use Petrinet\Model\MarkingInterface;
+use Petrinet\Model\PetrinetInterface;
 
 /**
  * Interface for Petrinet dumpers.
@@ -23,9 +24,10 @@ interface DumperInterface
     /**
      * Dumps a Petrinet.
      *
-     * @param PetrinetInterface $petrinet The Petrinet
+     * @param PetrinetInterface $petrinet
+     * @param MarkingInterface  $marking
      *
-     * @return string The string representation
+     * @return string
      */
-    public function dump(PetrinetInterface $petrinet);
+    public function dump(PetrinetInterface $petrinet, MarkingInterface $marking = null);
 }

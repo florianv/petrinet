@@ -1,314 +1,489 @@
 # Documentation
 
-1. [Creating a Petrinet](https://github.com/florianv/petrinet/blob/master/docs/documentation.md#creating-a-petrinet)
-    * [Using an XML file](https://github.com/florianv/petrinet/blob/master/docs/documentation.md#using-an-xml-file)
-    * [With the Petrinet Builder](https://github.com/florianv/petrinet/blob/master/docs/documentation.md#with-the-petrinet-builder)
-2. [Visualizing a Petrinet](https://github.com/florianv/petrinet/blob/master/docs/documentation.md#visualizing-a-petrinet)
-    * [Using Graphviz](https://github.com/florianv/petrinet/blob/master/docs/documentation.md#using-graphviz)
-3. [Execution](https://github.com/florianv/petrinet/blob/master/docs/documentation.md#execution)
-    * [Using the Engine](https://github.com/florianv/petrinet/blob/master/docs/documentation.md#using-the-engine)
-    * [Execution modes](https://github.com/florianv/petrinet/blob/master/docs/documentation.md#execution-modes)
-4. [Events](https://github.com/florianv/petrinet/blob/master/docs/documentation.md#events)
-    * [Examples](https://github.com/florianv/petrinet/blob/master/docs/documentation.md#examples)
-5. [Examples](https://github.com/florianv/petrinet/blob/master/docs/documentation.md#examples-1)
+This library follows the definition of the basic Petrinet model with weighted arcs as described
+[here](http://en.wikipedia.org/wiki/Petri_net), roughly:
 
-## Creating a Petrinet
+- there are two types of nodes: Places and Transitions
+- these nodes are connected with Arcs having a weight
+- a Petrinet is a set of Places and Transitions
+- a Place Marking associates a set of Tokens to a place
+- a Marking is a set of Place Markings
+- a Petrinet can be executed against a Marking
 
-### Using an XML file
+In workflow words, the Petrinet is the workflow structure and each marking is a workflow instance.
 
-Example of a simple Petrinet :
+## Model
 
-```xml
-<?xml version="1.0" ?>
+This library provides the models of basic Petrinets that you can use directly to work without persistence
+or extend with your custom entities mapped to a database with any ORM.
 
-<petrinet
-        id="net"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="https://raw.github.com/florianv/petrinet/master/src/Petrinet/Loader/meta/schema.xsd">
+## Builder
 
-    <!-- A place with two tokens -->
-    <place id="p1" tokens="2"/>
-
-    <!-- An empty place -->
-    <place id="p2"/>
-
-    <!-- Two transitions -->
-    <transition id="t1"/>
-    <transition id="t2"/>
-
-    <!-- An arc with a specified id, from the place p1 to the transition t1 -->
-    <arc id="a1" from="p1" to="t1"/>
-
-    <arc from="p1" to="t2"/>
-
-    <!-- An arc from the transition t1 to the place p2 -->
-    <arc from="t1" to="p2"/>
-    <arc from="t2" to="p2"/>
-</petrinet>
-```
-
-Now you can load the Petrinet using the `XmlFileLoader`:
+All builders make usage of a `FactoryInterface` that is reponsible for creating model instances.
+By default, the factory is configured to create models present in this library, but it is possible to configure it
+to create your custom model instances (for example Doctrine Entities) by passing the class names to its constructor.
 
 ```php
-<?php
-
-use Petrinet\Loader\XmlFileLoader;
-
-// Creating a loader instance
-$loader = new XmlFileLoader();
-
-// Loading the Petrinet
-$petrinet = $loader->load('/path/to/petrinet.xml');
+// Instanciating the factory
+$factory = new \Petrinet\Model\Factory();
 ```
 
-### With the Petrinet Builder
+### Petrinet Builder
+
+The Petrinet builder helps creating places and transitions, connecting them with arcs
+and retrieving the resulting Petrinet.
+
+#### Overview
 
 ```php
-<?php
+// Instanciating the builder
+$builder = new \Petrinet\Builder\PetrinetBuilder($factory);
 
-use Petrinet\PetrinetBuilder;
+// Creating a place
+$place = $builder->place();
 
-// Instanciating the builder to create a Petrinet called "Network"
-$builder = new PetrinetBuilder('Network');
+// Creating a transition
+$transition = $builder->transition();
 
-// Adding an empty place identified by 'p1'
-$builder->addPlace('p1');
+// Connecting a place to a transition
+$builder->connect($place, $transition);
 
-// Adding a place with one token
-$builder->addPlace('p1', 1);
+// Connecting a transition to a place
+$builder->connect($transition, $place);
 
-// Adding a transition identified by 't1'
-$builder->addTransition('t1');
+// Connecting a place to a transition with an arc of weight 3
+$builder->connect($place, $transition, 3);
 
-// Connecting the place p1 to the transition t1
-$builder->connectPT('p1', 't1');
-
-// Connecting the transition t1 to the place p2
-$builder->connectTP('t1', 'p2');
-
-// Obtaining the resulting Petrinet
+// Retrieving the Petrinet
 $petrinet = $builder->getPetrinet();
 ```
 
-## Visualizing a Petrinet
+#### Example
 
-### Using Graphviz
-
-Firstly download and install [Graphviz](http://www.graphviz.org/).
+This example shows how to create the following Petrinet: ![Petrinet](images/petrinet_builder.png).
 
 ```php
-<?php
-
-use Petrinet\Dumper\GraphvizDumper;
-
-$dumper = New GraphvizDumper();
-
-// Creating a file Network.dot ready to be opened by the Graphviz software
-file_put_contents('Network.dot', $dumper->dump($petrinet));
-```
-
-## Execution
-
-### Using the Engine
-
-```php
-<?php
-
-use Petrinet\Engine\Engine;
-
-// Instanciating the engine to execute the Petrinet
-$engine = new Engine($petrinet);
-
-// Starting the execution
-$engine->start();
-
-// Stopping the Execution
-$engine->stop();
-```
-
-### Execution modes
-
-There are two execution modes :
-
-- `Stepped` : the engine will fire the currently enabled transitions, and stop itself.
-- `Continuous` : the engine will fire the transitions until no more are enabled, and then stop itself.
-
-By default the engine is in `Continuous` mode.
-
-```php
-<?php
-
-// Changing the mode to "Stepped"
-$engine->setMode(Engine::MODE_STEPPED);
-```
-
-## Events
-
-The Petrinet framework is using Symfony
-[EventDispatcher](http://symfony.com/doc/current/components/event_dispatcher/index.html) to dispatch its events.
-
-Different events are available to interact with the engine or Petrinet elements during the execution process.
-
-They are documented in the following [file](https://github.com/florianv/petrinet/blob/master/src/Petrinet/PetrinetEvents.php).
-
-### Examples
-
-#### Listening to an EngineEvent
-
-```php
-<?php
-
-require_once __DIR__ . '/vendor/autoload.php';
-
-use Symfony\Component\EventDispatcher\EventDispatcher;
-use Petrinet\PetrinetEvents;
-use Petrinet\Event\EngineEvent;
-use Petrinet\PetrinetBuilder;
-use Petrinet\Engine\Engine;
-
-// Creating a simple Petrinet
-$builder = new PetrinetBuilder('Network');
-
 $petrinet = $builder
-	->addPlace('p1', 1)
-	->addTransition('t1')
-	->addPlace('p2')
-	->connectPT('p1', 't1')
-	->connectTP('t1', 'p2')
-	->getPetrinet();
-
-$engine = new Engine($petrinet);
-$dispatcher = new EventDispatcher();
-
-// Listening to an EngineEvent
-$listener = function (EngineEvent $e) {
-	$petrinet = $e->getEngine()->getPetrinet();
-	echo 'The execution of the Petrinet ' . $petrinet->getId() . ' just stopped';
-};
-
-// Adding the listener to the dispatcher
-$dispatcher->addListener(PetrinetEvents::AFTER_ENGINE_STOP, $listener);
-
-// Injecting the dispatcher into the engine
-$engine->setDispatcher($dispatcher);
-
-// Starting the execution
-$engine->start();
+    ->connect($builder->place(), $t1 = $builder->transition())
+    ->connect($t1, $p2 = $builder->place())
+    ->connect($t1, $p3 = $builder->place())
+    ->connect($p2, $t2 = $builder->transition())
+    ->connect($p3, $t2)
+    ->connect($t2, $builder->place())
+    ->getPetrinet();
 ```
 
-#### Listening to TokenAndPlaceEvent
+### Marking Builder
+
+The marking builder helps creating place markings and retrieving the resulting Petrinet marking
+(the places can be created manually or using the `PetrinetBuilder` above).
+
+#### Overview
+
+```php
+// Instanciating the builder
+$builder = new \Petrinet\Builder\MarkingBuilder($factory);
+
+// Marks a place with the specified tokens number
+$builder->mark($place, 3);
+
+// Marks a place with the specified token
+$builder->mark($place, new \Petrinet\Model\Token());
+
+// Marks a place with the specified tokens
+$builder->mark($place, array(new \Petrinet\Model\Token(), new \Petrinet\Model\Token()));
+
+// Retrieving the Marking
+$marking = $builder->getMarking();
+```
+
+#### Example
+
+This example shows how to create a marking containing two place markings:
+
+- The place `$p1` is marked with 3 tokens
+- The place `$p2` is marked with 2 tokens
+
+```php
+$marking = $markingBuilder
+    ->mark($p1, 3)
+    ->mark($p2, 2)
+    ->getMarking();
+```
+
+## Service
+
+The transition service allows you to check if a transition is enabled in a given marking and fire an enabled
+transition.
+
+```php
+// Instanciates the transition service
+$transitionService = new \Petrinet\Service\TransitionService($factory);
+
+// Checks if the transition is enabled in the given marking
+$transitionService->isEnabled($transition, $marking);
+
+// Fires the transition in the given marking
+try {
+    $transitionService->fire($transition, $marking);
+} catch (\Petrinet\Service\Exception\TransitionNotEnabledException $e) {
+    // The transition is not enabled and cannot be fired
+}
+```
+
+Firing a transition will modify the place markings by removing and adding new tokens to them.
+It will also create missing place markings if not existing.
+The persistence of the marking after firing a transition is up to you.
+
+## Dumper
+
+### Graphviz Dumper
+
+The Graphviz dumper dumps a Petrinet as a string in `dot` format that can be processed by
+the [Graphviz](http://www.graphviz.org) software.
+
+#### Usage
+
+```php
+// Instanciates the Dumper
+$dumper = new \Petrinet\Dumper\GraphvizDumper();
+
+// Dumps the Petrinet structure
+$string = $dumper->dump($petrinet);
+
+// Dumps the Petrinet in a given marking
+$string = $dumper->dump($petrinet, $marking);
+```
+
+You can write the resulting string in a file:
+
+```php
+file_put_contents('petrinet.dot', $string);
+```
+
+and transform it to a PNG image using the command:
+
+```bash
+$ dot -Tpng petrinet.dot > petrinet.png
+```
+
+You will obtain this kind of image:
+
+![Petrinet](images/graphviz.png).
+
+## Database Mapping
+
+### Doctrine ORM
+
+The following example shows the basic mapping for the Petrinet model classes using Doctrine2 ORM.
+
+#### Petrinet
 
 ```php
 <?php
 
-require_once __DIR__ . '/vendor/autoload.php';
+namespace Acme\Bundle\WorkflowBundle\Entity;
 
-use Symfony\Component\EventDispatcher\EventDispatcher;
-use Petrinet\PetrinetEvents;
-use Petrinet\Event\TokenAndPlaceEvent;
-use Petrinet\PetrinetBuilder;
-use Petrinet\Engine\Engine;
-
-$builder = new PetrinetBuilder('Network');
-
-$petrinet = $builder
-	->addPlace('p1', 1)
-	->addTransition('t1')
-	->addPlace('p2')
-	->connectPT('p1', 't1')
-	->connectTP('t1', 'p2')
-	->getPetrinet();
-
-$engine = new Engine($petrinet);
-$dispatcher = new EventDispatcher();
-
-$listenConsumption = function (TokenAndPlaceEvent $e) {
-	$placeId = $e->getPlace()->getId();
-	echo sprintf('The place %s just dropped a token', $placeId);
-};
-
-$listenInsertion = function (TokenAndPlaceEvent $e) {
-	$placeId = $e->getPlace()->getId();
-	echo sprintf('The place %s just received a new token', $placeId);
-};
-
-$dispatcher->addListener(PetrinetEvents::AFTER_TOKEN_CONSUME, $listenConsumption);
-$dispatcher->addListener(PetrinetEvents::AFTER_TOKEN_INSERT, $listenInsertion);
-$engine->setDispatcher($dispatcher);
-$engine->start();
-```
-
-## Examples
-
-### The Petrinet while function
-
-```php
-<?php
-
-require_once __DIR__ . '/vendor/autoload.php';
-
-use Symfony\Component\EventDispatcher\EventDispatcher;
-use Petrinet\Event\TransitionEvent;
-use Petrinet\PetrinetBuilder;
-use Petrinet\PetrinetEvents;
-use Petrinet\Engine\Engine;
+use Doctrine\ORM\Mapping as ORM;
+use Petrinet\Model\Petrinet as BasePetrinet;
 
 /**
- * Petrinet while function
- *
- * @param callable $while The while condition
- * @param callable $do    A callable to execute after each loop
+ * @ORM\Entity
+ * @ORM\Table(name="petrinet")
  */
-function petrinet_while($while, $do)
+class Petrinet extends BasePetrinet
 {
-	$builder = new PetrinetBuilder('Loop');
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
+     */
+    protected $id;
 
-	$petrinet = $builder
-		->addPlace('p1', 1)
-		->addTransition('t1')
-		->addTransition('t2')
-		->addPlace('p2')
-		->connectPT('p1', 't1')
-		->connectTP('t1', 'p2')
-		->connectPT('p2', 't2')
-		->connectTP('t2', 'p1')
-		->getPetrinet();
+    /**
+     * @ORM\ManyToMany(targetEntity="Acme\Bundle\WorkflowBundle\Entity\Place", cascade={"persist"})
+     * @ORM\JoinTable(
+     *  name="petrinet_place_xref",
+     *  joinColumns={@ORM\JoinColumn(name="petrinet_id")},
+     *  inverseJoinColumns={@ORM\JoinColumn(name="place_id", unique=true)}
+     * )
+     */
+    protected $places;
 
-	$engine = new Engine($petrinet);
-	$dispatcher = new EventDispatcher();
-
-	$listener = function (TransitionEvent $e) use ($engine, $while, $do) {
-		if (!$while()) {
-			$engine->stop();
-		}
-
-		call_user_func($do);
-	};
-
-	$dispatcher->addListener(PetrinetEvents::AFTER_TRANSITION_FIRE, $listener);
-	$engine->setDispatcher($dispatcher);
-	$engine->start();
+    /**
+     * @ORM\ManyToMany(targetEntity="Acme\Bundle\WorkflowBundle\Entity\Transition", cascade={"persist"})
+     * @ORM\JoinTable(
+     *  name="petrinet_transition_xref",
+     *  joinColumns={@ORM\JoinColumn(name="petrinet_id")},
+     *  inverseJoinColumns={@ORM\JoinColumn(name="transition_id", unique=true)}
+     * )
+     */
+    protected $transitions;
 }
+```
 
-// While condition
-$while = function () {
-	static $i = 0;
+#### InputArc
 
-	if (5 === $i) {
-		return false;
-	}
+```php
+<?php
 
-	$i++;
+namespace Acme\Bundle\WorkflowBundle\Entity;
 
-	return true;
-};
+use Doctrine\ORM\Mapping as ORM;
+use Petrinet\Model\InputArc as BaseInputArc;
 
-// Called after each loop
-$do = function () {
-	static $i = 0;
-	echo $i;
-	$i++;
-};
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="input_arc")
+ */
+class InputArc extends BaseInputArc
+{
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
+     */
+    protected $id;
 
-petrinet_while($while, $do);
+    /**
+     * @ORM\ManyToOne(targetEntity="Acme\Bundle\WorkflowBundle\Entity\Place", inversedBy="outputArcs")
+     */
+    protected $place;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Acme\Bundle\WorkflowBundle\Entity\Transition", inversedBy="inputArcs")
+     */
+    protected $transition;
+
+    /**
+     * @ORM\Column(type="integer", nullable=false)
+     */
+    protected $weight;
+}
+```
+
+#### OutputArc
+
+```php
+<?php
+
+namespace Acme\Bundle\WorkflowBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Petrinet\Model\OutputArc as BaseOutputArc;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="output_arc")
+ */
+class OutputArc extends BaseOutputArc
+{
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
+     */
+    protected $id;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Acme\Bundle\WorkflowBundle\Entity\Place", inversedBy="inputArcs")
+     */
+    protected $place;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Acme\Bundle\WorkflowBundle\Entity\Transition", inversedBy="outputArcs")
+     */
+    protected $transition;
+
+    /**
+     * @ORM\Column(type="integer", nullable=false)
+     */
+    protected $weight;
+}
+```
+
+#### Marking
+
+```php
+<?php
+
+namespace Acme\Bundle\WorkflowBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Petrinet\Model\Marking as BaseMarking;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="marking")
+ */
+class Marking extends BaseMarking
+{
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
+     */
+    protected $id;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Acme\Bundle\WorkflowBundle\Entity\PlaceMarking", cascade={"persist"})
+     * @ORM\JoinTable(
+     *  name="marking_place_marking_xref",
+     *  joinColumns={@ORM\JoinColumn(name="marking_id")},
+     *  inverseJoinColumns={@ORM\JoinColumn(name="place_marking_id", unique=true)}
+     * )
+     */
+    protected $placeMarkings;
+}
+```
+
+#### Place
+
+```php
+<?php
+
+namespace Acme\Bundle\WorkflowBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Petrinet\Model\Place as BasePlace;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="place")
+ */
+class Place extends BasePlace
+{
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
+     */
+    protected $id;
+
+    /**
+     * @ORM\OneToMany(
+     *   targetEntity="Acme\Bundle\WorkflowBundle\Entity\OutputArc",
+     *   mappedBy="place",
+     *   cascade={"persist"}
+     * )
+     */
+    protected $inputArcs;
+
+    /**
+     * @ORM\OneToMany(
+     *   targetEntity="Acme\Bundle\WorkflowBundle\Entity\InputArc",
+     *   mappedBy="place",
+     *   cascade={"persist"}
+     * )
+     */
+    protected $outputArcs;
+}
+```
+
+#### Place Marking
+
+```php
+<?php
+
+namespace Acme\Bundle\WorkflowBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Petrinet\Model\PlaceMarking as BasePlaceMarking;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="place_marking")
+ */
+class PlaceMarking extends BasePlaceMarking
+{
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
+     */
+    protected $id;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Acme\Bundle\WorkflowBundle\Entity\Place")
+     */
+    protected $place;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Acme\Bundle\WorkflowBundle\Entity\Token", cascade={"persist"})
+     * @ORM\JoinTable(
+     *  name="place_marking_token_xref",
+     *  joinColumns={@ORM\JoinColumn(name="place_marking_id")},
+     *  inverseJoinColumns={@ORM\JoinColumn(name="token_id", unique=true)}
+     * )
+     */
+    protected $tokens;
+}
+```
+
+#### Token
+
+```php
+<?php
+
+namespace Acme\Bundle\WorkflowBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Petrinet\Model\Token as BaseToken;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="token")
+ */
+class Token extends BaseToken
+{
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
+     */
+    protected $id;
+}
+```
+
+#### Transition
+
+```php
+<?php
+
+namespace Acme\Bundle\WorkflowBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Petrinet\Model\Transition as BaseTransition;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="transition")
+ */
+class Transition extends BaseTransition
+{
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
+     */
+    protected $id;
+
+    /**
+     * @ORM\OneToMany(
+     *   targetEntity="Acme\Bundle\WorkflowBundle\Entity\InputArc",
+     *   mappedBy="transition",
+     *   cascade={"persist"}
+     * )
+     */
+    protected $inputArcs;
+
+    /**
+     * @ORM\OneToMany(
+     *   targetEntity="Acme\Bundle\WorkflowBundle\Entity\OutputArc",
+     *   mappedBy="transition",
+     *   cascade={"persist"}
+     * )
+     */
+    protected $outputArcs;
+}
 ```

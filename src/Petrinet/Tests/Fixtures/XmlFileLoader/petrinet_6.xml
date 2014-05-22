@@ -1,7 +1,0 @@
-<?xml version="1.0" ?>
-
-<!-- Arc linking two places -->
-<petrinet id="test">
-    <place id="p1"/>
-    <arc from="p1" to="p1"/>
-</petrinet>
