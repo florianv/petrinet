@@ -1,6 +1,6 @@
 # Petrinet
 
-[![Build Status](https://travis-ci.org/florianv/swap.svg?branch=master)](https://travis-ci.org/florianv/petrinet)
+[![Build Status](https://travis-ci.org/florianv/petrinet.svg?branch=master)](https://travis-ci.org/florianv/petrinet)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/4a15ed6f-09d8-4678-bd49-629b4c1c1251/mini.png)](https://insight.sensiolabs.com/projects/4a15ed6f-09d8-4678-bd49-629b4c1c1251)
 [![Total Downloads](http://img.shields.io/packagist/dt/florianv/petrinet.svg)](https://packagist.org/packages/florianv/petrinet)
 [![License](http://img.shields.io/packagist/l/florianv/petrinet.svg)](https://packagist.org/packages/florianv/petrinet)
