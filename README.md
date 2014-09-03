@@ -1,9 +1,4 @@
-# Petrinet
-
-[![Build Status](https://travis-ci.org/florianv/petrinet.svg?branch=master)](https://travis-ci.org/florianv/petrinet)
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/4a15ed6f-09d8-4678-bd49-629b4c1c1251/mini.png)](https://insight.sensiolabs.com/projects/4a15ed6f-09d8-4678-bd49-629b4c1c1251)
-[![Total Downloads](http://img.shields.io/packagist/dt/florianv/petrinet.svg)](https://packagist.org/packages/florianv/petrinet)
-[![License](http://img.shields.io/packagist/l/florianv/petrinet.svg)](https://packagist.org/packages/florianv/petrinet)
+# Petrinet [![Build status][travis-image]][travis-url] [![Version][version-image]][version-url] [![License][license-image]][license-url]
 
 This framework allows to build, vizualize and execute [Petrinets](http://en.wikipedia.org/wiki/Petri_net)
 which can be used to build workflow engines. It provides the core domain model of basic Petrinets that can be persisted
@@ -38,3 +33,12 @@ $ php composer.phar update florianv/petrinet
 ## License
 
 [MIT](https://github.com/florianv/petrinet/blob/master/LICENSE)
+
+[travis-url]: https://travis-ci.org/florianv/petrinet
+[travis-image]: http://img.shields.io/travis/florianv/petrinet.svg?style=flat-square
+
+[license-url]: https://packagist.org/packages/florianv/petrinet
+[license-image]: http://img.shields.io/packagist/l/florianv/petrinet.svg?style=flat-square
+
+[version-url]: https://packagist.org/packages/florianv/petrinet
+[version-image]: http://img.shields.io/packagist/v/florianv/petrinet.svg?style=flat-square
