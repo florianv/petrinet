@@ -8,6 +8,11 @@ php:
   - nightly
   - hhvm
 
+matrix:
+  fast_finish: true
+  allow_failures:
+    - php: nightly
+
 before_script:
   - composer --prefer-source --dev install
 
