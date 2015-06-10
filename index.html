@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Petrinet by florianv</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Petrinet</h1>
+      <h2 class="project-tagline">PHP Petrinet framework</h2>
+      <a href="https://github.com/florianv/petrinet" class="btn">View on GitHub</a>
+      <a href="https://github.com/florianv/petrinet/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/florianv/petrinet/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="documentation" class="anchor" href="#documentation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Documentation</h1>
+
+<p>This library follows the definition of the basic Petrinet model with weighted arcs as described
+<a href="http://en.wikipedia.org/wiki/Petri_net">here</a>, roughly:</p>
+
+<ul>
+<li>there are two types of nodes: Places and Transitions</li>
+<li>these nodes are connected with Arcs having a weight</li>
+<li>a Petrinet is a set of Places and Transitions</li>
+<li>a Place Marking associates a set of Tokens to a place</li>
+<li>a Marking is a set of Place Markings</li>
+<li>a Petrinet can be executed against a Marking</li>
+</ul>
+
+<p>In workflow words, the Petrinet is the workflow structure and each marking is a workflow instance.</p>
+
+<h2>
+<a id="model" class="anchor" href="#model" aria-hidden="true"><span class="octicon octicon-link"></span></a>Model</h2>
+
+<p>This library provides the models of basic Petrinets that you can use directly to work without persistence
+or extend with your custom entities mapped to a database with any ORM.</p>
+
+<h2>
+<a id="builder" class="anchor" href="#builder" aria-hidden="true"><span class="octicon octicon-link"></span></a>Builder</h2>
+
+<p>All builders make usage of a <code>FactoryInterface</code> that is reponsible for creating model instances.
+By default, the factory is configured to create models present in this library, but it is possible to configure it
+to create your custom model instances (for example Doctrine Entities) by passing the class names to its constructor.</p>
+
+<div class="highlight highlight-php"><pre><span class="pl-s1"><span class="pl-c">// Instanciating the factory</span></span>
+<span class="pl-s1"><span class="pl-smi">$factory</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">\Petrinet\Model\</span><span class="pl-c1">Factory</span>();</span></pre></div>
+
+<h3>
+<a id="petrinet-builder" class="anchor" href="#petrinet-builder" aria-hidden="true"><span class="octicon octicon-link"></span></a>Petrinet Builder</h3>
+
+<p>The Petrinet builder helps creating places and transitions, connecting them with arcs
+and retrieving the resulting Petrinet.</p>
+
+<h4>
+<a id="overview" class="anchor" href="#overview" aria-hidden="true"><span class="octicon octicon-link"></span></a>Overview</h4>
+
+<div class="highlight highlight-php"><pre><span class="pl-s1"><span class="pl-c">// Instanciating the builder</span></span>
+<span class="pl-s1"><span class="pl-smi">$builder</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">\Petrinet\Builder\</span><span class="pl-c1">PetrinetBuilder</span>(<span class="pl-smi">$factory</span>);</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-c">// Creating a place</span></span>
+<span class="pl-s1"><span class="pl-smi">$place</span> <span class="pl-k">=</span> <span class="pl-smi">$builder</span><span class="pl-k">-&gt;</span>place();</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-c">// Creating a transition</span></span>
+<span class="pl-s1"><span class="pl-smi">$transition</span> <span class="pl-k">=</span> <span class="pl-smi">$builder</span><span class="pl-k">-&gt;</span>transition();</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-c">// Connecting a place to a transition</span></span>
+<span class="pl-s1"><span class="pl-smi">$builder</span><span class="pl-k">-&gt;</span>connect(<span class="pl-smi">$place</span>, <span class="pl-smi">$transition</span>);</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-c">// Connecting a transition to a place</span></span>
+<span class="pl-s1"><span class="pl-smi">$builder</span><span class="pl-k">-&gt;</span>connect(<span class="pl-smi">$transition</span>, <span class="pl-smi">$place</span>);</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-c">// Connecting a place to a transition with an arc of weight 3</span></span>
+<span class="pl-s1"><span class="pl-smi">$builder</span><span class="pl-k">-&gt;</span>connect(<span class="pl-smi">$place</span>, <span class="pl-smi">$transition</span>, <span class="pl-c1">3</span>);</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-c">// Retrieving the Petrinet</span></span>
+<span class="pl-s1"><span class="pl-smi">$petrinet</span> <span class="pl-k">=</span> <span class="pl-smi">$builder</span><span class="pl-k">-&gt;</span>getPetrinet();</span></pre></div>
+
+<h4>
+<a id="example" class="anchor" href="#example" aria-hidden="true"><span class="octicon octicon-link"></span></a>Example</h4>
+
+<p>This example shows how to create the following Petrinet: <img src="https://raw.githubusercontent.com/florianv/petrinet/master/docs/images/petrinet_builder.png" alt="Petrinet"></p>
+
+<div class="highlight highlight-php"><pre><span class="pl-s1"><span class="pl-smi">$petrinet</span> <span class="pl-k">=</span> <span class="pl-smi">$builder</span></span>
+<span class="pl-s1">    <span class="pl-k">-&gt;</span>connect(<span class="pl-smi">$builder</span><span class="pl-k">-&gt;</span>place(), <span class="pl-smi">$t1</span> <span class="pl-k">=</span> <span class="pl-smi">$builder</span><span class="pl-k">-&gt;</span>transition())</span>
+<span class="pl-s1">    <span class="pl-k">-&gt;</span>connect(<span class="pl-smi">$t1</span>, <span class="pl-smi">$p2</span> <span class="pl-k">=</span> <span class="pl-smi">$builder</span><span class="pl-k">-&gt;</span>place())</span>
+<span class="pl-s1">    <span class="pl-k">-&gt;</span>connect(<span class="pl-smi">$t1</span>, <span class="pl-smi">$p3</span> <span class="pl-k">=</span> <span class="pl-smi">$builder</span><span class="pl-k">-&gt;</span>place())</span>
+<span class="pl-s1">    <span class="pl-k">-&gt;</span>connect(<span class="pl-smi">$p2</span>, <span class="pl-smi">$t2</span> <span class="pl-k">=</span> <span class="pl-smi">$builder</span><span class="pl-k">-&gt;</span>transition())</span>
+<span class="pl-s1">    <span class="pl-k">-&gt;</span>connect(<span class="pl-smi">$p3</span>, <span class="pl-smi">$t2</span>)</span>
+<span class="pl-s1">    <span class="pl-k">-&gt;</span>connect(<span class="pl-smi">$t2</span>, <span class="pl-smi">$builder</span><span class="pl-k">-&gt;</span>place())</span>
+<span class="pl-s1">    <span class="pl-k">-&gt;</span>getPetrinet();</span></pre></div>
+
+<h3>
+<a id="marking-builder" class="anchor" href="#marking-builder" aria-hidden="true"><span class="octicon octicon-link"></span></a>Marking Builder</h3>
+
+<p>The marking builder helps creating place markings and retrieving the resulting Petrinet marking
+(the places can be created manually or using the <code>PetrinetBuilder</code> above).</p>
+
+<h4>
+<a id="overview-1" class="anchor" href="#overview-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Overview</h4>
+
+<div class="highlight highlight-php"><pre><span class="pl-s1"><span class="pl-c">// Instanciating the builder</span></span>
+<span class="pl-s1"><span class="pl-smi">$builder</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">\Petrinet\Builder\</span><span class="pl-c1">MarkingBuilder</span>(<span class="pl-smi">$factory</span>);</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-c">// Marks a place with the specified tokens number</span></span>
+<span class="pl-s1"><span class="pl-smi">$builder</span><span class="pl-k">-&gt;</span>mark(<span class="pl-smi">$place</span>, <span class="pl-c1">3</span>);</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-c">// Marks a place with the specified token</span></span>
+<span class="pl-s1"><span class="pl-smi">$builder</span><span class="pl-k">-&gt;</span>mark(<span class="pl-smi">$place</span>, <span class="pl-k">new</span> <span class="pl-c1">\Petrinet\Model\</span><span class="pl-c1">Token</span>());</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-c">// Marks a place with the specified tokens</span></span>
+<span class="pl-s1"><span class="pl-smi">$builder</span><span class="pl-k">-&gt;</span>mark(<span class="pl-smi">$place</span>, <span class="pl-c1">array</span>(<span class="pl-k">new</span> <span class="pl-c1">\Petrinet\Model\</span><span class="pl-c1">Token</span>(), <span class="pl-k">new</span> <span class="pl-c1">\Petrinet\Model\</span><span class="pl-c1">Token</span>()));</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-c">// Retrieving the Marking</span></span>
+<span class="pl-s1"><span class="pl-smi">$marking</span> <span class="pl-k">=</span> <span class="pl-smi">$builder</span><span class="pl-k">-&gt;</span>getMarking();</span></pre></div>
+
+<h4>
+<a id="example-1" class="anchor" href="#example-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Example</h4>
+
+<p>This example shows how to create a marking containing two place markings:</p>
+
+<ul>
+<li>The place <code>$p1</code> is marked with 3 tokens</li>
+<li>The place <code>$p2</code> is marked with 2 tokens</li>
+</ul>
+
+<div class="highlight highlight-php"><pre><span class="pl-s1"><span class="pl-smi">$marking</span> <span class="pl-k">=</span> <span class="pl-smi">$markingBuilder</span></span>
+<span class="pl-s1">    <span class="pl-k">-&gt;</span>mark(<span class="pl-smi">$p1</span>, <span class="pl-c1">3</span>)</span>
+<span class="pl-s1">    <span class="pl-k">-&gt;</span>mark(<span class="pl-smi">$p2</span>, <span class="pl-c1">2</span>)</span>
+<span class="pl-s1">    <span class="pl-k">-&gt;</span>getMarking();</span></pre></div>
+
+<h2>
+<a id="service" class="anchor" href="#service" aria-hidden="true"><span class="octicon octicon-link"></span></a>Service</h2>
+
+<p>The transition service allows you to check if a transition is enabled in a given marking and fire an enabled
+transition.</p>
+
+<div class="highlight highlight-php"><pre><span class="pl-s1"><span class="pl-c">// Instanciates the transition service</span></span>
+<span class="pl-s1"><span class="pl-smi">$transitionService</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">\Petrinet\Service\</span><span class="pl-c1">TransitionService</span>(<span class="pl-smi">$factory</span>);</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-c">// Checks if the transition is enabled in the given marking</span></span>
+<span class="pl-s1"><span class="pl-smi">$transitionService</span><span class="pl-k">-&gt;</span>isEnabled(<span class="pl-smi">$transition</span>, <span class="pl-smi">$marking</span>);</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-c">// Fires the transition in the given marking</span></span>
+<span class="pl-s1"><span class="pl-k">try</span> {</span>
+<span class="pl-s1">    <span class="pl-smi">$transitionService</span><span class="pl-k">-&gt;</span>fire(<span class="pl-smi">$transition</span>, <span class="pl-smi">$marking</span>);</span>
+<span class="pl-s1">} <span class="pl-k">catch</span> (<span class="pl-c1">\Petrinet\Service\Exception\</span><span class="pl-c1">TransitionNotEnabledException</span> <span class="pl-smi">$e</span>) {</span>
+<span class="pl-s1">    <span class="pl-c">// The transition is not enabled and cannot be fired</span></span>
+<span class="pl-s1">}</span></pre></div>
+
+<p>Firing a transition will modify the place markings by removing and adding new tokens to them.
+It will also create missing place markings if not existing.
+The persistence of the marking after firing a transition is up to you.</p>
+
+<h2>
+<a id="dumper" class="anchor" href="#dumper" aria-hidden="true"><span class="octicon octicon-link"></span></a>Dumper</h2>
+
+<h3>
+<a id="graphviz-dumper" class="anchor" href="#graphviz-dumper" aria-hidden="true"><span class="octicon octicon-link"></span></a>Graphviz Dumper</h3>
+
+<p>The Graphviz dumper dumps a Petrinet as a string in <code>dot</code> format that can be processed by
+the <a href="http://www.graphviz.org">Graphviz</a> software.</p>
+
+<h4>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h4>
+
+<div class="highlight highlight-php"><pre><span class="pl-s1"><span class="pl-c">// Instanciates the Dumper</span></span>
+<span class="pl-s1"><span class="pl-smi">$dumper</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">\Petrinet\Dumper\</span><span class="pl-c1">GraphvizDumper</span>();</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-c">// Dumps the Petrinet structure</span></span>
+<span class="pl-s1"><span class="pl-smi">$string</span> <span class="pl-k">=</span> <span class="pl-smi">$dumper</span><span class="pl-k">-&gt;</span>dump(<span class="pl-smi">$petrinet</span>);</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-c">// Dumps the Petrinet in a given marking</span></span>
+<span class="pl-s1"><span class="pl-smi">$string</span> <span class="pl-k">=</span> <span class="pl-smi">$dumper</span><span class="pl-k">-&gt;</span>dump(<span class="pl-smi">$petrinet</span>, <span class="pl-smi">$marking</span>);</span></pre></div>
+
+<p>You can write the resulting string in a file:</p>
+
+<div class="highlight highlight-php"><pre><span class="pl-s1"><span class="pl-c1">file_put_contents</span>(<span class="pl-s"><span class="pl-pds">'</span>petrinet.dot<span class="pl-pds">'</span></span>, <span class="pl-smi">$string</span>);</span></pre></div>
+
+<p>and transform it to a PNG image using the command:</p>
+
+<div class="highlight highlight-bash"><pre>$ dot -Tpng petrinet.dot <span class="pl-k">&gt;</span> petrinet.png</pre></div>
+
+<p>You will obtain this kind of image:</p>
+
+<p><img src="https://raw.githubusercontent.com/florianv/petrinet/master/docs/images/graphviz.png" alt="Petrinet"></p>
+
+<h2>
+<a id="database-mapping" class="anchor" href="#database-mapping" aria-hidden="true"><span class="octicon octicon-link"></span></a>Database Mapping</h2>
+
+<h3>
+<a id="doctrine-orm" class="anchor" href="#doctrine-orm" aria-hidden="true"><span class="octicon octicon-link"></span></a>Doctrine ORM</h3>
+
+<p>The following example shows the basic mapping for the Petrinet model classes using Doctrine2 ORM.</p>
+
+<h4>
+<a id="petrinet" class="anchor" href="#petrinet" aria-hidden="true"><span class="octicon octicon-link"></span></a>Petrinet</h4>
+
+<div class="highlight highlight-php"><pre><span class="pl-pse">&lt;?php</span><span class="pl-s1"></span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-k">namespace</span> <span class="pl-en">Acme\Bundle\WorkflowBundle\Entity</span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">Doctrine\ORM\Mapping</span> <span class="pl-k">as</span> <span class="pl-c1">ORM</span>;</span>
+<span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">Petrinet\Model\Petrinet</span> <span class="pl-k">as</span> <span class="pl-c1">BasePetrinet</span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-c">/**</span></span>
+<span class="pl-s1"><span class="pl-c"> * @ORM\Entity</span></span>
+<span class="pl-s1"><span class="pl-c"> * @ORM\Table(name="petrinet")</span></span>
+<span class="pl-s1"><span class="pl-c"> */</span></span>
+<span class="pl-s1"><span class="pl-k">class</span> <span class="pl-en">Petrinet</span> <span class="pl-k">extends</span> <span class="pl-e">BasePetrinet</span></span>
+<span class="pl-s1">{</span>
+<span class="pl-s1">    <span class="pl-c">/**</span></span>
+<span class="pl-s1"><span class="pl-c">     * @ORM\Id</span></span>
+<span class="pl-s1"><span class="pl-c">     * @ORM\GeneratedValue</span></span>
+<span class="pl-s1"><span class="pl-c">     * @ORM\Column(type="integer")</span></span>
+<span class="pl-s1"><span class="pl-c">     */</span></span>
+<span class="pl-s1">    <span class="pl-k">protected</span> <span class="pl-smi">$id</span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1">    <span class="pl-c">/**</span></span>
+<span class="pl-s1"><span class="pl-c">     * @ORM\ManyToMany(targetEntity="Acme\Bundle\WorkflowBundle\Entity\Place", cascade={"persist"})</span></span>
+<span class="pl-s1"><span class="pl-c">     * @ORM\JoinTable(</span></span>
+<span class="pl-s1"><span class="pl-c">     *  name="petrinet_place_xref",</span></span>
+<span class="pl-s1"><span class="pl-c">     *  joinColumns={@ORM\JoinColumn(name="petrinet_id")},</span></span>
+<span class="pl-s1"><span class="pl-c">     *  inverseJoinColumns={@ORM\JoinColumn(name="place_id", unique=true)}</span></span>
+<span class="pl-s1"><span class="pl-c">     * )</span></span>
+<span class="pl-s1"><span class="pl-c">     */</span></span>
+<span class="pl-s1">    <span class="pl-k">protected</span> <span class="pl-smi">$places</span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1">    <span class="pl-c">/**</span></span>
+<span class="pl-s1"><span class="pl-c">     * @ORM\ManyToMany(targetEntity="Acme\Bundle\WorkflowBundle\Entity\Transition", cascade={"persist"})</span></span>
+<span class="pl-s1"><span class="pl-c">     * @ORM\JoinTable(</span></span>
+<span class="pl-s1"><span class="pl-c">     *  name="petrinet_transition_xref",</span></span>
+<span class="pl-s1"><span class="pl-c">     *  joinColumns={@ORM\JoinColumn(name="petrinet_id")},</span></span>
+<span class="pl-s1"><span class="pl-c">     *  inverseJoinColumns={@ORM\JoinColumn(name="transition_id", unique=true)}</span></span>
+<span class="pl-s1"><span class="pl-c">     * )</span></span>
+<span class="pl-s1"><span class="pl-c">     */</span></span>
+<span class="pl-s1">    <span class="pl-k">protected</span> <span class="pl-smi">$transitions</span>;</span>
+<span class="pl-s1">}</span></pre></div>
+
+<h4>
+<a id="inputarc" class="anchor" href="#inputarc" aria-hidden="true"><span class="octicon octicon-link"></span></a>InputArc</h4>
+
+<div class="highlight highlight-php"><pre><span class="pl-pse">&lt;?php</span><span class="pl-s1"></span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-k">namespace</span> <span class="pl-en">Acme\Bundle\WorkflowBundle\Entity</span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">Doctrine\ORM\Mapping</span> <span class="pl-k">as</span> <span class="pl-c1">ORM</span>;</span>
+<span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">Petrinet\Model\InputArc</span> <span class="pl-k">as</span> <span class="pl-c1">BaseInputArc</span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-c">/**</span></span>
+<span class="pl-s1"><span class="pl-c"> * @ORM\Entity</span></span>
+<span class="pl-s1"><span class="pl-c"> * @ORM\Table(name="input_arc")</span></span>
+<span class="pl-s1"><span class="pl-c"> */</span></span>
+<span class="pl-s1"><span class="pl-k">class</span> <span class="pl-en">InputArc</span> <span class="pl-k">extends</span> <span class="pl-e">BaseInputArc</span></span>
+<span class="pl-s1">{</span>
+<span class="pl-s1">    <span class="pl-c">/**</span></span>
+<span class="pl-s1"><span class="pl-c">     * @ORM\Id</span></span>
+<span class="pl-s1"><span class="pl-c">     * @ORM\GeneratedValue</span></span>
+<span class="pl-s1"><span class="pl-c">     * @ORM\Column(type="integer")</span></span>
+<span class="pl-s1"><span class="pl-c">     */</span></span>
+<span class="pl-s1">    <span class="pl-k">protected</span> <span class="pl-smi">$id</span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1">    <span class="pl-c">/**</span></span>
+<span class="pl-s1"><span class="pl-c">     * @ORM\ManyToOne(targetEntity="Acme\Bundle\WorkflowBundle\Entity\Place", inversedBy="outputArcs")</span></span>
+<span class="pl-s1"><span class="pl-c">     */</span></span>
+<span class="pl-s1">    <span class="pl-k">protected</span> <span class="pl-smi">$place</span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1">    <span class="pl-c">/**</span></span>
+<span class="pl-s1"><span class="pl-c">     * @ORM\ManyToOne(targetEntity="Acme\Bundle\WorkflowBundle\Entity\Transition", inversedBy="inputArcs")</span></span>
+<span class="pl-s1"><span class="pl-c">     */</span></span>
+<span class="pl-s1">    <span class="pl-k">protected</span> <span class="pl-smi">$transition</span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1">    <span class="pl-c">/**</span></span>
+<span class="pl-s1"><span class="pl-c">     * @ORM\Column(type="integer", nullable=false)</span></span>
+<span class="pl-s1"><span class="pl-c">     */</span></span>
+<span class="pl-s1">    <span class="pl-k">protected</span> <span class="pl-smi">$weight</span>;</span>
+<span class="pl-s1">}</span></pre></div>
+
+<h4>
+<a id="outputarc" class="anchor" href="#outputarc" aria-hidden="true"><span class="octicon octicon-link"></span></a>OutputArc</h4>
+
+<div class="highlight highlight-php"><pre><span class="pl-pse">&lt;?php</span><span class="pl-s1"></span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-k">namespace</span> <span class="pl-en">Acme\Bundle\WorkflowBundle\Entity</span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">Doctrine\ORM\Mapping</span> <span class="pl-k">as</span> <span class="pl-c1">ORM</span>;</span>
+<span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">Petrinet\Model\OutputArc</span> <span class="pl-k">as</span> <span class="pl-c1">BaseOutputArc</span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-c">/**</span></span>
+<span class="pl-s1"><span class="pl-c"> * @ORM\Entity</span></span>
+<span class="pl-s1"><span class="pl-c"> * @ORM\Table(name="output_arc")</span></span>
+<span class="pl-s1"><span class="pl-c"> */</span></span>
+<span class="pl-s1"><span class="pl-k">class</span> <span class="pl-en">OutputArc</span> <span class="pl-k">extends</span> <span class="pl-e">BaseOutputArc</span></span>
+<span class="pl-s1">{</span>
+<span class="pl-s1">    <span class="pl-c">/**</span></span>
+<span class="pl-s1"><span class="pl-c">     * @ORM\Id</span></span>
+<span class="pl-s1"><span class="pl-c">     * @ORM\GeneratedValue</span></span>
+<span class="pl-s1"><span class="pl-c">     * @ORM\Column(type="integer")</span></span>
+<span class="pl-s1"><span class="pl-c">     */</span></span>
+<span class="pl-s1">    <span class="pl-k">protected</span> <span class="pl-smi">$id</span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1">    <span class="pl-c">/**</span></span>
+<span class="pl-s1"><span class="pl-c">     * @ORM\ManyToOne(targetEntity="Acme\Bundle\WorkflowBundle\Entity\Place", inversedBy="inputArcs")</span></span>
+<span class="pl-s1"><span class="pl-c">     */</span></span>
+<span class="pl-s1">    <span class="pl-k">protected</span> <span class="pl-smi">$place</span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1">    <span class="pl-c">/**</span></span>
+<span class="pl-s1"><span class="pl-c">     * @ORM\ManyToOne(targetEntity="Acme\Bundle\WorkflowBundle\Entity\Transition", inversedBy="outputArcs")</span></span>
+<span class="pl-s1"><span class="pl-c">     */</span></span>
+<span class="pl-s1">    <span class="pl-k">protected</span> <span class="pl-smi">$transition</span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1">    <span class="pl-c">/**</span></span>
+<span class="pl-s1"><span class="pl-c">     * @ORM\Column(type="integer", nullable=false)</span></span>
+<span class="pl-s1"><span class="pl-c">     */</span></span>
+<span class="pl-s1">    <span class="pl-k">protected</span> <span class="pl-smi">$weight</span>;</span>
+<span class="pl-s1">}</span></pre></div>
+
+<h4>
+<a id="marking" class="anchor" href="#marking" aria-hidden="true"><span class="octicon octicon-link"></span></a>Marking</h4>
+
+<div class="highlight highlight-php"><pre><span class="pl-pse">&lt;?php</span><span class="pl-s1"></span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-k">namespace</span> <span class="pl-en">Acme\Bundle\WorkflowBundle\Entity</span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">Doctrine\ORM\Mapping</span> <span class="pl-k">as</span> <span class="pl-c1">ORM</span>;</span>
+<span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">Petrinet\Model\Marking</span> <span class="pl-k">as</span> <span class="pl-c1">BaseMarking</span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-c">/**</span></span>
+<span class="pl-s1"><span class="pl-c"> * @ORM\Entity</span></span>
+<span class="pl-s1"><span class="pl-c"> * @ORM\Table(name="marking")</span></span>
+<span class="pl-s1"><span class="pl-c"> */</span></span>
+<span class="pl-s1"><span class="pl-k">class</span> <span class="pl-en">Marking</span> <span class="pl-k">extends</span> <span class="pl-e">BaseMarking</span></span>
+<span class="pl-s1">{</span>
+<span class="pl-s1">    <span class="pl-c">/**</span></span>
+<span class="pl-s1"><span class="pl-c">     * @ORM\Id</span></span>
+<span class="pl-s1"><span class="pl-c">     * @ORM\GeneratedValue</span></span>
+<span class="pl-s1"><span class="pl-c">     * @ORM\Column(type="integer")</span></span>
+<span class="pl-s1"><span class="pl-c">     */</span></span>
+<span class="pl-s1">    <span class="pl-k">protected</span> <span class="pl-smi">$id</span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1">    <span class="pl-c">/**</span></span>
+<span class="pl-s1"><span class="pl-c">     * @ORM\ManyToMany(targetEntity="Acme\Bundle\WorkflowBundle\Entity\PlaceMarking", cascade={"persist"})</span></span>
+<span class="pl-s1"><span class="pl-c">     * @ORM\JoinTable(</span></span>
+<span class="pl-s1"><span class="pl-c">     *  name="marking_place_marking_xref",</span></span>
+<span class="pl-s1"><span class="pl-c">     *  joinColumns={@ORM\JoinColumn(name="marking_id")},</span></span>
+<span class="pl-s1"><span class="pl-c">     *  inverseJoinColumns={@ORM\JoinColumn(name="place_marking_id", unique=true)}</span></span>
+<span class="pl-s1"><span class="pl-c">     * )</span></span>
+<span class="pl-s1"><span class="pl-c">     */</span></span>
+<span class="pl-s1">    <span class="pl-k">protected</span> <span class="pl-smi">$placeMarkings</span>;</span>
+<span class="pl-s1">}</span></pre></div>
+
+<h4>
+<a id="place" class="anchor" href="#place" aria-hidden="true"><span class="octicon octicon-link"></span></a>Place</h4>
+
+<div class="highlight highlight-php"><pre><span class="pl-pse">&lt;?php</span><span class="pl-s1"></span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-k">namespace</span> <span class="pl-en">Acme\Bundle\WorkflowBundle\Entity</span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">Doctrine\ORM\Mapping</span> <span class="pl-k">as</span> <span class="pl-c1">ORM</span>;</span>
+<span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">Petrinet\Model\Place</span> <span class="pl-k">as</span> <span class="pl-c1">BasePlace</span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-c">/**</span></span>
+<span class="pl-s1"><span class="pl-c"> * @ORM\Entity</span></span>
+<span class="pl-s1"><span class="pl-c"> * @ORM\Table(name="place")</span></span>
+<span class="pl-s1"><span class="pl-c"> */</span></span>
+<span class="pl-s1"><span class="pl-k">class</span> <span class="pl-en">Place</span> <span class="pl-k">extends</span> <span class="pl-e">BasePlace</span></span>
+<span class="pl-s1">{</span>
+<span class="pl-s1">    <span class="pl-c">/**</span></span>
+<span class="pl-s1"><span class="pl-c">     * @ORM\Id</span></span>
+<span class="pl-s1"><span class="pl-c">     * @ORM\GeneratedValue</span></span>
+<span class="pl-s1"><span class="pl-c">     * @ORM\Column(type="integer")</span></span>
+<span class="pl-s1"><span class="pl-c">     */</span></span>
+<span class="pl-s1">    <span class="pl-k">protected</span> <span class="pl-smi">$id</span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1">    <span class="pl-c">/**</span></span>
+<span class="pl-s1"><span class="pl-c">     * @ORM\OneToMany(</span></span>
+<span class="pl-s1"><span class="pl-c">     *   targetEntity="Acme\Bundle\WorkflowBundle\Entity\OutputArc",</span></span>
+<span class="pl-s1"><span class="pl-c">     *   mappedBy="place",</span></span>
+<span class="pl-s1"><span class="pl-c">     *   cascade={"persist"}</span></span>
+<span class="pl-s1"><span class="pl-c">     * )</span></span>
+<span class="pl-s1"><span class="pl-c">     */</span></span>
+<span class="pl-s1">    <span class="pl-k">protected</span> <span class="pl-smi">$inputArcs</span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1">    <span class="pl-c">/**</span></span>
+<span class="pl-s1"><span class="pl-c">     * @ORM\OneToMany(</span></span>
+<span class="pl-s1"><span class="pl-c">     *   targetEntity="Acme\Bundle\WorkflowBundle\Entity\InputArc",</span></span>
+<span class="pl-s1"><span class="pl-c">     *   mappedBy="place",</span></span>
+<span class="pl-s1"><span class="pl-c">     *   cascade={"persist"}</span></span>
+<span class="pl-s1"><span class="pl-c">     * )</span></span>
+<span class="pl-s1"><span class="pl-c">     */</span></span>
+<span class="pl-s1">    <span class="pl-k">protected</span> <span class="pl-smi">$outputArcs</span>;</span>
+<span class="pl-s1">}</span></pre></div>
+
+<h4>
+<a id="place-marking" class="anchor" href="#place-marking" aria-hidden="true"><span class="octicon octicon-link"></span></a>Place Marking</h4>
+
+<div class="highlight highlight-php"><pre><span class="pl-pse">&lt;?php</span><span class="pl-s1"></span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-k">namespace</span> <span class="pl-en">Acme\Bundle\WorkflowBundle\Entity</span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">Doctrine\ORM\Mapping</span> <span class="pl-k">as</span> <span class="pl-c1">ORM</span>;</span>
+<span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">Petrinet\Model\PlaceMarking</span> <span class="pl-k">as</span> <span class="pl-c1">BasePlaceMarking</span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-c">/**</span></span>
+<span class="pl-s1"><span class="pl-c"> * @ORM\Entity</span></span>
+<span class="pl-s1"><span class="pl-c"> * @ORM\Table(name="place_marking")</span></span>
+<span class="pl-s1"><span class="pl-c"> */</span></span>
+<span class="pl-s1"><span class="pl-k">class</span> <span class="pl-en">PlaceMarking</span> <span class="pl-k">extends</span> <span class="pl-e">BasePlaceMarking</span></span>
+<span class="pl-s1">{</span>
+<span class="pl-s1">    <span class="pl-c">/**</span></span>
+<span class="pl-s1"><span class="pl-c">     * @ORM\Id</span></span>
+<span class="pl-s1"><span class="pl-c">     * @ORM\GeneratedValue</span></span>
+<span class="pl-s1"><span class="pl-c">     * @ORM\Column(type="integer")</span></span>
+<span class="pl-s1"><span class="pl-c">     */</span></span>
+<span class="pl-s1">    <span class="pl-k">protected</span> <span class="pl-smi">$id</span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1">    <span class="pl-c">/**</span></span>
+<span class="pl-s1"><span class="pl-c">     * @ORM\ManyToOne(targetEntity="Acme\Bundle\WorkflowBundle\Entity\Place")</span></span>
+<span class="pl-s1"><span class="pl-c">     */</span></span>
+<span class="pl-s1">    <span class="pl-k">protected</span> <span class="pl-smi">$place</span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1">    <span class="pl-c">/**</span></span>
+<span class="pl-s1"><span class="pl-c">     * @ORM\ManyToMany(targetEntity="Acme\Bundle\WorkflowBundle\Entity\Token", cascade={"persist"})</span></span>
+<span class="pl-s1"><span class="pl-c">     * @ORM\JoinTable(</span></span>
+<span class="pl-s1"><span class="pl-c">     *  name="place_marking_token_xref",</span></span>
+<span class="pl-s1"><span class="pl-c">     *  joinColumns={@ORM\JoinColumn(name="place_marking_id")},</span></span>
+<span class="pl-s1"><span class="pl-c">     *  inverseJoinColumns={@ORM\JoinColumn(name="token_id", unique=true)}</span></span>
+<span class="pl-s1"><span class="pl-c">     * )</span></span>
+<span class="pl-s1"><span class="pl-c">     */</span></span>
+<span class="pl-s1">    <span class="pl-k">protected</span> <span class="pl-smi">$tokens</span>;</span>
+<span class="pl-s1">}</span></pre></div>
+
+<h4>
+<a id="token" class="anchor" href="#token" aria-hidden="true"><span class="octicon octicon-link"></span></a>Token</h4>
+
+<div class="highlight highlight-php"><pre><span class="pl-pse">&lt;?php</span><span class="pl-s1"></span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-k">namespace</span> <span class="pl-en">Acme\Bundle\WorkflowBundle\Entity</span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">Doctrine\ORM\Mapping</span> <span class="pl-k">as</span> <span class="pl-c1">ORM</span>;</span>
+<span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">Petrinet\Model\Token</span> <span class="pl-k">as</span> <span class="pl-c1">BaseToken</span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-c">/**</span></span>
+<span class="pl-s1"><span class="pl-c"> * @ORM\Entity</span></span>
+<span class="pl-s1"><span class="pl-c"> * @ORM\Table(name="token")</span></span>
+<span class="pl-s1"><span class="pl-c"> */</span></span>
+<span class="pl-s1"><span class="pl-k">class</span> <span class="pl-en">Token</span> <span class="pl-k">extends</span> <span class="pl-e">BaseToken</span></span>
+<span class="pl-s1">{</span>
+<span class="pl-s1">    <span class="pl-c">/**</span></span>
+<span class="pl-s1"><span class="pl-c">     * @ORM\Id</span></span>
+<span class="pl-s1"><span class="pl-c">     * @ORM\GeneratedValue</span></span>
+<span class="pl-s1"><span class="pl-c">     * @ORM\Column(type="integer")</span></span>
+<span class="pl-s1"><span class="pl-c">     */</span></span>
+<span class="pl-s1">    <span class="pl-k">protected</span> <span class="pl-smi">$id</span>;</span>
+<span class="pl-s1">}</span></pre></div>
+
+<h4>
+<a id="transition" class="anchor" href="#transition" aria-hidden="true"><span class="octicon octicon-link"></span></a>Transition</h4>
+
+<div class="highlight highlight-php"><pre><span class="pl-pse">&lt;?php</span><span class="pl-s1"></span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-k">namespace</span> <span class="pl-en">Acme\Bundle\WorkflowBundle\Entity</span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">Doctrine\ORM\Mapping</span> <span class="pl-k">as</span> <span class="pl-c1">ORM</span>;</span>
+<span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">Petrinet\Model\Transition</span> <span class="pl-k">as</span> <span class="pl-c1">BaseTransition</span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-c">/**</span></span>
+<span class="pl-s1"><span class="pl-c"> * @ORM\Entity</span></span>
+<span class="pl-s1"><span class="pl-c"> * @ORM\Table(name="transition")</span></span>
+<span class="pl-s1"><span class="pl-c"> */</span></span>
+<span class="pl-s1"><span class="pl-k">class</span> <span class="pl-en">Transition</span> <span class="pl-k">extends</span> <span class="pl-e">BaseTransition</span></span>
+<span class="pl-s1">{</span>
+<span class="pl-s1">    <span class="pl-c">/**</span></span>
+<span class="pl-s1"><span class="pl-c">     * @ORM\Id</span></span>
+<span class="pl-s1"><span class="pl-c">     * @ORM\GeneratedValue</span></span>
+<span class="pl-s1"><span class="pl-c">     * @ORM\Column(type="integer")</span></span>
+<span class="pl-s1"><span class="pl-c">     */</span></span>
+<span class="pl-s1">    <span class="pl-k">protected</span> <span class="pl-smi">$id</span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1">    <span class="pl-c">/**</span></span>
+<span class="pl-s1"><span class="pl-c">     * @ORM\OneToMany(</span></span>
+<span class="pl-s1"><span class="pl-c">     *   targetEntity="Acme\Bundle\WorkflowBundle\Entity\InputArc",</span></span>
+<span class="pl-s1"><span class="pl-c">     *   mappedBy="transition",</span></span>
+<span class="pl-s1"><span class="pl-c">     *   cascade={"persist"}</span></span>
+<span class="pl-s1"><span class="pl-c">     * )</span></span>
+<span class="pl-s1"><span class="pl-c">     */</span></span>
+<span class="pl-s1">    <span class="pl-k">protected</span> <span class="pl-smi">$inputArcs</span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1">    <span class="pl-c">/**</span></span>
+<span class="pl-s1"><span class="pl-c">     * @ORM\OneToMany(</span></span>
+<span class="pl-s1"><span class="pl-c">     *   targetEntity="Acme\Bundle\WorkflowBundle\Entity\OutputArc",</span></span>
+<span class="pl-s1"><span class="pl-c">     *   mappedBy="transition",</span></span>
+<span class="pl-s1"><span class="pl-c">     *   cascade={"persist"}</span></span>
+<span class="pl-s1"><span class="pl-c">     * )</span></span>
+<span class="pl-s1"><span class="pl-c">     */</span></span>
+<span class="pl-s1">    <span class="pl-k">protected</span> <span class="pl-smi">$outputArcs</span>;</span>
+<span class="pl-s1">}</span></pre></div>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/florianv/petrinet">Petrinet</a> is maintained by <a href="https://github.com/florianv">florianv</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
+
