@@ -1,7 +1,7 @@
 {
     "name": "florianv/petrinet",
     "type": "library",
-    "description": "Petrinet framework for PHP 5.3+",
+    "description": "Petrinet framework for PHP 7.2+",
     "keywords": ["petrinet", "workflow"],
     "homepage": "https://github.com/florianv/petrinet",
     "license": "MIT",
@@ -13,11 +13,11 @@
         }
     ],
     "require": {
-        "php": ">=5.3.3",
-        "doctrine/common": "~2.0"
+        "php": ">=7.2",
+        "doctrine/collections": "^1.6"
     },
     "require-dev": {
-        "phpspec/phpspec": "2.0.*@dev"
+        "phpspec/phpspec": "^6.2"
     },
     "autoload": {
         "psr-0": {

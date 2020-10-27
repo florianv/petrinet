@@ -35,7 +35,7 @@ interface FactoryInterface
     /**
      * Creates a new transition instance.
      *
-     * @return PlaceInterface
+     * @return TransitionInterface
      */
     public function createTransition();
 
