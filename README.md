@@ -7,7 +7,7 @@ using your favorite ORM as well as services to manage its execution.
 ## Installation
 
 ```bash
-$ composer require florianv/petrinet
+$ composer require tienvx/petrinet
 ```
 
 ## Documentation

@@ -1,9 +1,9 @@
 {
-    "name": "florianv/petrinet",
+    "name": "tienvx/petrinet",
     "type": "library",
-    "description": "Petrinet framework for PHP 5.3+",
+    "description": "Petrinet framework for PHP 7.2+",
     "keywords": ["petrinet", "workflow"],
-    "homepage": "https://github.com/florianv/petrinet",
+    "homepage": "https://github.com/tienvx/petrinet",
     "license": "MIT",
     "authors": [
         {
@@ -13,11 +13,11 @@
         }
     ],
     "require": {
-        "php": ">=5.3.3",
-        "doctrine/common": "~2.0"
+        "php": ">=7.2",
+        "doctrine/collections": "^1.6"
     },
     "require-dev": {
-        "phpspec/phpspec": "2.0.*@dev"
+        "phpspec/phpspec": "^6.2"
     },
     "autoload": {
         "psr-0": {
@@ -29,7 +29,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "2.0-dev"
+            "dev-master": "1.0-dev"
         }
     }
 }
