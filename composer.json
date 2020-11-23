@@ -1,9 +1,9 @@
 {
-    "name": "florianv/petrinet",
+    "name": "tienvx/petrinet",
     "type": "library",
     "description": "Petrinet framework for PHP 7.2+",
     "keywords": ["petrinet", "workflow"],
-    "homepage": "https://github.com/florianv/petrinet",
+    "homepage": "https://github.com/tienvx/petrinet",
     "license": "MIT",
     "authors": [
         {
