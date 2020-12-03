@@ -1,0 +1,31 @@
+name: main
+
+on: [push, pull_request]
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php-versions: ['7.3', '7.4', '8.0']
+    name: PHP ${{ matrix.php-versions }}
+    steps:
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: ${{ matrix.php-versions }}
+        tools: phpcs, composer:v2
+        #extensions: mbstring, intl
+
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Install
+      run: composer install
+
+    - name: Run PHP CS
+      run: phpcs --standard=PSR12 src
+
+    - name: Test
+      run: |
+        php bin/phpspec run
