@@ -71,10 +71,12 @@ class PlaceMarking implements PlaceMarkingInterface
      * Tells if the place marking has the given token.
      *
      * @param TokenInterface $token
+     *
+     * @return boolean
      */
     public function hasToken(TokenInterface $token)
     {
-        $this->tokens->contains($token);
+        return $this->tokens->contains($token);
     }
 
     /**
