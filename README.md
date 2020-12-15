@@ -30,4 +30,4 @@ $ composer require florianv/petrinet
 [version-image]: http://img.shields.io/packagist/v/florianv/petrinet.svg?style=flat
 
 [php-version-url]: https://packagist.org/packages/florianv/petrinet
-[php-version-image]: http://img.shields.io/badge/php-5.3.3+-ff69b4.svg
+[php-version-image]: http://img.shields.io/badge/php-7.3.0+-ff69b4.svg
