@@ -47,7 +47,7 @@ class TransitionService implements TransitionServiceInterface
     {
         $inputArcs = $transition->getInputArcs();
 
-        if (empty($inputArcs)) {
+        if (count($inputArcs) === 0) {
             return false;
         }
 

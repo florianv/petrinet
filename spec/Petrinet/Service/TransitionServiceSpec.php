@@ -2,6 +2,7 @@
 
 namespace spec\Petrinet\Service;
 
+use Doctrine\Common\Collections\Collection;
 use Petrinet\Model\FactoryInterface;
 use Petrinet\Model\InputArcInterface;
 use Petrinet\Model\MarkingInterface;
@@ -51,6 +52,45 @@ class TransitionServiceSpec extends ObjectBehavior
 
         $this->beConstructedWith($factory);
         $this->isEnabled($transition, $marking)->shouldReturn(true);
+    }
+
+    function it_tells_a_transition_is_disabled_when_there_is_no_items_in_input_arcs_array(
+        FactoryInterface $factory,
+        InputArcInterface $arc,
+        PlaceInterface $place,
+        TransitionInterface $transition,
+        MarkingInterface $marking
+    )
+    {
+        $arc->getPlace()->willReturn($place);
+        $arc->getWeight()->willReturn(1);
+
+        $marking->getPlaceMarking($place->getWrappedObject())->willReturn(null);
+        $transition->getInputArcs()->willReturn(array());
+
+        $this->beConstructedWith($factory);
+        $this->isEnabled($transition, $marking)->shouldReturn(false);
+    }
+
+    function it_tells_a_transition_is_disabled_when_there_is_no_items_in_input_arcs_collection(
+        FactoryInterface $factory,
+        InputArcInterface $arc,
+        PlaceInterface $place,
+        TransitionInterface $transition,
+        MarkingInterface $marking,
+        Collection $inputArcs
+    )
+    {
+        $arc->getPlace()->willReturn($place);
+        $arc->getWeight()->willReturn(1);
+
+        $inputArcs->count()->willReturn(0);
+
+        $marking->getPlaceMarking($place->getWrappedObject())->willReturn(null);
+        $transition->getInputArcs()->willReturn($inputArcs);
+
+        $this->beConstructedWith($factory);
+        $this->isEnabled($transition, $marking)->shouldReturn(false);
     }
 
     function it_tells_a_transition_is_disabled_when_there_is_no_marking_for_the_input_places(
